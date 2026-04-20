@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal Companion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.5;
+            color: #2c3e50;
+            background: #fafbfc;
+            padding: 16px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .header {
+            padding: 24px 24px 16px;
+            border-bottom: 1px solid #e8f0fe;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1a202c;
+        }
+        
+        .header p {
+            font-size: 16px;
+            color: #64748b;
+        }
+        
+        .main-form {
+            padding: 24px;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+        
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+            transition: border-color 0.2s;
+        }
+        
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        
+        .scale-input {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        
+        .scale-input input[type="range"] {
+            flex: 1;
+        }
+        
+        .scale-value {
+            font-weight: 600;
+            color: #3b82f6;
+            min-width: 20px;
+        }
+        
+        .feeling-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .feeling-btn {
+            padding: 10px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+        
+        .feeling-btn:hover, .feeling-btn.active {
+            border-color: #3b82f6;
+            background: #f0f9ff;
+        }
+        
+        .wait-options {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .wait-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+        
+        .wait-btn:hover, .wait-btn.active {
+            border-color: #3b82f6;
+            background: #f0f9ff;
+        }
+        
+        .custom-feeling {
+            margin-top: 12px;
+            display: none;
+        }
+        
+        .encouragement {
+            background: #f0f9ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 24px 0;
+            text-align: center;
+        }
+        
+        .encouragement h3 {
+            font-size: 16px;
+            color: #1e40af;
+            margin-bottom: 4px;
+        }
+        
+        .encouragement p {
+            font-size: 14px;
+            color: #1e40af;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .submit-btn:hover {
+            background: #2563eb;
+        }
+        
+        .history-section {
+            border-top: 1px solid #e8f0fe;
+            padding: 24px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #1a202c;
+        }
+        
+        .history-item {
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .history-item-title {
+            font-weight: 500;
+            color: #374151;
+        }
+        
+        .history-item-details {
+            color: #64748b;
+            margin-top: 4px;
+        }
+        
+        .insights-section {
+            border-top: 1px solid #e8f0fe;
+            padding: 24px;
+        }
+        
+        .insight-chart {
+            background: #f8fafc;
+            border-radius: 6px;
+            padding: 16px;
+            text-align: center;
+        }
+        
+        .chart-bars {
+            display: flex;
+            align-items: end;
+            justify-content: space-around;
+            height: 80px;
+            margin: 16px 0;
+        }
+        
+        .chart-bar {
+            background: #3b82f6;
+            width: 20px;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+        
+        .chart-labels {
+            display: flex;
+            justify-content: space-around;
+            font-size: 12px;
+            color: #64748b;
+        }
+        
+        @media (min-width: 768px) {
+            body {
+                padding: 32px;
+            }
+            
+            .container {
+                border-radius: 16px;
+            }
+            
+            .header {
+                padding: 32px 32px 24px;
+            }
+            
+            .main-form, .history-section, .insights-section {
+                padding: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Journal Companion</h1>
+            <p>Pause and reflect before you buy</p>
+        </header>
+        
+        <form class="main-form">
+            <div class="form-group">
+                <label for="item">What do you want to buy?</label>
+                <input type="text" id="item" name="item" placeholder="e.g., wireless headphones">
+            </div>
+            
+            <div class="form-group">
+                <label for="attention">What caught your attention?</label>
+                <textarea id="attention" name="attention" rows="3" placeholder="Describe what made you notice this item..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="price">What's the price?</label>
+                <input type="text" id="price" name="price" placeholder="$120">
+            </div>
+            
+            <div class="form-group">
+                <label for="desire">How much do you want it? (1-10)</label>
+                <div class="scale-input">
+                    <span>1</span>
+                    <input type="range" id="desire" name="desire" min="1" max="10" value="5">
+                    <span>10</span>
+                    <span class="scale-value" id="desire-value">5</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="before">What happened right before this impulse?</label>
+                <textarea id="before" name="before" rows="2" placeholder="I was scrolling social media, feeling bored..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>What do you want to feel?</label>
+                <div class="feeling-options">
+                    <button type="button" class="feeling-btn" data-feeling="warmth">Warmth</button>
+                    <button type="button" class="feeling-btn" data-feeling="dazzled">Dazzled</button>
+                    <button type="button" class="feeling-btn" data-feeling="seen">Seen</button>
+                    <button type="button" class="feeling-btn" data-feeling="safe">Safe</button>
+                    <button type="button" class="feeling-btn" data-feeling="other">Something else</button>
+                </div>
+                <div class="custom-feeling">
+                    <input type="text" id="custom-feeling" name="custom-feeling" placeholder="Describe the feeling...">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>How long can you wait?</label>
+                <div class="wait-options">
+                    <button type="button" class="wait-btn" data-wait="breaths">A few breaths</button>
+                    <button type="button" class="wait-btn" data-wait="day">A day</button>
+                    <button type="button" class="wait-btn" data-wait="week">A week</button>
+                </div>
+            </div>
+            
+            <div class="encouragement">
+                <h3>Consider waiting</h3>
+                <p>Taking time to reflect often leads to better decisions</p>
+            </div>
+            
+            <button type="submit" class="submit-btn">Save to Journal</button>
+        </form>
+        
+        <section class="history-section">
+            <h2 class="section-title">Recent Entries</h2>
+            <div class="history-item">
+                <div class="history-item-title">Running shoes - $120</div>
+                <div class="history-item-details">Wanted to feel motivated • Decided to wait a week • 2 days ago</div>
+            </div>
+            <div class="history-item">
+                <div class="history-item-title">Coffee maker - $80</div>
+                <div class="history-item-details">Wanted to feel productive • Waited a day, then bought • 5 days ago</div>
+            </div>
+            <div class="history-item">
+                <div class="history-item-title">Jacket - $200</div>
+                <div class="history-item-details">Wanted to feel stylish • Still waiting • 1 week ago</div>
+            </div>
+        </section>
+        
+        <section class="insights-section">
+            <h2 class="section-title">Your Patterns</h2>
+            <div class="insight-chart">
+                <p style="font-size: 14px; color: #64748b; margin-bottom: 8px;">Most common feelings you seek</p>
+                <div class="chart-bars">
+                    <div class="chart-bar" style="height: 60px;"></div>
+                    <div class="chart-bar" style="height: 40px;"></div>
+                    <div class="chart-bar" style="height: 30px;"></div>
+                    <div class="chart-bar" style="height: 20px;"></div>
+                </div>
+                <div class="chart-labels">
+                    <span>Safe</span>
+                    <span>Seen</span>
+                    <span>Warmth</span>
+                    <span>Dazzled</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Handle desire scale
+        const desireSlider = document.getElementById('desire');
+        const desireValue = document.getElementById('desire-value');
+        desireSlider.addEventListener('input', function() {
+            desireValue.textContent = this.value;
+        });
+
+        // Handle feeling buttons
+        const feelingBtns = document.querySelectorAll('.feeling-btn');
+        const customFeelingDiv = document.querySelector('.custom-feeling');
+        feelingBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                feelingBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                if (this.dataset.feeling === 'other') {
+                    customFeelingDiv.style.display = 'block';
+                } else {
+                    customFeelingDiv.style.display = 'none';
+                }
+            });
+        });
+
+        // Handle wait buttons
+        const waitBtns = document.querySelectorAll('.wait-btn');
+        waitBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                waitBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Handle form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Entry saved to your journal!');
+        });
+    </script>
+</body>
+</html>

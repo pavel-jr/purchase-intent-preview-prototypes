@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journal Companion Self Split</title>
+  <style>
+    :root {
+      --bg: #f3ede6;
+      --card: rgba(255,255,255,0.82);
+      --text: #231c17;
+      --muted: #7f7369;
+      --line: rgba(35,28,23,0.08);
+      --accent: #c26f4a;
+      --accent-soft: rgba(194,111,74,0.12);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Georgia, serif; color: var(--text); background: linear-gradient(180deg, #f9f5f0, var(--bg)); }
+    .page { width: min(980px, calc(100% - 24px)); margin: 0 auto; padding: 20px 0 48px; }
+    .intro, .card { background: var(--card); border: 1px solid var(--line); border-radius: 26px; box-shadow: 0 18px 44px rgba(34,25,19,0.06); }
+    .intro { padding: 22px; margin-bottom: 16px; }
+    .intro p { margin: 0; color: var(--muted); line-height: 1.5; }
+    .eyebrow { margin: 0 0 8px; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+    h1, h2, h3, p { margin: 0; }
+    h1 { margin-bottom: 10px; font-size: 2rem; }
+    .layout { display: grid; gap: 14px; }
+    .card { padding: 16px; }
+    .stack { display: grid; gap: 12px; }
+    label { display: block; margin-bottom: 8px; font-size: 0.95rem; }
+    input[type="text"], input[type="number"] {
+      width: 100%; padding: 14px 15px; border-radius: 16px; border: 1px solid var(--line); background: white; font: inherit;
+    }
+    .pair { display: grid; gap: 10px; }
+    .pair.tight { grid-template-columns: 1.4fr 0.8fr; }
+    .scale { display: grid; gap: 10px; }
+    input[type="range"] { width: 100%; accent-color: var(--accent); }
+    .scale-head { display: flex; justify-content: space-between; color: var(--muted); font-size: 0.9rem; }
+    .scale-badge { color: var(--accent); font-size: 1.35rem; }
+    .options { display: flex; gap: 8px; flex-wrap: wrap; }
+    .options button {
+      padding: 10px 12px; border: 1px solid var(--line); border-radius: 999px; background: white; color: var(--text); font: inherit;
+    }
+    .options button.active { background: var(--accent-soft); border-color: rgba(194,111,74,0.35); }
+    .submit { padding: 14px 16px; border: 0; border-radius: 18px; background: var(--text); color: white; font: inherit; }
+    .note { margin-top: 12px; color: #47624a; background: rgba(136,160,131,0.15); border-radius: 18px; padding: 14px; }
+    .mini { color: var(--muted); font-size: 0.9rem; line-height: 1.45; }
+    .timeline { display: grid; gap: 10px; }
+    .item { padding: 14px; border-radius: 18px; background: rgba(255,255,255,0.6); border: 1px solid var(--line); }
+    .item strong { display: block; margin-bottom: 5px; }
+    .item time { color: var(--muted); font-size: 0.85rem; }
+    .bars { display: flex; gap: 8px; align-items: end; height: 120px; margin-top: 12px; }
+    .bars div { flex: 1; background: linear-gradient(180deg, #c26f4a, rgba(194,111,74,0.22)); border-radius: 18px 18px 8px 8px; position: relative; }
+    .bars span { position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%); color: var(--muted); font-size: 0.78rem; }
+    @media (min-width: 780px) { .layout { grid-template-columns: 1.1fr 0.9fr; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="intro">
+      <p class="eyebrow">Self Version 02</p>
+      <h1>Journal Companion Split</h1>
+      <p>A clearer left-right rhythm: log on one side, context on the other. Still warm, but more product-like and easier to scan quickly.</p>
+    </section>
+
+    <section class="layout">
+      <form class="card stack">
+        <div class="pair tight">
+          <div>
+            <label for="item">What caught your attention?</label>
+            <input id="item" type="text" placeholder="e.g. Ceramic table lamp">
+          </div>
+          <div>
+            <label for="price">Price</label>
+            <input id="price" type="number" placeholder="$120" step="1">
+          </div>
+        </div>
+
+        <div class="scale">
+          <div class="scale-head">
+            <label for="want">How much do you want this right now?</label>
+            <div class="scale-badge" id="wantValue">6</div>
+          </div>
+          <input id="want" type="range" min="1" max="10" value="6" step="1">
+          <div class="scale-head"><span>barely</span><span>very much</span></div>
+        </div>
+
+        <div>
+          <label for="before">What happened right before this?</label>
+          <input id="before" type="text" placeholder="e.g. I felt flat, then I saw it in a reel">
+        </div>
+
+        <div>
+          <label>What do you want to feel?</label>
+          <div class="options group">
+            <button type="button">warmth</button>
+            <button type="button">dazzled</button>
+            <button type="button">seen</button>
+            <button type="button">safe</button>
+            <button type="button">something else</button>
+          </div>
+          <div style="margin-top:10px"><input type="text" placeholder="in your own words"></div>
+        </div>
+
+        <div>
+          <label>How long can you wait?</label>
+          <div class="options group">
+            <button type="button">a few breaths</button>
+            <button type="button">a day</button>
+            <button type="button">a week</button>
+          </div>
+        </div>
+
+        <button class="submit" type="button">Log the pause</button>
+        <div class="note">If the feeling is urgent, that may be the very reason to delay the purchase.</div>
+      </form>
+
+      <div class="stack">
+        <section class="card">
+          <h2 style="margin-bottom:10px;">Recent diary</h2>
+          <div class="timeline">
+            <article class="item">
+              <time>Today • 8:42 PM</time>
+              <strong>Desk speaker • not purchased</strong>
+              <p class="mini">Wanted to feel dazzled. Trigger: opened shopping tabs after finishing work.</p>
+            </article>
+            <article class="item">
+              <time>Yesterday • 12:11 PM</time>
+              <strong>Tea mug set • purchased</strong>
+              <p class="mini">Wanted warmth. Trigger: saw a photo that made home feel a little incomplete.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Pattern snapshot</h2>
+          <p class="mini" style="margin-top:8px;">Your strongest spikes happen when tiredness and browsing overlap.</p>
+          <div class="bars">
+            <div style="height:32%"><span>M</span></div>
+            <div style="height:44%"><span>T</span></div>
+            <div style="height:39%"><span>W</span></div>
+            <div style="height:54%"><span>T</span></div>
+            <div style="height:74%"><span>F</span></div>
+            <div style="height:86%"><span>S</span></div>
+            <div style="height:47%"><span>S</span></div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const want = document.getElementById("want");
+    const wantValue = document.getElementById("wantValue");
+    want.addEventListener("input", () => wantValue.textContent = want.value);
+    document.querySelectorAll(".group").forEach((group) => {
+      group.querySelectorAll("button").forEach((button) => {
+        button.addEventListener("click", () => {
+          group.querySelectorAll("button").forEach((item) => item.classList.remove("active"));
+          button.classList.add("active");
+        });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journal Companion Self Calm</title>
+  <style>
+    :root {
+      --bg: #f6f0e8;
+      --paper: rgba(255, 252, 247, 0.92);
+      --ink: #2f261f;
+      --muted: #7d6d5f;
+      --line: rgba(61, 45, 35, 0.11);
+      --accent: #b98653;
+      --accent-soft: rgba(185, 134, 83, 0.15);
+      --safe: #88a083;
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(185, 134, 83, 0.15), transparent 24rem),
+        linear-gradient(180deg, #f8f2eb 0%, var(--bg) 100%);
+    }
+
+    .wrap { width: min(760px, calc(100% - 24px)); margin: 0 auto; padding: 20px 0 48px; }
+    .panel, .entry, .insight {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 18px 40px rgba(74, 55, 39, 0.06);
+    }
+
+    .hero { padding: 22px; margin-bottom: 14px; }
+    .eyebrow { margin: 0 0 8px; color: var(--muted); font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; }
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: 2.1rem; line-height: 1; margin-bottom: 10px; }
+    .hero p { color: var(--muted); line-height: 1.5; }
+
+    form.panel { padding: 18px; display: grid; gap: 14px; }
+    label { display: block; font-size: 0.95rem; margin-bottom: 8px; }
+    input[type="text"], input[type="number"] {
+      width: 100%; padding: 14px 16px; border-radius: 18px; border: 1px solid var(--line);
+      background: rgba(255,255,255,0.85); color: var(--ink); font: inherit;
+    }
+
+    .row { display: grid; gap: 12px; }
+    .slider { padding: 12px 0 0; }
+    .slider input[type="range"] { width: 100%; accent-color: var(--accent); }
+    .scale { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--muted); }
+    .desire { color: var(--accent); font-size: 1.15rem; margin-top: 8px; }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chips button, .wait button {
+      border: 1px solid var(--line); background: white; color: var(--ink); border-radius: 999px;
+      padding: 10px 12px; font: inherit;
+    }
+    .chips button.active, .wait button.active { background: var(--accent-soft); border-color: rgba(185,134,83,0.38); }
+    .other { margin-top: 10px; }
+
+    .wait { display: flex; gap: 8px; flex-wrap: wrap; }
+    .submit {
+      border: 0; border-radius: 999px; padding: 14px 16px; font: inherit; color: white;
+      background: linear-gradient(135deg, #bc8c59, #a96f44);
+    }
+
+    .nudge {
+      margin-top: 14px; padding: 16px 18px; border-radius: 22px; color: #47624a;
+      background: rgba(136,160,131,0.16); border: 1px solid rgba(136,160,131,0.28);
+    }
+
+    .section { margin-top: 16px; }
+    .section h2 { margin-bottom: 12px; font-size: 1.1rem; }
+    .entries { display: grid; gap: 10px; }
+    .entry { padding: 14px 16px; }
+    .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 6px; }
+    .entry strong { display: block; margin-bottom: 6px; font-size: 1rem; }
+    .entry p { color: var(--muted); line-height: 1.45; }
+
+    .insight { padding: 16px; }
+    .bars { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; align-items: end; height: 120px; margin-top: 14px; }
+    .bar {
+      border-radius: 16px 16px 8px 8px;
+      background: linear-gradient(180deg, rgba(185,134,83,0.88), rgba(185,134,83,0.26));
+      position: relative;
+    }
+    .bar span { position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%); color: var(--muted); font-size: 0.8rem; }
+
+    @media (min-width: 620px) { .row { grid-template-columns: 1.5fr 0.8fr; } }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="panel hero">
+      <p class="eyebrow">Self Version 01</p>
+      <h1>Journal Companion Calm</h1>
+      <p>A quieter, more breathable take. The form stays clear, the diary stays visible, and nothing fights for attention.</p>
+    </section>
+
+    <form class="panel">
+      <div class="row">
+        <div>
+          <label for="item">What caught your attention?</label>
+          <input id="item" type="text" placeholder="e.g. Soft shell jacket">
+        </div>
+        <div>
+          <label for="price">Price</label>
+          <input id="price" type="number" placeholder="$120" step="1">
+        </div>
+      </div>
+
+      <div class="slider">
+        <label for="desire">How much do you want this right now?</label>
+        <input id="desire" type="range" min="1" max="10" value="5" step="1">
+        <div class="scale"><span>1</span><span>10</span></div>
+        <div class="desire" id="desireValue">5 / 10</div>
+      </div>
+
+      <div>
+        <label for="trigger">What happened right before this?</label>
+        <input id="trigger" type="text" placeholder="e.g. Someone mentioned it, I felt behind, I was scrolling">
+      </div>
+
+      <div>
+        <label>What do you want to feel?</label>
+        <div class="chips" id="emotionChips">
+          <button type="button">warmth</button>
+          <button type="button">dazzled</button>
+          <button type="button">seen</button>
+          <button type="button">safe</button>
+          <button type="button">something else</button>
+        </div>
+        <div class="other"><input type="text" placeholder="in your own words"></div>
+      </div>
+
+      <div>
+        <label>How long can you wait before deciding?</label>
+        <div class="wait" id="waitChips">
+          <button type="button">a few breaths</button>
+          <button type="button">a day</button>
+          <button type="button">a week</button>
+        </div>
+      </div>
+
+      <button class="submit" type="button">Record this moment</button>
+    </form>
+
+    <div class="nudge">Pause a little longer. Wanting something strongly does not mean you need to answer it quickly.</div>
+
+    <section class="section">
+      <h2>Recent entries</h2>
+      <div class="entries">
+        <article class="entry">
+          <div class="meta">Today, 7:14 PM</div>
+          <strong>Portable projector • not purchased</strong>
+          <p>Wanted to feel dazzled and a bit elsewhere. Trigger: late-night scrolling after a tired day.</p>
+        </article>
+        <article class="entry">
+          <div class="meta">Yesterday, 1:08 PM</div>
+          <strong>Sketchbook set • purchased</strong>
+          <p>Wanted warmth and steadiness. Trigger: passing an art store after lunch.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Impulse pattern this week</h2>
+      <div class="insight">
+        <p style="color: var(--muted);">You tend to log stronger desire late on Friday and Saturday evenings.</p>
+        <div class="bars">
+          <div class="bar" style="height:36%"><span>M</span></div>
+          <div class="bar" style="height:30%"><span>T</span></div>
+          <div class="bar" style="height:48%"><span>W</span></div>
+          <div class="bar" style="height:40%"><span>T</span></div>
+          <div class="bar" style="height:58%"><span>F</span></div>
+          <div class="bar" style="height:88%"><span>S</span></div>
+          <div class="bar" style="height:51%"><span>S</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const desire = document.getElementById("desire");
+    const desireValue = document.getElementById("desireValue");
+    desire.addEventListener("input", () => desireValue.textContent = `${desire.value} / 10`);
+    document.querySelectorAll("#emotionChips button, #waitChips button").forEach((button) => {
+      button.addEventListener("click", () => {
+        const group = button.parentElement;
+        group.querySelectorAll("button").forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+      });
+    });
+  </script>
+</body>
+</html>

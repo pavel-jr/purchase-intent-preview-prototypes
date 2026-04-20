@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal Companion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: #2c2c2c;
+            background: #fefefe;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 300;
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+            color: #1a1a1a;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #666;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .section {
+            margin-bottom: 56px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 24px;
+            color: #1a1a1a;
+        }
+
+        .form-group {
+            margin-bottom: 32px;
+        }
+
+        label {
+            display: block;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            color: #333;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+            transition: border-color 0.2s ease;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: #4a90e2;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .scale-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+        }
+
+        .scale-labels {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background: #4a90e2;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .feeling-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .feeling-option {
+            padding: 14px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: white;
+        }
+
+        .feeling-option:hover, .feeling-option.selected {
+            border-color: #4a90e2;
+            background: #f8fbff;
+        }
+
+        .wait-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .wait-option {
+            padding: 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: white;
+            text-align: center;
+        }
+
+        .wait-option:hover, .wait-option.selected {
+            border-color: #4a90e2;
+            background: #f8fbff;
+        }
+
+        .encouragement {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 32px 24px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 48px 0;
+        }
+
+        .encouragement h3 {
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .encouragement p {
+            font-size: 16px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .diary-entry {
+            background: white;
+            border: 1px solid #f0f0f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .diary-date {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 8px;
+        }
+
+        .diary-item {
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .insights {
+            background: #f9f9f9;
+            padding: 24px;
+            border-radius: 12px;
+        }
+
+        .insight-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .insight-item:last-child {
+            border-bottom: none;
+        }
+
+        .insight-bar {
+            width: 60px;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .insight-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4a90e2, #667eea);
+            border-radius: 3px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 18px;
+            background: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background: #357abd;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: 600px;
+                padding: 48px 32px;
+            }
+
+            .feeling-options {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Journal Companion</h1>
+            <p class="subtitle">Pause. Reflect. Choose mindfully.</p>
+        </header>
+
+        <div class="section">
+            <h2 class="section-title">What caught your attention?</h2>
+            <div class="form-group">
+                <textarea placeholder="Describe what you're thinking about purchasing..."></textarea>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">What's the price?</h2>
+            <div class="form-group">
+                <input type="text" placeholder="$120">
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">How much do you want this?</h2>
+            <div class="form-group">
+                <div class="scale-labels">
+                    <span>Not at all</span>
+                    <span>Desperately</span>
+                </div>
+                <input type="range" min="1" max="10" value="5" class="desire-scale">
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">What happened right before this moment?</h2>
+            <div class="form-group">
+                <textarea placeholder="I was scrolling social media, had a stressful meeting, saw an ad..."></textarea>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">What do you want to feel?</h2>
+            <div class="feeling-options">
+                <div class="feeling-option" data-feeling="warmth">Warmth</div>
+                <div class="feeling-option" data-feeling="dazzled">Dazzled</div>
+                <div class="feeling-option" data-feeling="seen">Seen</div>
+                <div class="feeling-option" data-feeling="safe">Safe</div>
+                <div class="feeling-option" data-feeling="other">Something else</div>
+            </div>
+            <input type="text" placeholder="Describe the feeling..." style="display: none;" class="custom-feeling">
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">How long can you wait?</h2>
+            <div class="wait-options">
+                <div class="wait-option" data-wait="breaths">A few deep breaths</div>
+                <div class="wait-option" data-wait="day">One day</div>
+                <div class="wait-option" data-wait="week">One week</div>
+            </div>
+        </div>
+
+        <div class="encouragement">
+            <h3>Take a moment</h3>
+            <p>Your awareness is already a powerful step. Consider sitting with this feeling for now—the item will likely still be there tomorrow.</p>
+        </div>
+
+        <button class="btn-primary">Save This Moment</button>
+
+        <div class="section" style="margin-top: 64px;">
+            <h2 class="section-title">Recent Entries</h2>
+            
+            <div class="diary-entry">
+                <div class="diary-date">Yesterday, 3:47 PM</div>
+                <div class="diary-item"><strong>Item:</strong> Vintage leather jacket</div>
+                <div class="diary-item"><strong>Price:</strong> $240</div>
+                <div class="diary-item"><strong>Desire:</strong> 8/10</div>
+                <div class="diary-item"><strong>Feeling sought:</strong> Cool, confident</div>
+                <div class="diary-item"><strong>Wait time:</strong> One week</div>
+            </div>
+
+            <div class="diary-entry">
+                <div class="diary-date">3 days ago, 11:22 AM</div>
+                <div class="diary-item"><strong>Item:</strong> Smart home speaker</div>
+                <div class="diary-item"><strong>Price:</strong> $99</div>
+                <div class="diary-item"><strong>Desire:</strong> 6/10</div>
+                <div class="diary-item"><strong>Feeling sought:</strong> Connected, efficient</div>
+                <div class="diary-item"><strong>Wait time:</strong> One day</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Your Patterns</h2>
+            <div class="insights">
+                <div class="insight-item">
+                    <span>Most common trigger: Social media</span>
+                    <div class="insight-bar">
+                        <div class="insight-fill" style="width: 75%"></div>
+                    </div>
+                </div>
+                <div class="insight-item">
+                    <span>Average desire level: 7/10</span>
+                    <div class="insight-bar">
+                        <div class="insight-fill" style="width: 70%"></div>
+                    </div>
+                </div>
+                <div class="insight-item">
+                    <span>Times you waited: 8 out of 12</span>
+                    <div class="insight-bar">
+                        <div class="insight-fill" style="width: 67%"></div>
+                    </div>
+                </div>
+                <div class="insight-item">
+                    <span>Most sought feeling: Safe</span>
+                    <div class="insight-bar">
+                        <div class="insight-fill" style="width: 60%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Handle feeling selection
+        document.querySelectorAll('.feeling-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.feeling-option').forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                
+                const customInput = document.querySelector('.custom-feeling');
+                if (option.dataset.feeling === 'other') {
+                    customInput.style.display = 'block';
+                    customInput.focus();
+                } else {
+                    customInput.style.display = 'none';
+                }
+            });
+        });
+
+        // Handle wait time selection
+        document.querySelectorAll('.wait-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.wait-option').forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+            });
+        });
+
+        // Handle range input display
+        document.querySelector('.desire-scale').addEventListener('input', (e) => {
+            console.log('Desire level:', e.target.value);
+        });
+    </script>
+</body>
+</html>

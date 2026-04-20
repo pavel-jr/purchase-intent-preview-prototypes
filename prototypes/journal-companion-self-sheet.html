@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journal Companion Self Sheet</title>
+  <style>
+    :root {
+      --bg: #efe6db;
+      --card: rgba(255,255,255,0.84);
+      --text: #211a16;
+      --muted: #74685e;
+      --line: rgba(33,26,22,0.09);
+      --accent: #9e7d62;
+      --soft: rgba(158,125,98,0.14);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Georgia, serif; color: var(--text); background: radial-gradient(circle at top, rgba(158,125,98,0.16), transparent 20rem), var(--bg); }
+    .shell { width: min(720px, calc(100% - 20px)); margin: 0 auto; padding: 16px 0 40px; }
+    .header, .sheet, .panel { background: var(--card); border: 1px solid var(--line); border-radius: 28px; box-shadow: 0 18px 48px rgba(33,26,22,0.08); }
+    .header { padding: 20px; margin-bottom: 14px; }
+    .header h1 { margin: 0 0 8px; font-size: 2rem; }
+    .header p, .muted { margin: 0; color: var(--muted); line-height: 1.5; }
+    .sheet { padding: 16px; display: grid; gap: 12px; }
+    .tag { color: var(--muted); text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.8rem; margin: 0 0 6px; }
+    .field { display: grid; gap: 8px; }
+    .field label { font-size: 0.95rem; }
+    .input, input[type="text"], input[type="number"] {
+      width: 100%; padding: 14px 15px; border-radius: 18px; border: 1px solid var(--line); background: white; font: inherit; color: var(--text);
+    }
+    .compact { display: grid; grid-template-columns: 1fr 120px; gap: 10px; }
+    .meter {
+      padding: 14px; border-radius: 22px; border: 1px solid var(--line); background: rgba(255,255,255,0.6);
+    }
+    input[type="range"] { width: 100%; accent-color: var(--accent); }
+    .meter-top, .ends { display: flex; justify-content: space-between; align-items: center; }
+    .meter-value { font-size: 1.25rem; color: var(--accent); }
+    .ends { color: var(--muted); font-size: 0.85rem; margin-top: 8px; }
+    .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pills button { border: 1px solid var(--line); background: white; color: var(--text); border-radius: 999px; padding: 10px 12px; font: inherit; }
+    .pills button.active { background: var(--soft); border-color: rgba(158,125,98,0.32); }
+    .cta { border: 0; border-radius: 18px; background: linear-gradient(135deg, #ac8664, #927058); color: white; padding: 14px 16px; font: inherit; }
+    .gentle { padding: 14px 16px; border-radius: 20px; background: rgba(136,160,131,0.15); color: #47624a; }
+    .section { margin-top: 16px; display: grid; gap: 10px; }
+    .panel { padding: 15px; }
+    .entry { padding: 12px 0; border-top: 1px solid var(--line); }
+    .entry:first-of-type { border-top: 0; padding-top: 0; }
+    .entry strong, .entry p { display: block; margin: 0; }
+    .entry time { color: var(--muted); font-size: 0.84rem; }
+    .entry p { color: var(--muted); line-height: 1.45; margin-top: 5px; }
+    .chart { display: flex; gap: 10px; height: 110px; align-items: end; margin-top: 14px; }
+    .chart div { flex: 1; border-radius: 16px 16px 8px 8px; background: linear-gradient(180deg, rgba(158,125,98,0.95), rgba(158,125,98,0.18)); position: relative; }
+    .chart span { position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%); color: var(--muted); font-size: 0.78rem; }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="header">
+      <p class="tag">Self Version 03</p>
+      <h1>Journal Companion Sheet</h1>
+      <p>A more compact, sheet-like version that feels ready for repeated daily use. The form is tighter, the language is plain, and the signals stay soft.</p>
+    </section>
+
+    <form class="sheet">
+      <div class="compact">
+        <div class="field">
+          <label for="item">What caught your attention?</label>
+          <input id="item" type="text" placeholder="e.g. Linen shirt">
+        </div>
+        <div class="field">
+          <label for="price">Price</label>
+          <input id="price" type="number" placeholder="$120" step="1">
+        </div>
+      </div>
+
+      <div class="meter">
+        <div class="meter-top">
+          <label for="desire">How much do you want this?</label>
+          <div class="meter-value" id="score">4/10</div>
+        </div>
+        <input id="desire" type="range" min="1" max="10" value="4" step="1">
+        <div class="ends"><span>low pull</span><span>strong pull</span></div>
+      </div>
+
+      <div class="field">
+        <label for="before">What happened right before this?</label>
+        <input id="before" type="text" placeholder="e.g. I opened a shopping app while feeling flat">
+      </div>
+
+      <div class="field">
+        <label>What do you want to feel?</label>
+        <div class="pills group">
+          <button type="button">warmth</button>
+          <button type="button">dazzled</button>
+          <button type="button">seen</button>
+          <button type="button">safe</button>
+          <button type="button">something else</button>
+        </div>
+        <input class="input" type="text" placeholder="in your own words">
+      </div>
+
+      <div class="field">
+        <label>How long can you wait?</label>
+        <div class="pills group">
+          <button type="button">a few breaths</button>
+          <button type="button">a day</button>
+          <button type="button">a week</button>
+        </div>
+      </div>
+
+      <button class="cta" type="button">Keep this in the diary</button>
+      <div class="gentle">If you can name the feeling, you may not need to solve it with a purchase right away.</div>
+    </form>
+
+    <section class="section">
+      <article class="panel">
+        <h2 style="margin:0 0 12px;">Diary</h2>
+        <div class="entry">
+          <time>Today • 10:03 PM</time>
+          <strong>Travel-size espresso kit • not purchased</strong>
+          <p>Wanted to feel seen and a bit more together. Trigger: comparison after watching a creator setup video.</p>
+        </div>
+        <div class="entry">
+          <time>Yesterday • 4:22 PM</time>
+          <strong>New pen set • purchased</strong>
+          <p>Wanted warmth. Trigger: quiet walk back from the stationery shop.</p>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2 style="margin:0;">Weekly pulse</h2>
+        <p class="muted" style="margin-top:8px;">Longing rises when scrolling and fatigue meet.</p>
+        <div class="chart">
+          <div style="height:28%"><span>M</span></div>
+          <div style="height:36%"><span>T</span></div>
+          <div style="height:41%"><span>W</span></div>
+          <div style="height:52%"><span>T</span></div>
+          <div style="height:66%"><span>F</span></div>
+          <div style="height:82%"><span>S</span></div>
+          <div style="height:44%"><span>S</span></div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    const desire = document.getElementById("desire");
+    const score = document.getElementById("score");
+    desire.addEventListener("input", () => score.textContent = `${desire.value}/10`);
+    document.querySelectorAll(".group").forEach((group) => {
+      group.querySelectorAll("button").forEach((button) => {
+        button.addEventListener("click", () => {
+          group.querySelectorAll("button").forEach((item) => item.classList.remove("active"));
+          button.classList.add("active");
+        });
+      });
+    });
+  </script>
+</body>
+</html>

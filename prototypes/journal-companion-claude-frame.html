@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal Companion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
+            color: #2c3e50;
+            line-height: 1.5;
+            padding: 16px;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .main {
+            padding: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: #34495e;
+        }
+
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1.5px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.2s ease;
+        }
+
+        input[type="text"]:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .scale-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 6px;
+        }
+
+        .scale-numbers {
+            display: flex;
+            gap: 8px;
+        }
+
+        input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            margin: 0;
+        }
+
+        .scale-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #6c757d;
+            margin-top: 4px;
+        }
+
+        .feeling-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .feeling-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px;
+            border: 1.5px solid #dee2e6;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 13px;
+        }
+
+        .feeling-option:hover {
+            border-color: #adb5bd;
+        }
+
+        .feeling-option input[type="radio"] {
+            width: 16px;
+            height: 16px;
+        }
+
+        .feeling-option input[type="radio"]:checked + span {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .feeling-option:has(input:checked) {
+            border-color: #3498db;
+            background: #f8f9fa;
+        }
+
+        .custom-feeling {
+            grid-column: 1 / -1;
+            margin-top: 8px;
+        }
+
+        .wait-options {
+            display: flex;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .wait-option {
+            flex: 1;
+            padding: 10px;
+            border: 1.5px solid #dee2e6;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 13px;
+            background: white;
+        }
+
+        .wait-option:hover {
+            border-color: #adb5bd;
+        }
+
+        .wait-option input[type="radio"] {
+            display: none;
+        }
+
+        .wait-option:has(input:checked) {
+            border-color: #3498db;
+            background: #f8f9fa;
+            font-weight: 500;
+        }
+
+        .encouragement {
+            background: #e8f5e8;
+            border: 1px solid #c3e6c3;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 14px;
+            color: #155724;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn:hover {
+            background: #34495e;
+        }
+
+        .section {
+            margin-top: 24px;
+            border-top: 1px solid #e9ecef;
+            padding-top: 20px;
+        }
+
+        .section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #2c3e50;
+        }
+
+        .history-item {
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .history-item .date {
+            font-weight: 500;
+            color: #6c757d;
+            font-size: 11px;
+        }
+
+        .history-item .item {
+            margin-top: 2px;
+        }
+
+        .chart {
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 16px;
+        }
+
+        .chart-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .chart-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .chart-bar {
+            width: 60px;
+            height: 6px;
+            background: #dee2e6;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .chart-fill {
+            height: 100%;
+            background: #3498db;
+            border-radius: 3px;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: 500px;
+            }
+            
+            .main {
+                padding: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Journal Companion</h1>
+            <p>Pause before you purchase</p>
+        </div>
+        
+        <div class="main">
+            <form id="impulse-form">
+                <div class="form-group">
+                    <label for="item">What caught your attention?</label>
+                    <input type="text" id="item" name="item" placeholder="Describe the item...">
+                </div>
+
+                <div class="form-group">
+                    <label for="price">How much does it cost?</label>
+                    <input type="text" id="price" name="price" placeholder="$120">
+                </div>
+
+                <div class="form-group">
+                    <label>How much do you want this? (1-10)</label>
+                    <div class="scale-group">
+                        <div class="scale-numbers">
+                            <input type="radio" name="desire" value="1" id="d1">
+                            <input type="radio" name="desire" value="2" id="d2">
+                            <input type="radio" name="desire" value="3" id="d3">
+                            <input type="radio" name="desire" value="4" id="d4">
+                            <input type="radio" name="desire" value="5" id="d5">
+                            <input type="radio" name="desire" value="6" id="d6">
+                            <input type="radio" name="desire" value="7" id="d7">
+                            <input type="radio" name="desire" value="8" id="d8">
+                            <input type="radio" name="desire" value="9" id="d9">
+                            <input type="radio" name="desire" value="10" id="d10">
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span>Not really</span>
+                        <span>Must have</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="before">What happened right before this urge?</label>
+                    <textarea id="before" name="before" placeholder="Describe your situation..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>What do you want to feel?</label>
+                    <div class="feeling-options">
+                        <div class="feeling-option">
+                            <input type="radio" name="feeling" value="warmth" id="f1">
+                            <span>Warmth</span>
+                        </div>
+                        <div class="feeling-option">
+                            <input type="radio" name="feeling" value="dazzled" id="f2">
+                            <span>Dazzled</span>
+                        </div>
+                        <div class="feeling-option">
+                            <input type="radio" name="feeling" value="seen" id="f3">
+                            <span>Seen</span>
+                        </div>
+                        <div class="feeling-option">
+                            <input type="radio" name="feeling" value="safe" id="f4">
+                            <span>Safe</span>
+                        </div>
+                        <div class="feeling-option">
+                            <input type="radio" name="feeling" value="other" id="f5">
+                            <span>Something else</span>
+                        </div>
+                        <div class="custom-feeling">
+                            <input type="text" id="custom-feeling" name="custom-feeling" placeholder="Describe the feeling...">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>How long can you wait?</label>
+                    <div class="wait-options">
+                        <div class="wait-option">
+                            <input type="radio" name="wait" value="breaths" id="w1">
+                            <label for="w1">A few breaths</label>
+                        </div>
+                        <div class="wait-option">
+                            <input type="radio" name="wait" value="day" id="w2">
+                            <label for="w2">A day</label>
+                        </div>
+                        <div class="wait-option">
+                            <input type="radio" name="wait" value="week" id="w3">
+                            <label for="w3">A week</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="encouragement">
+                    💙 Take a moment. This feeling will pass. You have everything you need right now.
+                </div>
+
+                <button type="submit" class="btn">Save Entry</button>
+            </form>
+
+            <div class="section">
+                <h3>Recent Entries</h3>
+                <div class="history-item">
+                    <div class="date">Yesterday, 3:24 PM</div>
+                    <div class="item">Vintage leather jacket - $180 - Desire: 8/10</div>
+                </div>
+                <div class="history-item">
+                    <div class="date">3 days ago, 11:45 AM</div>
+                    <div class="item">Smart watch - $299 - Desire: 6/10</div>
+                </div>
+                <div class="history-item">
+                    <div class="date">1 week ago, 7:12 PM</div>
+                    <div class="item">Skincare set - $95 - Desire: 9/10</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Your Patterns</h3>
+                <div class="chart">
+                    <div class="chart-row">
+                        <span>Evening impulses</span>
+                        <div class="chart-bar">
+                            <div class="chart-fill" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <div class="chart-row">
+                        <span>After social media</span>
+                        <div class="chart-bar">
+                            <div class="chart-fill" style="width: 60%"></div>
+                        </div>
+                    </div>
+                    <div class="chart-row">
+                        <span>Seeking "warmth"</span>
+                        <div class="chart-bar">
+                            <div class="chart-fill" style="width: 45%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('impulse-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simple form handling
+            const formData = new FormData(this);
+            const entry = {
+                item: formData.get('item'),
+                price: formData.get('price'),
+                desire: formData.get('desire'),
+                before: formData.get('before'),
+                feeling: formData.get('feeling'),
+                customFeeling: formData.get('custom-feeling'),
+                wait: formData.get('wait'),
+                timestamp: new Date()
+            };
+            
+            // In a real app, this would save to storage
+            alert('Entry saved! Take your time with this decision.');
+            this.reset();
+        });
+
+        // Show/hide custom feeling input
+        document.addEventListener('change', function(e) {
+            if (e.target.name === 'feeling') {
+                const customInput = document.getElementById('custom-feeling');
+                if (e.target.value === 'other') {
+                    customInput.style.display = 'block';
+                    customInput.focus();
+                } else {
+                    customInput.style.display = 'none';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
