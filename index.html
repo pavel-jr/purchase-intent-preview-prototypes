@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Purchase Intent Prototypes</title>
+  <style>
+    :root {
+      --bg: #f5f1ea;
+      --panel: rgba(255, 255, 255, 0.76);
+      --text: #1d1d1b;
+      --muted: #6b675f;
+      --line: rgba(29, 29, 27, 0.12);
+      --accent: #b85c38;
+      --accent-soft: rgba(184, 92, 56, 0.12);
+      --shadow: 0 18px 50px rgba(47, 40, 34, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(184, 92, 56, 0.08), transparent 28rem),
+        radial-gradient(circle at bottom right, rgba(107, 138, 122, 0.10), transparent 24rem),
+        var(--bg);
+    }
+
+    .shell {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 56px;
+    }
+
+    .hero {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--panel);
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+    }
+
+    .lede,
+    .note {
+      max-width: 52rem;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .card {
+      padding: 20px;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 1.45rem;
+    }
+
+    p {
+      margin: 0 0 16px;
+      line-height: 1.55;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    a.button {
+      display: inline-block;
+      padding: 12px 16px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      color: var(--text);
+      border: 1px solid var(--line);
+      background: white;
+    }
+
+    a.button.primary {
+      color: white;
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .traits {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .traits span {
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      font-size: 0.9rem;
+      color: #7f4228;
+    }
+
+    @media (min-width: 780px) {
+      .grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <p class="eyebrow">Prototype Set</p>
+      <h1>Purchase Intent Diary</h1>
+      <p class="lede">Three mobile-first page directions for logging purchase intent before checkout, surfacing the conditions behind impulsive buying, and nudging the user to pause.</p>
+      <p class="note">Each page is a standalone HTML prototype generated through Claude and placed here for fast comparison on GitHub Pages.</p>
+    </section>
+
+    <section class="grid" aria-label="Prototype concepts">
+      <article class="card">
+        <p class="eyebrow">Concept 01</p>
+        <h2>Pause &amp; Reflect</h2>
+        <p>A softer, more mindful flow. The page treats each purchase intent as a small interruption worth breathing through before acting.</p>
+        <div class="traits">
+          <span>calm pacing</span>
+          <span>soft cards</span>
+          <span>reflection cue</span>
+        </div>
+        <div class="actions">
+          <a class="button primary" href="./prototypes/pause-reflect.html">Open prototype</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <p class="eyebrow">Concept 02</p>
+        <h2>Stark Clarity</h2>
+        <p>A sharper, more severe direction. It uses strong contrast and blunt framing so the emotional fog around an impulse buy is harder to hide inside.</p>
+        <div class="traits">
+          <span>high contrast</span>
+          <span>direct decisions</span>
+          <span>data first</span>
+        </div>
+        <div class="actions">
+          <a class="button primary" href="./prototypes/stark-clarity.html">Open prototype</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <p class="eyebrow">Concept 03</p>
+        <h2>Journal Companion</h2>
+        <p>A warmer diary-like approach. It frames the product less as a monitor and more as a personal companion helping the user notice patterns with some tenderness.</p>
+        <div class="traits">
+          <span>earthy tones</span>
+          <span>personal diary</span>
+          <span>gentle insight</span>
+        </div>
+        <div class="actions">
+          <a class="button primary" href="./prototypes/journal-companion.html">Open prototype</a>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pause & Reflect</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f8f9fb 0%, #f1f3f7 100%);
+            color: #4a5568;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .breathing {
+            animation: breathe 4s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.02); opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 420px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 300;
+            color: #6b7db3;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .tagline {
+            font-size: 15px;
+            color: #8a94a6;
+            font-weight: 400;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 32px rgba(107, 125, 179, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: #4a5568;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #6b7db3;
+            margin-bottom: 8px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e8ecf4;
+            border-radius: 12px;
+            font-size: 16px;
+            background: #fafbfc;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #6b7db3;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(107, 125, 179, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            background: #f8f9fb;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .checkbox-item:hover {
+            background: #e8ecf4;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+            transform: scale(1.1);
+        }
+
+        .checkbox-item input[type="checkbox"]:checked + span {
+            color: #6b7db3;
+            font-weight: 500;
+        }
+
+        .reflection-zone {
+            background: linear-gradient(135deg, #6b7db3 0%, #8a94a6 100%);
+            color: white;
+            text-align: center;
+            padding: 32px 28px;
+            margin: 32px 0;
+        }
+
+        .breathing-circle {
+            width: 80px;
+            height: 80px;
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            margin: 0 auto 24px;
+            position: relative;
+        }
+
+        .breathing-circle::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 60px;
+            height: 60px;
+            border: 2px solid white;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: breathe 3s ease-in-out infinite;
+        }
+
+        .reflection-text {
+            font-size: 16px;
+            line-height: 1.7;
+            opacity: 0.95;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6b7db3 0%, #8a94a6 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(107, 125, 179, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f8f9fb;
+            color: #6b7db3;
+            border: 2px solid #e8ecf4;
+            margin-top: 12px;
+        }
+
+        .btn-secondary:hover {
+            background: #e8ecf4;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #e8ecf4;
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #6b7db3, #8a94a6);
+            border-radius: 3px;
+            transition: width 2s ease-out;
+            width: 0%;
+        }
+
+        .diary-entry {
+            background: #fafbfc;
+            border-left: 4px solid #6b7db3;
+            padding: 16px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 16px;
+        }
+
+        .diary-date {
+            font-size: 12px;
+            color: #8a94a6;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .diary-item {
+            font-weight: 500;
+            color: #4a5568;
+            margin: 4px 0;
+        }
+
+        .diary-trigger {
+            font-size: 13px;
+            color: #6b7db3;
+            font-style: italic;
+        }
+
+        .diary-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 8px;
+        }
+
+        .status-waiting {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-avoided {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-purchased {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .chart-container {
+            margin-top: 24px;
+        }
+
+        .chart-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .chart-label {
+            width: 80px;
+            font-size: 12px;
+            color: #8a94a6;
+            text-align: right;
+            margin-right: 12px;
+        }
+
+        .chart-track {
+            flex: 1;
+            height: 24px;
+            background: #e8ecf4;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .chart-fill {
+            height: 100%;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #6b7db3, #8a94a6);
+            transition: width 1.5s ease-out;
+        }
+
+        .chart-value {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 11px;
+            color: white;
+            font-weight: 500;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: 600px;
+                padding: 40px;
+            }
+
+            .card {
+                padding: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header fade-in">
+            <h1 class="logo breathing">Pause & Reflect</h1>
+            <p class="tagline">A moment of mindfulness before you buy</p>
+        </div>
+
+        <form id="intentForm" class="card fade-in">
+            <h2 class="section-title">What are you considering?</h2>
+            
+            <div class="form-group">
+                <label for="item">Item or service</label>
+                <input type="text" id="item" name="item" placeholder="What caught your attention?">
+            </div>
+
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="number" id="price" name="price" placeholder="0.00" step="0.01">
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" name="category">
+                    <option value="">Select a category</option>
+                    <option value="clothing">Clothing & Accessories</option>
+                    <option value="electronics">Electronics & Gadgets</option>
+                    <option value="home">Home & Garden</option>
+                    <option value="books">Books & Media</option>
+                    <option value="food">Food & Dining</option>
+                    <option value="health">Health & Beauty</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="trigger">What triggered this desire?</label>
+                <textarea id="trigger" name="trigger" placeholder="Advertisement, friend's recommendation, browsing online, stress, celebration..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>How are you feeling right now?</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="mood" value="tired">
+                        <span>Tired</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="mood" value="stressed">
+                        <span>Stressed</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="mood" value="lonely">
+                        <span>Lonely</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="mood" value="excited">
+                        <span>Excited</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="mood" value="bored">
+                        <span>Bored</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="mood" value="happy">
+                        <span>Happy</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="urgency">How urgent does this feel? (1-10)</label>
+                <input type="range" id="urgency" name="urgency" min="1" max="10" value="5">
+                <div style="display: flex; justify-content: space-between; font-size: 12px; color: #8a94a6; margin-top: 4px;">
+                    <span>Can wait</span>
+                    <span>Need it now</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="why">Why do you want this?</label>
+                <textarea id="why" name="why" placeholder="What need will this fulfill? How will it improve your life?"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="delay">Cooling-off period</label>
+                <select id="delay" name="delay">
+                    <option value="1h">1 hour</option>
+                    <option value="24h" selected>24 hours</option>
+                    <option value="3d">3 days</option>
+                    <option value="1w">1 week</option>
+                    <option value="1m">1 month</option>
+                </select>
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="showReflection()">
+                Take a moment to reflect
+            </button>
+        </form>
+
+        <div id="reflectionZone" class="card reflection-zone hidden">
+            <div class="breathing-circle"></div>
+            <div class="reflection-text breathing">
+                <p>Take three deep breaths with me.</p>
+                <p style="margin-top: 16px;">Consider: Will you remember this purchase in a month? What else could you do with this money or time?</p>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="reflectionProgress"></div>
+            </div>
+        </div>
+
+        <div id="completionCard" class="card hidden">
+            <h2 class="section-title">✨ Intent logged successfully</h2>
+            <p style="margin-bottom: 24px; color: #8a94a6;">Your purchase intent has been recorded. Consider waiting for your chosen cooling-off period. You've got this!</p>
+            
+            <button type="button" class="btn btn-secondary" onclick="showForm()">
+                Log another intent
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="showDiary()">
+                View my diary
+            </button>
+        </div>
+
+        <div id="diarySection" class="card">
+            <h2 class="section-title">Your Purchase Diary</h2>
+            
+            <div class="diary-entry">
+                <div class="diary-date">Today, 2:14 PM</div>
+                <div class="diary-item">Wireless noise-canceling headphones - $299</div>
+                <div class="diary-trigger">Triggered by: Work from home setup stress</div>
+                <span class="diary-status status-waiting">Cooling off (22h left)</span>
+            </div>
+
+            <div class="diary-entry">
+                <div class="diary-date">Yesterday, 11:30 AM</div>
+                <div class="diary-item">Designer coffee mug set - $85</div>
+                <div class="diary-trigger">Triggered by: Instagram ad during morning scroll</div>
+                <span class="diary-status status-avoided">Avoided ✓</span>
+            </div>
+
+            <div class="diary-entry">
+                <div class="diary-date">3 days ago</div>
+                <div class="diary-item">Online course bundle - $199</div>
+                <div class="diary-trigger">Triggered by: Feeling behind in career</div>
+                <span class="diary-status status-purchased">Purchased</span>
+            </div>
+
+            <div class="diary-entry">
+                <div class="diary-date">1 week ago</div>
+                <div class="diary-item">Vintage leather jacket - $340</div>
+                <div class="diary-trigger">Triggered by: Saw similar on a friend</div>
+                <span class="diary-status status-avoided">Avoided ✓</span>
+            </div>
+
+            <div class="chart-container">
+                <h3 style="font-size: 16px; margin-bottom: 16px; color: #6b7db3;">Your Patterns</h3>
+                
+                <div class="chart-bar">
+                    <div class="chart-label">Avoided</div>
+                    <div class="chart-track">
+                        <div class="chart-fill" style="width: 65%;">
+                            <div class="chart-value">65%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-bar">
+                    <div class="chart-label">Waiting</div>
+                    <div class="chart-track">
+                        <div class="chart-fill" style="width: 20%; background: linear-gradient(90deg, #ffd93d, #ff9500);">
+                            <div class="chart-value">20%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-bar">
+                    <div class="chart-label">Purchased</div>
+                    <div class="chart-track">
+                        <div class="chart-fill" style="width: 15%; background: linear-gradient(90deg, #ff6b6b, #ee5a24);">
+                            <div class="chart-value">15%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showReflection() {
+            const form = document.getElementById('intentForm');
+            const reflection = document.getElementById('reflectionZone');
+            const progressBar = document.getElementById('reflectionProgress');
+            
+            form.classList.add('hidden');
+            reflection.classList.remove('hidden');
+            
+            // Start progress animation
+            setTimeout(() => {
+                progressBar.style.width = '100%';
+            }, 100);
+            
+            // Show completion after reflection period
+            setTimeout(() => {
+                reflection.classList.add('hidden');
+                document.getElementById('completionCard').classList.remove('hidden');

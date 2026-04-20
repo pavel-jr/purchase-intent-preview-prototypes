@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stark Clarity - Purchase Intent Logger</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: #ffffff;
+            color: #000000;
+            line-height: 1.2;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .tagline {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 40px;
+            font-weight: 500;
+        }
+
+        .section {
+            margin-bottom: 48px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.01em;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 16px;
+            border: 3px solid #000;
+            background: #fff;
+            font-size: 16px;
+            font-family: inherit;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #ff0000;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin: 0;
+        }
+
+        .checkbox-item label {
+            margin: 0;
+            font-size: 12px;
+            text-transform: none;
+            font-weight: 600;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 20px;
+            background: #000;
+            color: #fff;
+            border: none;
+            font-size: 16px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            margin-bottom: 24px;
+        }
+
+        .submit-btn:hover {
+            background: #333;
+        }
+
+        .warning-box {
+            background: #ff0000;
+            color: #fff;
+            padding: 20px;
+            margin: 24px 0;
+            font-weight: 700;
+            text-align: center;
+            display: none;
+        }
+
+        .warning-box.show {
+            display: block;
+        }
+
+        .chart-section {
+            background: #f8f8f8;
+            padding: 24px 20px;
+            border: 3px solid #000;
+            margin-bottom: 32px;
+        }
+
+        .chart-title {
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin-bottom: 16px;
+        }
+
+        .chart-day {
+            aspect-ratio: 1;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .chart-day.high { background: #ff0000; color: #fff; }
+        .chart-day.medium { background: #666; color: #fff; }
+        .chart-day.low { background: #000; color: #fff; }
+
+        .chart-legend {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .diary-entry {
+            border: 3px solid #000;
+            padding: 16px;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .diary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .diary-item {
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .diary-price {
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .diary-date {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .diary-details {
+            font-size: 13px;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+
+        .diary-status {
+            display: flex;
+            gap: 8px;
+        }
+
+        .status-btn {
+            padding: 8px 12px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: 2px solid #000;
+            background: #fff;
+            cursor: pointer;
+        }
+
+        .status-btn.active {
+            background: #000;
+            color: #fff;
+        }
+
+        .status-btn.purchased {
+            border-color: #ff0000;
+            color: #ff0000;
+        }
+
+        .status-btn.purchased.active {
+            background: #ff0000;
+            color: #fff;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: 600px;
+                padding: 40px 24px;
+            }
+            
+            .checkbox-group {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Stark Clarity</h1>
+            <p class="tagline">Stop. Log. Decide.</p>
+        </header>
+
+        <section class="section">
+            <h2 class="section-title">Purchase Intent</h2>
+            <form id="intentForm">
+                <div class="form-group">
+                    <label for="item">Item</label>
+                    <input type="text" id="item" name="item" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="number" id="price" name="price" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category" required>
+                        <option value="">Select category</option>
+                        <option value="clothing">Clothing</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="food">Food & Dining</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="home">Home & Garden</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="trigger">Trigger/Context</label>
+                    <input type="text" id="trigger" name="trigger" placeholder="Social media ad, walking past store, etc.">
+                </div>
+
+                <div class="form-group">
+                    <label for="why">Why I want this</label>
+                    <textarea id="why" name="why" placeholder="Be honest about the real reason"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Current state</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="tired" name="state" value="tired">
+                            <label for="tired">Tired</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="stressed" name="state" value="stressed">
+                            <label for="stressed">Stressed</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="lonely" name="state" value="lonely">
+                            <label for="lonely">Lonely</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="bored" name="state" value="bored">
+                            <label for="bored">Bored</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="happy" name="state" value="happy">
+                            <label for="happy">Happy</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="urgent" name="state" value="urgent">
+                            <label for="urgent">Urgent need</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="delay">Cooling-off period</label>
+                    <select id="delay" name="delay">
+                        <option value="1">1 hour</option>
+                        <option value="24" selected>24 hours</option>
+                        <option value="72">3 days</option>
+                        <option value="168">1 week</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="submit-btn">Log Intent</button>
+            </form>
+
+            <div class="warning-box" id="warningBox">
+                <strong>INTENT LOGGED.</strong><br>
+                Consider: Do you still need this item tomorrow? 
+                Close this app and wait for your cooling-off period.
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="chart-section">
+                <div class="chart-title">Purchase pressure: Last 30 days</div>
+                <div class="chart-grid">
+                    <div class="chart-day">1</div>
+                    <div class="chart-day medium">2</div>
+                    <div class="chart-day">3</div>
+                    <div class="chart-day low">4</div>
+                    <div class="chart-day">5</div>
+                    <div class="chart-day high">6</div>
+                    <div class="chart-day">7</div>
+                    <div class="chart-day">8</div>
+                    <div class="chart-day medium">9</div>
+                    <div class="chart-day low">10</div>
+                    <div class="chart-day">11</div>
+                    <div class="chart-day">12</div>
+                    <div class="chart-day high">13</div>
+                    <div class="chart-day">14</div>
+                    <div class="chart-day">15</div>
+                    <div class="chart-day medium">16</div>
+                    <div class="chart-day">17</div>
+                    <div class="chart-day">18</div>
+                    <div class="chart-day low">19</div>
+                    <div class="chart-day high">20</div>
+                    <div class="chart-day">21</div>
+                    <div class="chart-day">22</div>
+                    <div class="chart-day medium">23</div>
+                    <div class="chart-day">24</div>
+                    <div class="chart-day">25</div>
+                    <div class="chart-day low">26</div>
+                    <div class="chart-day">27</div>
+                    <div class="chart-day high">28</div>
+                    <div class="chart-day">29</div>
+                    <div class="chart-day">30</div>
+                </div>
+                <div class="chart-legend">
+                    <span>■ None</span>
+                    <span>■ Low</span>
+                    <span>■ Medium</span>
+                    <span>■ High</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Intent History</h2>
+            
+            <div class="diary-entry">
+                <div class="diary-date">Today, 2:14 PM</div>
+                <div class="diary-header">
+                    <div class="diary-item">Wireless headphones</div>
+                    <div class="diary-price">$299</div>
+                </div>
+                <div class="diary-details">
+                    Saw Instagram ad. Said I "deserve" them. Currently stressed, tired. 
+                    Cooling-off: 24 hours.
+                </div>
+                <div class="diary-status">
+                    <button class="status-btn active">Waiting</button>
+                    <button class="status-btn purchased">Purchased</button>
+                    <button class="status-btn">Passed</button>
+                </div>
+            </div>
+
+            <div class="diary-entry">
+                <div class="diary-date">Yesterday, 7:22 PM</div>
+                <div class="diary-header">
+                    <div class="diary-item">Designer sneakers</div>
+                    <div class="diary-price">$180</div>
+                </div>
+                <div class="diary-details">
+                    Limited time sale. Felt urgent. Was lonely, scrolling late at night.
+                    Cooling-off: 24 hours.
+                </div>
+                <div class="diary-status">
+                    <button class="status-btn">Waiting</button>
+                    <button class="status-btn">Purchased</button>
+                    <button class="status-btn active">Passed</button>
+                </div>
+            </div>
+
+            <div class="diary-entry">
+                <div class="diary-date">3 days ago, 11:45 AM</div>
+                <div class="diary-header">
+                    <div class="diary-item">Kitchen gadget</div>
+                    <div class="diary-price">$89</div>
+                </div>
+                <div class="diary-details">
+                    YouTube cooking video. Thought it would make me cook more. Was bored.
+                    Cooling-off: 72 hours.
+                </div>
+                <div class="diary-status">
+                    <button class="status-btn">Waiting</button>
+                    <button class="status-btn purchased active">Purchased</button>
+                    <button class="status-btn">Passed</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.getElementById('intentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('warningBox').classList.add('show');
+            this.reset();
+            setTimeout(() => {
+                document.getElementById('warningBox').classList.remove('show');
+            }, 5000);
+        });
+
+        document.querySelectorAll('.status-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const entry = this.closest('.diary-entry');
+                const buttons = entry.querySelectorAll('.status-btn');
+                buttons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

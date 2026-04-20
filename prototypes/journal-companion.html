@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal Companion - Your Purchase Intent Diary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f7f3e9 0%, #ede0d3 100%);
+            color: #5d4e37;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(139, 115, 85, 0.03) 1px, transparent 1px),
+                radial-gradient(circle at 75% 75%, rgba(139, 115, 85, 0.02) 1px, transparent 1px);
+            background-size: 30px 30px, 45px 45px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 100%;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 40px 20px;
+            }
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(139, 115, 85, 0.1);
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #8b7355;
+            margin-bottom: 10px;
+            font-weight: normal;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #a0916d;
+            font-style: italic;
+        }
+
+        .form-section {
+            background: rgba(255, 255, 255, 0.6);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(139, 115, 85, 0.1);
+            border: 2px solid rgba(139, 115, 85, 0.1);
+        }
+
+        .form-section h2 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #8b7355;
+            font-weight: normal;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #6d5a42;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid rgba(139, 115, 85, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            font-family: inherit;
+            font-size: 16px;
+            color: #5d4e37;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #c4a574;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 0 3px rgba(196, 165, 116, 0.2);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        @media (min-width: 480px) {
+            .form-row {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 5px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #c4a574 0%, #b8956a 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(196, 165, 116, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(196, 165, 116, 0.4);
+        }
+
+        .encouragement {
+            background: rgba(144, 169, 144, 0.2);
+            border: 2px solid rgba(144, 169, 144, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+
+        .encouragement.show {
+            display: block;
+        }
+
+        .encouragement h3 {
+            color: #5d6b3d;
+            margin-bottom: 10px;
+        }
+
+        .chart-section {
+            background: rgba(255, 255, 255, 0.5);
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(139, 115, 85, 0.1);
+        }
+
+        .chart-title {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #8b7355;
+            text-align: center;
+        }
+
+        .chart {
+            display: flex;
+            align-items: end;
+            justify-content: space-around;
+            height: 120px;
+            margin: 20px 0;
+            padding: 0 10px;
+        }
+
+        .bar {
+            width: 25px;
+            background: linear-gradient(to top, #c4a574, #d4b584);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(139, 115, 85, 0.2);
+        }
+
+        .bar::after {
+            content: attr(data-label);
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: #8b7355;
+            white-space: nowrap;
+        }
+
+        .diary-section {
+            background: rgba(255, 255, 255, 0.6);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(139, 115, 85, 0.1);
+        }
+
+        .diary-entry {
+            padding: 20px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            border-left: 4px solid #c4a574;
+            position: relative;
+        }
+
+        .entry-date {
+            font-size: 0.9rem;
+            color: #a0916d;
+            margin-bottom: 8px;
+        }
+
+        .entry-item {
+            font-weight: 600;
+            color: #6d5a42;
+            margin-bottom: 5px;
+        }
+
+        .entry-details {
+            font-size: 0.9rem;
+            color: #8b7355;
+            margin-bottom: 10px;
+        }
+
+        .entry-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-resisted {
+            background: rgba(144, 169, 144, 0.2);
+            color: #5d6b3d;
+        }
+
+        .status-purchased {
+            background: rgba(185, 151, 91, 0.2);
+            color: #8b7355;
+        }
+
+        .status-toggle {
+            background: none;
+            border: 1px solid #c4a574;
+            color: #8b7355;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .status-toggle:hover {
+            background: #c4a574;
+            color: white;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .form-section, .diary-section {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.7rem;
+            }
+            
+            .chart {
+                height: 100px;
+            }
+            
+            .bar {
+                width: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>✨ Journal Companion</h1>
+            <p class="subtitle">Your gentle guide to mindful purchasing</p>
+        </header>
+
+        <div class="chart-section">
+            <div class="chart-title">Your Recent Patterns</div>
+            <div class="chart">
+                <div class="bar" style="height: 60%" data-label="Mon"></div>
+                <div class="bar" style="height: 35%" data-label="Tue"></div>
+                <div class="bar" style="height: 80%" data-label="Wed"></div>
+                <div class="bar" style="height: 25%" data-label="Thu"></div>
+                <div class="bar" style="height: 45%" data-label="Fri"></div>
+                <div class="bar" style="height: 90%" data-label="Sat"></div>
+                <div class="bar" style="height: 40%" data-label="Sun"></div>
+            </div>
+        </div>
+
+        <form class="form-section" id="intentForm">
+            <h2>💭 Pause & Reflect</h2>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="item">What caught your attention?</label>
+                    <input type="text" id="item" name="item" placeholder="e.g., Vintage leather jacket" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="number" id="price" name="price" placeholder="0.00" step="0.01" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category" required>
+                        <option value="">Choose...</option>
+                        <option value="clothing">Clothing & Accessories</option>
+                        <option value="electronics">Electronics & Gadgets</option>
+                        <option value="books">Books & Media</option>
+                        <option value="home">Home & Decor</option>
+                        <option value="food">Food & Treats</option>
+                        <option value="beauty">Beauty & Self-care</option>
+                        <option value="hobby">Hobby & Recreation</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="urgency">How urgent does this feel?</label>
+                    <select id="urgency" name="urgency" required>
+                        <option value="">Select...</option>
+                        <option value="low">Can wait weeks</option>
+                        <option value="medium">Want it this week</option>
+                        <option value="high">Need it right now</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="trigger">What triggered this desire?</label>
+                <input type="text" id="trigger" name="trigger" placeholder="e.g., Saw it on Instagram, friend recommended it">
+            </div>
+
+            <div class="form-group">
+                <label for="why">Why do you want this?</label>
+                <textarea id="why" name="why" placeholder="Be honest with yourself... What need or feeling are you hoping this will address?"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>How are you feeling right now?</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="tired" name="mood" value="tired">
+                        <label for="tired">Tired</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="stressed" name="mood" value="stressed">
+                        <label for="stressed">Stressed</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="lonely" name="mood" value="lonely">
+                        <label for="lonely">Lonely</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="excited" name="mood" value="excited">
+                        <label for="excited">Excited</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="bored" name="mood" value="bored">
+                        <label for="bored">Bored</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="delay">How long can you wait before deciding?</label>
+                <select id="delay" name="delay">
+                    <option value="">Choose a cooling-off period...</option>
+                    <option value="1">1 hour</option>
+                    <option value="24">24 hours</option>
+                    <option value="72">3 days</option>
+                    <option value="168">1 week</option>
+                    <option value="720">1 month</option>
+                </select>
+            </div>
+
+            <button type="submit" class="submit-btn">Record This Moment</button>
+        </form>
+
+        <div class="encouragement" id="encouragement">
+            <h3>🌱 Beautiful reflection!</h3>
+            <p>You've taken a moment to pause and listen to yourself. That's already a victory. Consider sitting with these feelings a bit longer before deciding. Your future self might thank you for this moment of mindfulness.</p>
+        </div>
+
+        <div class="diary-section">
+            <h2>📖 Your Purchase Diary</h2>
+            
+            <div class="diary-entry">
+                <div class="entry-date">Yesterday, 2:30 PM</div>
+                <div class="entry-item">Wireless noise-canceling headphones - $299</div>
+                <div class="entry-details">Feeling: Stressed from work calls • Trigger: Coworker's recommendation • Why: Hope for better focus and peace</div>
+                <span class="entry-status status-resisted">Resisted ✨</span>
+                <button class="status-toggle" onclick="toggleStatus(this)">Mark as purchased</button>
+            </div>
+
+            <div class="diary-entry">
+                <div class="entry-date">3 days ago, 11:45 PM</div>
+                <div class="entry-item">Skincare set - $89</div>
+                <div class="entry-details">Feeling: Tired, lonely • Trigger: Late night Instagram browsing • Why: Want to feel more confident</div>
+                <span class="entry-status status-purchased">Purchased</span>
+                <button class="status-toggle" onclick="toggleStatus(this)">Mark as resisted</button>
+            </div>
+
+            <div class="diary-entry">
+                <div class="entry-date">1 week ago, 6:15 PM</div>
+                <div class="entry-item">Vintage cookbook - $34</div>
+                <div class="entry-details">Feeling: Excited, inspired • Trigger: Watching cooking videos • Why: Want to try new recipes and connect with food</div>
+                <span class="entry-status status-resisted">Resisted ✨</span>
+                <button class="status-toggle" onclick="toggleStatus(this)">Mark as purchased</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('intentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show encouragement message
+            const encouragement = document.getElementById('encouragement');
+            encouragement.classList.add('show');
+            
+            // Scroll to encouragement
+            encouragement.scrollIntoView({ behavior: 'smooth' });
+            
+            // Reset form after a moment
+            setTimeout(() => {
+                this.reset();
+            }, 2000);
+            
+            // Hide encouragement after 10 seconds
+            setTimeout(() => {
+                encouragement.classList.remove('show');
+            }, 10000);
+        });
+
+        function toggleStatus(button) {
+            const entry = button.closest('.diary-entry');
+            const statusSpan = entry.querySelector('.entry-status');
+            
+            if (statusSpan.classList.contains('status-resisted')) {
+                statusSpan.className = 'entry-status status-purchased';
+                statusSpan.textContent = 'Purchased';
+                button.textContent = 'Mark as resisted';
+            } else {
+                statusSpan.className = 'entry-status status-resisted';
+                statusSpan.textContent = 'Resisted ✨';
+                button.textContent = 'Mark as purchased';
+            }
+        }
+    </script>
+</body>
+</html>
