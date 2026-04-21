@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal Companion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.5;
+            color: #2c2c2c;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 520px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding: 24px 0;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            color: #1e293b;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #64748b;
+            font-weight: 400;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #1e293b;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #475569;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: white;
+            transform: scale(1.01);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .scale-container {
+            margin-top: 8px;
+        }
+
+        .scale-labels {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 12px;
+        }
+
+        .scale-value {
+            text-align: center;
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            outline: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .feeling-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .feeling-option {
+            padding: 12px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .feeling-option:hover {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.05);
+            transform: translateY(-1px);
+        }
+
+        .feeling-option.selected {
+            border-color: #3b82f6;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+        }
+
+        .wait-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .wait-option {
+            padding: 14px 18px;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .wait-option:hover {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.05);
+            transform: translateY(-1px);
+        }
+
+        .wait-option.selected {
+            border-color: #3b82f6;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+        }
+
+        .encouragement {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 28px 24px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 32px 0;
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.2);
+        }
+
+        .encouragement h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .encouragement p {
+            font-size: 15px;
+            opacity: 0.95;
+            line-height: 1.5;
+        }
+
+        .diary-entry {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .diary-entry:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .diary-date {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .diary-item {
+            font-size: 14px;
+            margin-bottom: 3px;
+            line-height: 1.4;
+        }
+
+        .insights {
+            background: rgba(248, 250, 252, 0.8);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(226, 232, 240, 0.5);
+        }
+
+        .insight-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+            font-size: 14px;
+        }
+
+        .insight-item:last-child {
+            border-bottom: none;
+        }
+
+        .insight-bar {
+            width: 70px;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .insight-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #6366f1);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+        }
+
+        .custom-feeling {
+            margin-top: 12px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .custom-feeling.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (min-width: 600px) {
+            .container {
+                padding: 32px 24px;
+            }
+
+            .feeling-options {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .card {
+                padding: 28px;
+                margin-bottom: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 16px;
+            }
+
+            .card {
+                padding: 20px;
+                border-radius: 16px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Journal Companion</h1>
+            <p class="subtitle">Pause. Reflect. Choose mindfully.</p>
+        </header>
+
+        <div class="card">
+            <h2 class="section-title">What caught your attention?</h2>
+            <div class="form-group">
+                <textarea placeholder="Describe what you're thinking about purchasing..."></textarea>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">What's the price?</h2>
+            <div class="form-group">
+                <input type="text" placeholder="$120">
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">How much do you want this?</h2>
+            <div class="form-group">
+                <div class="scale-value">5</div>
+                <div class="scale-labels">
+                    <span>Not at all</span>
+                    <span>Desperately</span>
+                </div>
+                <input type="range" min="1" max="10" value="5" class="desire-scale">
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">What happened right before this moment?</h2>
+            <div class="form-group">
+                <textarea placeholder="I was scrolling social media, had a stressful meeting, saw an ad..."></textarea>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">What do you want to feel?</h2>
+            <div class="feeling-options">
+                <div class="feeling-option" data-feeling="warmth">Warmth</div>
+                <div class="feeling-option" data-feeling="dazzled">Dazzled</div>
+                <div class="feeling-option" data-feeling="seen">Seen</div>
+                <div class="feeling-option" data-feeling="safe">Safe</div>
+                <div class="feeling-option" data-feeling="other">Something else</div>
+            </div>
+            <input type="text" placeholder="Describe the feeling..." class="custom-feeling">
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">How long can you wait?</h2>
+            <div class="wait-options">
+                <div class="wait-option" data-wait="breaths">A few deep breaths</div>
+                <div class="wait-option" data-wait="day">A day</div>
+                <div class="wait-option" data-wait="week">A week</div>
+            </div>
+        </div>
+
+        <div class="encouragement">
+            <h3>Take a moment</h3>
+            <p>Your awareness is already a powerful step. Consider sitting with this feeling for now—the item will likely still be there tomorrow.</p>
+        </div>
+
+        <button class="btn-primary">Save This Moment</button>
+
+        <div class="card" style="margin-top: 40px;">
+            <h2 class="section-title">Recent Entries</h2>
+            
+            <div class="diary-entry">
+                <div class="diary-date">Yesterday, 3:47 PM</div>
+                <div class="diary-item"><strong>Item:</strong> Vintage leather jacket</div>
+                <div class="diary-item"><strong>Price:</strong> $240</div>
+                <div class="diary-item"><strong>Desire:</strong> 8/10</div>
+                <div class="diary-item"><strong>Feeling sought:</strong> Cool, confident</div>
+                <div class="diary-item"><strong>Wait time:</strong> A week</div>
+            </div>
+
+            <div class="diary-entry">
+                <div class="diary-date">3 days ago, 11:22 AM</div>
+                <div class="diary-item"><strong>Item:</strong> Smart home speaker</div>
+                <div class="diary-item"><strong>Price:</strong> $99</div>
+                <div class="diary-item"><strong>Desire:</strong> 6/10</div>
+                <div class="diary-item"><strong>Feeling sought:</strong> Connected, efficient</div>
+                <div class="diary-item"><strong>Wait time:</strong> A day</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">Your Patterns</h2>
+            <div class="insights">
+                <div class="insight-item">
+                    <span>Most common trigger: Social media</span>
+                    <div class="insight-bar">
+                        <div class="insight-fill" style="width: 75%"></div>
+                    </div>
+                </div>
+                <div class="insight-item">
+                    <span>Average desire level: 7/10</span>
+                    <div class="insight-bar">
+                        <div class="insight-fill" style="width: 70%"></div>
+                    </div>
+                </div>
+                <div class="insight-item">
+                    <span>Times you waited: 8 out of 12</span>
+                    <div class="insight-bar">
+                        <div class="insight-fill" style="width: 67%"></div>
+                    </div>
+                </div>
+                <div class="insight-item">
+                    <span>Most sought feeling: Safe</span>
+                    <div class="insight-bar">
+                        <div class="insight-fill" style="width: 60%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Handle feeling selection
+        document.querySelectorAll('.feeling-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.feeling-option').forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                
+                const customInput = document.querySelector('.custom-feeling');
+                if (option.dataset.feeling === 'other') {
+                    customInput.classList.add('show');
+                    setTimeout(() => customInput.focus(), 150);
+                } else {
+                    customInput.classList.remove('show');
+                }
+            });
+        });
+
+        // Handle wait time selection
+        document.querySelectorAll('.wait-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.wait-option').forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+            });
+        });
+
+        // Handle range input display
+        const scaleInput = document.querySelector('.desire-scale');
+        const scaleValue = document.querySelector('.scale-value');
+        
+        scaleInput.addEventListener('input', (e) => {
+            scaleValue.textContent = e.target.value;
+        });
+
+        // Add smooth scroll behavior
+        document.querySelectorAll('input, textarea').forEach(field => {
+            field.addEventListener('focus', () => {
+                setTimeout(() => {
+                    field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>
+
