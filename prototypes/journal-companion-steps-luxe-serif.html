@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Pause Journal</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #fdfcfa;
+            --surface: #fffef9;
+            --elevated-surface: #f9f8f4;
+            --text: #2d2d2a;
+            --muted-text: #6b6b68;
+            --light-text: #999896;
+            --accent: #6b5b95;
+            --accent-light: #f5f3f9;
+            --success: #6a8f5a;
+            --warning: #b87333;
+            --spacing-xs: 8px;
+            --spacing-sm: 12px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-xxl: 48px;
+            --radius-tight: 8px;
+            --radius-input: 12px;
+            --radius-card: 16px;
+            --radius-pill: 999px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+            font-size: 16px;
+        }
+
+        .page-shell {
+            max-width: 520px;
+            margin: 0 auto;
+            padding: var(--spacing-xl) var(--spacing-lg);
+        }
+
+        /* Typography */
+        .page-title {
+            font-family: 'Crimson Text', serif;
+            font-size: 36px;
+            font-weight: 600;
+            letter-spacing: -0.8px;
+            margin-bottom: var(--spacing-xs);
+            color: var(--text);
+        }
+
+        .step-title {
+            font-family: 'Crimson Text', serif;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            letter-spacing: -0.4px;
+            color: var(--text);
+        }
+
+        .section-title {
+            font-family: 'Crimson Text', serif;
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-lg);
+            letter-spacing: -0.3px;
+            color: var(--text);
+        }
+
+        .step-number {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: var(--spacing-sm);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .body-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--muted-text);
+        }
+
+        .label {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: var(--spacing-sm);
+            display: block;
+            letter-spacing: -0.1px;
+        }
+
+        .helper-text {
+            font-size: 15px;
+            color: var(--muted-text);
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        /* Context/Heading */
+        .header {
+            text-align: center;
+            margin-bottom: var(--spacing-xxl);
+            padding: var(--spacing-xl) 0;
+        }
+
+        /* Step Structure */
+        .step-container {
+            margin-bottom: var(--spacing-xxl);
+        }
+
+        .step-card {
+            background: var(--surface);
+            padding: var(--spacing-xxl);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .step-header {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Text Inputs */
+        .text-input, .textarea {
+            width: 100%;
+            padding: var(--spacing-lg) var(--spacing-md);
+            border: none;
+            background: var(--elevated-surface);
+            color: var(--text);
+            transition: all 0.3s ease;
+            font-family: inherit;
+            font-size: 16px;
+            border-radius: var(--radius-input);
+        }
+
+        .text-input:focus, .textarea:focus {
+            outline: none;
+            background: var(--accent-light);
+            box-shadow: 0 0 0 1px var(--accent);
+        }
+
+        .textarea {
+            min-height: 96px;
+            resize: vertical;
+            line-height: 1.5;
+        }
+
+        /* Slider */
+        .slider-container {
+            margin-top: var(--spacing-lg);
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-lg);
+            font-size: 14px;
+            color: var(--muted-text);
+            font-style: italic;
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            background: var(--elevated-surface);
+            border-radius: var(--radius-pill);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background: var(--accent);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(107, 91, 149, 0.3);
+            transition: transform 0.2s ease;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            background: var(--accent);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(107, 91, 149, 0.3);
+        }
+
+        /* Pill Selectors */
+        .pill-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .pill-selector {
+            padding: var(--spacing-lg) var(--spacing-md);
+            background: var(--elevated-surface);
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 15px;
+            font-weight: 500;
+            text-align: center;
+            border-radius: var(--radius-input);
+            border: none;
+        }
+
+        .pill-selector:hover {
+            background: var(--accent-light);
+            color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .pill-selector.selected {
+            background: var(--accent);
+            color: white;
+        }
+
+        .wait-pills {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .wait-pills .pill-selector {
+            padding: var(--spacing-xl) var(--spacing-lg);
+        }
+
+        .optional-input {
+            margin-top: var(--spacing-md);
+            display: none;
+        }
+
+        .optional-input .text-input {
+            font-style: italic;
+        }
+
+        /* Primary Button */
+        .primary-button {
+            width: 100%;
+            padding: var(--spacing-xl) var(--spacing-md);
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: var(--radius-input);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: -0.2px;
+            margin-top: var(--spacing-lg);
+        }
+
+        .primary-button:hover {
+            background: #5a4e82;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(107, 91, 149, 0.25);
+        }
+
+        .primary-button:active {
+            transform: translateY(0);
+        }
+
+        /* Reflection/Pause Cue */
+        .reflection-cue {
+            background: var(--accent-light);
+            color: var(--text);
+            padding: var(--spacing-xxl);
+            text-align: center;
+            margin-bottom: var(--spacing-xxl);
+        }
+
+        .reflection-cue .section-title {
+            color: var(--accent);
+            margin-bottom: var(--spacing-md);
+        }
+
+        /* Supporting Sections */
+        .supporting-section {
+            margin-bottom: var(--spacing-xxl);
+        }
+
+        .insights-grid {
+            display: grid;
+            gap: var(--spacing-lg);
+        }
+
+        /* Diary Entries */
+        .diary-entry {
+            background: var(--surface);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-lg);
+            transition: background 0.3s ease;
+        }
+
+        .diary-entry:hover {
+            background: var(--accent-light);
+        }
+
+        .diary-entry:last-child {
+            margin-bottom: 0;
+        }
+
+        .diary-meta {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--light-text);
+            margin-bottom: var(--spacing-md);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .diary-item {
+            font-size: 15px;
+            margin-bottom: var(--spacing-xs);
+            display: flex;
+            align-items: baseline;
+        }
+
+        .diary-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .diary-label {
+            font-weight: 600;
+            min-width: 80px;
+            color: var(--muted-text);
+            margin-right: var(--spacing-md);
+            font-size: 14px;
+        }
+
+        /* Insight Cards */
+        .insights-card {
+            background: var(--surface);
+            padding: var(--spacing-xl);
+        }
+
+        .insight-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-md) 0;
+            font-size: 15px;
+        }
+
+        .insight-row:last-child {
+            padding-bottom: 0;
+        }
+
+        .insight-row:first-child {
+            padding-top: 0;
+        }
+
+        .insight-bar {
+            width: 72px;
+            height: 8px;
+            background: var(--elevated-surface);
+            border-radius: var(--radius-pill);
+            overflow: hidden;
+        }
+
+        .insight-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: var(--radius-pill);
+            transition: width 0.6s ease;
+        }
+
+        @media (min-width: 520px) {
+            .page-shell {
+                padding: var(--spacing-xxl) var(--spacing-xl);
+            }
+            
+            .page-title {
+                font-size: 42px;
+            }
+            
+            .step-title {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-shell">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="page-title">Purchase Pause Journal</h1>
+            <p class="helper-text">A structured approach to mindful purchasing</p>
+        </div>
+
+        <!-- Step 1: The Item -->
+        <div class="step-container">
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">Step 1</div>
+                    <h2 class="step-title">What caught your attention?</h2>
+                </div>
+
+                <div class="form-group">
+                    <label class="label">Describe the item</label>
+                    <textarea class="textarea" placeholder="What are you considering buying?"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="label">Price</label>
+                    <input type="text" class="text-input" placeholder="$120">
+                </div>
+
+                <div class="form-group">
+                    <label class="label">How much do you want this?</label>
+                    <div class="slider-container">
+                        <div class="slider-labels">
+                            <span>Mild interest</span>
+                            <span>Must have it</span>
+                        </div>
+                        <input type="range" min="1" max="10" value="5" class="slider">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Context -->
+        <div class="step-container">
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">Step 2</div>
+                    <h2 class="step-title">Understanding the moment</h2>
+                </div>
+
+                <div class="form-group">
+                    <label class="label">What happened right before?</label>
+                    <textarea class="textarea" placeholder="Were you scrolling social media, feeling stressed, bored...?"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="label">What feeling are you seeking?</label>
+                    <div class="pill-group">
+                        <div class="pill-selector" data-feeling="security">Security</div>
+                        <div class="pill-selector" data-feeling="confidence">Confidence</div>
+                        <div class="pill-selector" data-feeling="excitement">Excitement</div>
+                        <div class="pill-selector" data-feeling="belonging">Belonging</div>
+                        <div class="pill-selector" data-feeling="comfort">Comfort</div>
+                        <div class="pill-selector" data-feeling="something else">Something else</div>
+                    </div>
+                    <div class="optional-input">
+                        <input type="text" class="text-input" placeholder="Describe the feeling you're seeking">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: The Pause -->
+        <div class="step-container">
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">Step 3</div>
+                    <h2 class="step-title">Choose your pause</h2>
+                </div>
+
+                <div class="form-group">
+                    <label class="label">How long will you wait?</label>
+                    <div class="wait-pills">
+                        <div class="pill-selector" data-wait="hour">A few breaths</div>
+                        <div class="pill-selector" data-wait="day">A day</div>
+                        <div class="pill-selector" data-wait="week">A week</div>
+                    </div>
+                </div>
+
+                <button class="primary-button">Record This Moment</button>
+            </div>
+        </div>
+
+        <!-- Reflection Cue -->
+        <div class="reflection-cue">
+            <h3 class="section-title">Take a breath</h3>
+            <p class="body-text">The urge to buy often fades when we create space between wanting and acting.</p>
+        </div>
+
+        <!-- Supporting Section: Recent Entries -->
+        <div class="supporting-section">
+            <h2 class="section-title">Your recent reflections</h2>
+            
+            <div class="diary-entry">
+                <div class="diary-meta">Yesterday at 3:15 PM</div>
+                <div class="diary-item">
+                    <span class="diary-label">Item:</span>
+                    <span>Noise-canceling headphones</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label">Price:</span>
+                    <span>$280</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label">Desire:</span>
+                    <span>8/10</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label">Feeling:</span>
+                    <span>Seeking focus</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label">Waiting:</span>
+                    <span>A week</span>
+                </div>
+            </div>
+
+            <div class="diary-entry">
+                <div class="diary-meta">4 days ago at 11:30 AM</div>
+                <div class="diary-item">
+                    <span class="diary-label">Item:</span>
+                    <span>Designer running jacket</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label">Price:</span>
+                    <span>$145</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label">Desire:</span>
+                    <span>6/10</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label">Feeling:</span>
+                    <span>Confidence</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label">Waited:</span>
+                    <span>A day</span>
+                </div>
+            </div>
+
+            <div class="diary-entry">
+                <div class="diary-meta">1 week ago at 7:45 PM</div>
+                <div class="diary-item">
+                    <span class="diary-label">Item:</span>
+                    <span>Smart home speaker</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label">Price:</span>
+                    <span>$99</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label">Desire:</span>
+                    <span>7/10</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label">Feeling:</span>
+                    <span>Convenience</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label">Waited:</span>
+                    <span>A few breaths</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Supporting Section: Pattern Insights -->
+        <div class="supporting-section">
+            <h2 class="section-title">Your purchasing patterns</h2>
+            <div class="insights-card">
+                <div class="insight-row">
+                    <span>Successfully waited: 78%</span>
+                    <div class="insight-bar">
+                        <div class="insight-fill" style="width: 78%"></div>
+                    </div>
+                </div>
+                <div class="insight-row">
+                    <span>Most common trigger: Social media</span>
+                    <div class="insight-bar">
+                        <div class="insight-fill" style="width: 65%"></div>
+                    </div>
+                </div>
+                <div class="insight-row">
+                    <span>Average desire intensity: 6.8/10</span>
+                    <div class="insight-bar">
+                        <div class="insight-fill" style="width: 68%"></div>
+                    </div>
+                </div>
+                <div class="insight-row">
+                    <span>Most sought feeling: Confidence</span>
+                    <div class="insight-bar">
+                        <div class="insight-fill" style="width: 45%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Feeling selection
+        document.querySelectorAll('[data-feeling]').forEach(pill => {
+            pill.addEventListener('click', () => {
+                const group = pill.parentElement;
+                group.querySelectorAll('.pill-selector').forEach(p => p.classList.remove('selected'));
+                pill.classList.add('selected');
+                
+                const optionalInput = group.nextElementSibling;
+                if (pill.dataset.feeling === 'something else') {
+                    optionalInput.style.display = 'block';
+                    optionalInput.querySelector('input').focus();
+                } else {
+                    optionalInput.style.display = 'none';
+                }
+            });
+        });
+
+        // Wait time selection
+        document.querySelectorAll('[data-wait]').forEach(pill => {
+            pill.addEventListener('click', () => {
+                const group = pill.parentElement;
+                group.querySelectorAll('.pill-selector').forEach(p => p.classList.remove('selected'));
+                pill.classList.add('selected');
+            });
+        });
+
+        // Button interaction
+        document.querySelector('.primary-button').addEventListener('click', () => {
+            const button = document.querySelector('.primary-button');
+            const originalText = button.textContent;
+            button.textContent = 'Recorded ✓';
+            button.style.background = 'var(--success)';
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.background = 'var(--accent)';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
+
