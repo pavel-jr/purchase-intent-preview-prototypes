@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>журнал покупок</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --background: #fdfcfa;
+            --surface: #ffffff;
+            --elevated-surface: #f8f7f3;
+            --text: #2d2d2a;
+            --muted-text: #6b6b68;
+            --border: rgba(45, 45, 42, 0.08);
+            --accent: #6b5b95;
+            --accent-light: #f5f3f9;
+            --success: #6a8f5a;
+        }
+
+        body {
+            font-family: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--background);
+            font-size: 17px;
+        }
+
+        .page-shell {
+            max-width: 520px;
+            margin: 0 auto;
+            padding: 18px 24px 32px;
+        }
+
+        /* Ornamental dividers */
+        .ornamental-divider {
+            text-align: center;
+            margin: 32px 0;
+            color: var(--muted-text);
+            font-size: 14px;
+            opacity: 0.6;
+        }
+
+        .page-ornament {
+            text-align: center;
+            color: var(--muted-text);
+            font-size: 18px;
+            opacity: 0.5;
+        }
+
+        .page-ornament-top {
+            margin-bottom: 36px;
+        }
+
+        .page-ornament-bottom {
+            margin-top: 48px;
+        }
+
+        /* Typography Scale */
+        .page-title {
+            font-family: 'Baskerville', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+
+        .section-title {
+            font-family: 'Baskerville', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            letter-spacing: -0.4px;
+            color: var(--text);
+        }
+
+        .body {
+            font-size: 17px;
+            line-height: 1.62;
+            color: var(--muted-text);
+        }
+
+        .label {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .meta {
+            font-size: 15px;
+            color: var(--muted-text);
+            font-style: italic;
+        }
+
+        /* Screen Structure */
+        .context {
+            text-align: center;
+            margin-bottom: 28px;
+            padding-top: 0;
+        }
+
+        .primary-task {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+
+        .reflection-cue {
+            background: var(--accent-light);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .reflection-cue .section-title {
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .recent-patterns {
+            margin-bottom: 32px;
+        }
+
+        /* Form Components */
+        .form-group {
+            margin-bottom: 32px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .text-input, .textarea {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            background: var(--elevated-surface);
+            color: var(--text);
+            border-radius: 16px;
+            font-family: inherit;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .text-input:focus, .textarea:focus {
+            outline: none;
+            background: var(--accent-light);
+            box-shadow: 0 0 0 1px var(--accent);
+        }
+
+        .textarea {
+            min-height: 96px;
+            resize: vertical;
+            line-height: 1.5;
+        }
+
+        /* Slider */
+        .slider-container {
+            margin-top: 16px;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            font-size: 14px;
+            color: var(--muted-text);
+            font-style: italic;
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            background: var(--elevated-surface);
+            border-radius: 999px;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background: var(--accent);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(107, 91, 149, 0.3);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            background: var(--accent);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(107, 91, 149, 0.3);
+        }
+
+        /* Pill Selectors */
+        .pill-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .pill-selector {
+            padding: 16px 12px;
+            background: var(--elevated-surface);
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 15px;
+            font-weight: 500;
+            text-align: center;
+            border-radius: 16px;
+            border: none;
+        }
+
+        .pill-selector:hover {
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+
+        .pill-selector.selected {
+            background: var(--accent);
+            color: white;
+        }
+
+        .wait-pills {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .wait-pills .pill-selector {
+            padding: 24px 16px;
+        }
+
+        .optional-input {
+            margin-top: 12px;
+            display: none;
+        }
+
+        /* Primary Button */
+        .primary-button {
+            width: 100%;
+            padding: 24px 16px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 24px;
+        }
+
+        .primary-button:hover {
+            background: #5a4e82;
+            transform: translateY(-1px);
+        }
+
+        /* Diary Entries */
+        .diary-entry {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 16px;
+            transition: background 0.2s ease;
+        }
+
+        .diary-entry:hover {
+            background: var(--accent-light);
+        }
+
+        .diary-entry:last-child {
+            margin-bottom: 0;
+        }
+
+        .diary-meta {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--muted-text);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .diary-item {
+            font-size: 15px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: baseline;
+        }
+
+        .diary-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .diary-label {
+            font-weight: 600;
+            min-width: 80px;
+            color: var(--muted-text);
+            margin-right: 16px;
+            font-size: 14px;
+        }
+
+        /* Insight Card */
+        .insights-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px;
+        }
+
+        .insight-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            font-size: 15px;
+        }
+
+        .insight-row:last-child {
+            padding-bottom: 0;
+        }
+
+        .insight-row:first-child {
+            padding-top: 0;
+        }
+
+        .insight-bar {
+            width: 72px;
+            height: 8px;
+            background: var(--elevated-surface);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .insight-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 999px;
+            transition: width 0.6s ease;
+        }
+
+        @media (min-width: 520px) {
+            .page-shell {
+                padding: 48px 32px;
+            }
+            
+            .page-title {
+                font-size: 42px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-shell">
+        <!-- Ornamental top -->
+        <div class="page-ornament page-ornament-top">
+            ◆ ❖ ◆
+        </div>
+
+        <!-- 1. Context/Heading -->
+        <div class="context">
+            <h1 class="page-title">журнал покупок</h1>
+        </div>
+
+        <!-- 2. Primary Task Area -->
+        <div class="primary-task">
+            <div class="form-group">
+                <label class="label">что привлекло твое внимание?</label>
+                <textarea class="textarea" placeholder="опиши, что ты рассматриваешь"></textarea>
+            </div>
+
+            <div class="ornamental-divider">❦</div>
+
+            <div class="form-group">
+                <label class="label">цена</label>
+                <input type="text" class="text-input" placeholder="$120">
+            </div>
+
+            <div class="ornamental-divider">❦</div>
+
+            <div class="form-group">
+                <label class="label">насколько сильно ты этого хочешь?</label>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>слегка</span>
+                        <span>очень сильно</span>
+                    </div>
+                    <input type="range" min="1" max="10" value="5" class="slider">
+                </div>
+            </div>
+
+            <div class="ornamental-divider">❦</div>
+
+            <div class="form-group">
+                <label class="label">что произошло прямо перед этим?</label>
+                <textarea class="textarea" placeholder="ты листал ленту, устал, скучал...?"></textarea>
+            </div>
+
+            <div class="ornamental-divider">❦</div>
+
+            <div class="form-group">
+                <label class="label">какое чувство ты ищешь?</label>
+                <div class="pill-group">
+                    <div class="pill-selector" data-feeling="security">безопасность</div>
+                    <div class="pill-selector" data-feeling="confidence">уверенность</div>
+                    <div class="pill-selector" data-feeling="excitement">возбуждение</div>
+                    <div class="pill-selector" data-feeling="belonging">принадлежность</div>
+                    <div class="pill-selector" data-feeling="comfort">комфорт</div>
+                    <div class="pill-selector" data-feeling="other">что-то еще</div>
+                </div>
+                <div class="optional-input">
+                    <input type="text" class="text-input" placeholder="опиши чувство">
+                </div>
+            </div>
+
+            <div class="ornamental-divider">❦</div>
+
+            <div class="form-group">
+                <label class="label">сколько ты готов подождать?</label>
+                <div class="wait-pills">
+                    <div class="pill-selector" data-wait="breaths">несколько вдохов</div>
+                    <div class="pill-selector" data-wait="day">день</div>
+                    <div class="pill-selector" data-wait="week">неделю</div>
+                </div>
+            </div>
+
+            <button class="primary-button">сохранить этот момент</button>
+        </div>
+
+        <!-- 3. Reflection/Pause Cue -->
+        <div class="reflection-cue">
+            <h3 class="section-title">сделай вдох</h3>
+            <p class="body">желание купить часто слабеет, когда между импульсом и действием появляется пауза.</p>
+        </div>
+
+        <!-- 4. Recent Entries -->
+        <div class="recent-patterns">
+            <h2 class="section-title">недавние записи</h2>
+            
+            <div class="diary-entry">
+                <div class="diary-meta">вчера, 15:15</div>
+                <div class="diary-item">
+                    <span class="diary-label">предмет:</span>
+                    <span>наушники с шумоподавлением</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label">цена:</span>
+                    <span>$280</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label">желание:</span>
+                    <span>8/10</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label">чувство:</span>
+                    <span>собранность</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label">ожидание:</span>
+                    <span>неделю</span>
+                </div>
+            </div>
+
+            <div class="diary-entry">
+                <div class="diary-meta">4 дня назад, 11:30</div>
+                <div class="diary-item">
+                    <span class="diary-label">предмет:</span>
+                    <span>куртка для бега</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label">цена:</span>
+                    <span>$145</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label">желание:</span>
+                    <span>6/10</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label">чувство:</span>
+                    <span>уверенность</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label">ожидание:</span>
+                    <span>день</span>
+                </div>
+            </div>
+
+            <div class="diary-entry">
+                <div class="diary-meta">1 неделю назад, 19:45</div>
+                <div class="diary-item">
+                    <span class="diary-label">предмет:</span>
+                    <span>умная колонка</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label">цена:</span>
+                    <span>$99</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label">желание:</span>
+                    <span>7/10</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label">чувство:</span>
+                    <span>удобство</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label">ожидание:</span>
+                    <span>несколько вдохов</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Patterns -->
+        <div class="recent-patterns">
+            <h2 class="section-title">твои паттерны</h2>
+            <div class="insights-card">
+                <div class="insight-row">
+                    <span>удается выдержать паузу: 78%</span>
+                    <div class="insight-bar">
+                        <div class="insight-fill" style="width: 78%"></div>
+                    </div>
+                </div>
+                <div class="insight-row">
+                    <span>самый частый триггер: соцсети</span>
+                    <div class="insight-bar">
+                        <div class="insight-fill" style="width: 65%"></div>
+                    </div>
+                </div>
+                <div class="insight-row">
+                    <span>средняя сила желания: 6.8/10</span>
+                    <div class="insight-bar">
+                        <div class="insight-fill" style="width: 68%"></div>
+                    </div>
+                </div>
+                <div class="insight-row">
+                    <span>Most sought: уверенность</span>
+                    <div class="insight-bar">
+                        <div class="insight-fill" style="width: 45%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ornamental bottom -->
+        <div class="page-ornament page-ornament-bottom">
+            ◆ ❖ ◆
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('[data-feeling]').forEach(pill => {
+            pill.addEventListener('click', () => {
+                const group = pill.parentElement;
+                group.querySelectorAll('.pill-selector').forEach(p => p.classList.remove('selected'));
+                pill.classList.add('selected');
+                
+                const optionalInput = group.nextElementSibling;
+                if (pill.dataset.feeling === 'other') {
+                    optionalInput.style.display = 'block';
+                    optionalInput.querySelector('input').focus();
+                } else {
+                    optionalInput.style.display = 'none';
+                }
+            });
+        });
+
+        document.querySelectorAll('[data-wait]').forEach(pill => {
+            pill.addEventListener('click', () => {
+                const group = pill.parentElement;
+                group.querySelectorAll('.pill-selector').forEach(p => p.classList.remove('selected'));
+                pill.classList.add('selected');
+            });
+        });
+
+        document.querySelector('.primary-button').addEventListener('click', () => {
+            const button = document.querySelector('.primary-button');
+            const originalText = button.textContent;
+            button.textContent = 'Recorded ✓';
+            button.style.background = 'var(--success)';
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.background = 'var(--accent)';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
+
