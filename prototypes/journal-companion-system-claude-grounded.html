@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Pause</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #f8f9fa;
+            --surface: #ffffff;
+            --surface-raised: #ffffff;
+            --text: #212529;
+            --text-secondary: #6c757d;
+            --border: #dee2e6;
+            --border-focus: #4285f4;
+            --primary: #4285f4;
+            --primary-light: #e3f2fd;
+            --success: #28a745;
+            --warning: #ffc107;
+            --radius: 8px;
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.5;
+            color: var(--text);
+            background: var(--bg);
+            font-size: 15px;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: var(--spacing-lg) var(--spacing-md);
+        }
+
+        /* Header */
+        .header {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .app-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .app-subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Input Form */
+        .input-section {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .section-header {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .field-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .field-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .field-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text);
+        }
+
+        .text-input, .textarea-input {
+            width: 100%;
+            padding: var(--spacing-md);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 15px;
+            background: var(--surface);
+            transition: border-color 0.15s ease;
+        }
+
+        .text-input:focus, .textarea-input:focus {
+            outline: none;
+            border-color: var(--border-focus);
+        }
+
+        .textarea-input {
+            min-height: 72px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .price-input {
+            max-width: 120px;
+        }
+
+        /* Slider */
+        .slider-wrapper {
+            margin-top: var(--spacing-md);
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-md);
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .slider-input {
+            width: 100%;
+            height: 4px;
+            background: #e9ecef;
+            border-radius: var(--radius);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .slider-input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .slider-input::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Pills */
+        .pill-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .pill-option {
+            padding: var(--spacing-md);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--surface);
+            cursor: pointer;
+            text-align: center;
+            font-size: 14px;
+            transition: all 0.15s ease;
+        }
+
+        .pill-option:hover {
+            border-color: var(--primary);
+        }
+
+        .pill-option.active {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .wait-pills {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .wait-pills .pill-option {
+            grid-column: span 1;
+        }
+
+        .custom-feeling {
+            display: none;
+            margin-top: var(--spacing-sm);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: var(--spacing-md);
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.15s ease;
+            margin-top: var(--spacing-md);
+        }
+
+        .submit-btn:hover {
+            background: #3367d6;
+        }
+
+        /* Reflection */
+        .reflection-section {
+            background: var(--primary-light);
+            border: 1px solid rgba(66, 133, 244, 0.2);
+            border-radius: var(--radius);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+        }
+
+        .reflection-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text);
+        }
+
+        .reflection-text {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* History */
+        .history-section {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .history-entry {
+            padding: var(--spacing-md);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: var(--spacing-md);
+            background: #fafbfc;
+        }
+
+        .history-entry:last-child {
+            margin-bottom: 0;
+        }
+
+        .entry-date {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .entry-details {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: var(--spacing-sm) var(--spacing-md);
+            font-size: 14px;
+        }
+
+        .entry-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .entry-value {
+            color: var(--text);
+        }
+
+        /* Insights */
+        .insights-section {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .insight-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-md) 0;
+            border-bottom: 1px solid #f1f3f4;
+            font-size: 14px;
+        }
+
+        .insight-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .insight-item:first-child {
+            padding-top: 0;
+        }
+
+        .insight-label {
+            color: var(--text);
+            flex: 1;
+        }
+
+        .insight-visual {
+            width: 60px;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-left: var(--spacing-md);
+        }
+
+        .insight-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: var(--radius);
+        }
+
+        @media (min-width: 520px) {
+            .container {
+                padding: var(--spacing-xl);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="app-title">Purchase Pause</h1>
+            <p class="app-subtitle">A mindful approach to spending decisions</p>
+        </header>
+
+        <!-- Input Form -->
+        <section class="input-section">
+            <h2 class="section-header">New Entry</h2>
+            
+            <div class="field-group">
+                <label class="field-label">What caught your attention?</label>
+                <textarea class="textarea-input" placeholder="Describe the item you're considering..."></textarea>
+            </div>
+
+            <div class="field-group">
+                <label class="field-label">Price</label>
+                <input type="text" class="text-input price-input" placeholder="$120">
+            </div>
+
+            <div class="field-group">
+                <label class="field-label">Desire level</label>
+                <div class="slider-wrapper">
+                    <div class="slider-labels">
+                        <span>Low</span>
+                        <span>High</span>
+                    </div>
+                    <input type="range" min="1" max="10" value="5" class="slider-input">
+                </div>
+            </div>
+
+            <div class="field-group">
+                <label class="field-label">What happened right before?</label>
+                <textarea class="textarea-input" placeholder="I was browsing social media, had a stressful meeting..."></textarea>
+            </div>
+
+            <div class="field-group">
+                <label class="field-label">What feeling are you seeking?</label>
+                <div class="pill-container">
+                    <div class="pill-option" data-feeling="comfort">Comfort</div>
+                    <div class="pill-option" data-feeling="status">Status</div>
+                    <div class="pill-option" data-feeling="excitement">Excitement</div>
+                    <div class="pill-option" data-feeling="control">Control</div>
+                    <div class="pill-option" data-feeling="connection">Connection</div>
+                    <div class="pill-option" data-feeling="custom">Something else</div>
+                </div>
+                <div class="custom-feeling">
+                    <input type="text" class="text-input" placeholder="Describe the feeling">
+                </div>
+            </div>
+
+            <div class="field-group">
+                <label class="field-label">How long will you wait?</label>
+                <div class="wait-pills">
+                    <div class="pill-option" data-wait="minutes">A few breaths</div>
+                    <div class="pill-option" data-wait="day">A day</div>
+                    <div class="pill-option" data-wait="week">A week</div>
+                </div>
+            </div>
+
+            <button class="submit-btn">Save Entry</button>
+        </section>
+
+        <!-- Reflection -->
+        <section class="reflection-section">
+            <h3 class="reflection-title">Take a moment</h3>
+            <p class="reflection-text">Notice what you're feeling right now. The urge will likely pass if you give it time.</p>
+        </section>
+
+        <!-- Recent History -->
+        <section class="history-section">
+            <h2 class="section-header">Recent Entries</h2>
+            
+            <div class="history-entry">
+                <div class="entry-date">Today, 2:15 PM</div>
+                <div class="entry-details">
+                    <span class="entry-label">Item:</span>
+                    <span class="entry-value">Bluetooth headphones</span>
+                    <span class="entry-label">Price:</span>
+                    <span class="entry-value">$180</span>
+                    <span class="entry-label">Desire:</span>
+                    <span class="entry-value">7/10</span>
+                    <span class="entry-label">Wait time:</span>
+                    <span class="entry-value">A week</span>
+                </div>
+            </div>
+
+            <div class="history-entry">
+                <div class="entry-date">Yesterday, 4:30 PM</div>
+                <div class="entry-details">
+                    <span class="entry-label">Item:</span>
+                    <span class="entry-value">Running shoes</span>
+                    <span class="entry-label">Price:</span>
+                    <span class="entry-value">$120</span>
+                    <span class="entry-label">Desire:</span>
+                    <span class="entry-value">9/10</span>
+                    <span class="entry-label">Wait time:</span>
+                    <span class="entry-value">A day</span>
+                </div>
+            </div>
+
+            <div class="history-entry">
+                <div class="entry-date">3 days ago, 11:00 AM</div>
+                <div class="entry-details">
+                    <span class="entry-label">Item:</span>
+                    <span class="entry-value">Kitchen gadget</span>
+                    <span class="entry-label">Price:</span>
+                    <span class="entry-value">$45</span>
+                    <span class="entry-label">Desire:</span>
+                    <span class="entry-value">6/10</span>
+                    <span class="entry-label">Wait time:</span>
+                    <span class="entry-value">A day</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pattern Insights -->
+        <section class="insights-section">
+            <h2 class="section-header">Your Patterns</h2>
+            
+            <div class="insight-item">
+                <span class="insight-label">Successfully waited</span>
+                <div class="insight-visual">
+                    <div class="insight-fill" style="width: 78%"></div>
+                </div>
+            </div>
+            
+            <div class="insight-item">
+                <span class="insight-label">Most common trigger: Social media</span>
+                <div class="insight-visual">
+                    <div class="insight-fill" style="width: 65%"></div>
+                </div>
+            </div>
+            
+            <div class="insight-item">
+                <span class="insight-label">Average desire level: 7.2/10</span>
+                <div class="insight-visual">
+                    <div class="insight-fill" style="width: 72%"></div>
+                </div>
+            </div>
+            
+            <div class="insight-item">
+                <span class="insight-label">Peak urge time: 2-4 PM</span>
+                <div class="insight-visual">
+                    <div class="insight-fill" style="width: 55%"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Feeling selection
+        document.querySelectorAll('.pill-container .pill-option').forEach(pill => {
+            pill.addEventListener('click', () => {
+                const container = pill.parentElement;
+                container.querySelectorAll('.pill-option').forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                
+                const customField = container.nextElementSibling;
+                if (pill.dataset.feeling === 'custom') {
+                    customField.style.display = 'block';
+                } else {
+                    customField.style.display = 'none';
+                }
+            });
+        });
+
+        // Wait time selection
+        document.querySelectorAll('.wait-pills .pill-option').forEach(pill => {
+            pill.addEventListener('click', () => {
+                const container = pill.parentElement;
+                container.querySelectorAll('.pill-option').forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
+

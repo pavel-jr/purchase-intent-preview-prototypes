@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Journal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #f8f9fa;
+            --surface: #ffffff;
+            --surface-raised: #ffffff;
+            --text: #1a1d21;
+            --text-secondary: #5a6c7d;
+            --text-muted: #8b95a1;
+            --border: #e1e7ed;
+            --border-strong: #d0d9e2;
+            --primary: #3b82f6;
+            --primary-bg: #eff6ff;
+            --primary-border: #bfdbfe;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --spacing-xs: 8px;
+            --spacing-sm: 12px;
+            --spacing-md: 16px;
+            --spacing-lg: 20px;
+            --spacing-xl: 28px;
+            --spacing-2xl: 36px;
+            --radius-sm: 12px;
+            --radius-md: 16px;
+            --radius-lg: 20px;
+            --radius-xl: 24px;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: var(--spacing-2xl) var(--spacing-lg);
+        }
+
+        /* Typography */
+        .page-header {
+            text-align: center;
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: var(--spacing-xs);
+            color: var(--text);
+        }
+
+        .page-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text);
+        }
+
+        .field-label {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: var(--spacing-sm);
+            display: block;
+        }
+
+        .helper-text {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Cards & Layout */
+        .main-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-2xl);
+            margin-bottom: var(--spacing-xl);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .section-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .field-group {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .field-group:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Form Controls */
+        .text-input, .textarea {
+            width: 100%;
+            padding: var(--spacing-md) var(--spacing-lg);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-md);
+            font-size: 16px;
+            background: var(--surface);
+            color: var(--text);
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .text-input:focus, .textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-bg);
+        }
+
+        .textarea {
+            min-height: 88px;
+            resize: vertical;
+            line-height: 1.5;
+        }
+
+        /* Slider */
+        .slider-wrapper {
+            margin-top: var(--spacing-md);
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-md);
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            background: var(--border);
+            border-radius: var(--radius-sm);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 28px;
+            height: 28px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 28px;
+            height: 28px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Choice Pills */
+        .choice-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .choice-pill {
+            padding: var(--spacing-md) var(--spacing-lg);
+            border: 2px solid var(--border-strong);
+            border-radius: var(--radius-md);
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 15px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .choice-pill:hover {
+            border-color: var(--primary-border);
+            background: var(--primary-bg);
+        }
+
+        .choice-pill.selected {
+            border-color: var(--primary);
+            background: var(--primary-bg);
+            color: var(--primary);
+        }
+
+        .wait-choices {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .wait-choices .choice-pill {
+            grid-column: 1 / -1;
+            padding: var(--spacing-lg);
+        }
+
+        .custom-feeling {
+            margin-top: var(--spacing-md);
+            display: none;
+        }
+
+        /* Primary Action */
+        .primary-action {
+            width: 100%;
+            padding: var(--spacing-lg) var(--spacing-xl);
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .primary-action:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .primary-action:active {
+            transform: translateY(0);
+        }
+
+        /* Pause Section */
+        .pause-section {
+            background: linear-gradient(135deg, var(--primary-bg) 0%, #f0f9ff 100%);
+            border: 1px solid var(--primary-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .pause-section .section-title {
+            color: var(--primary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .pause-section p {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        /* Entry Items */
+        .entry-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .entry-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .entry-timestamp {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: var(--spacing-sm);
+            font-weight: 500;
+        }
+
+        .entry-detail {
+            font-size: 15px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: baseline;
+        }
+
+        .entry-detail:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-label {
+            font-weight: 500;
+            min-width: 72px;
+            color: var(--text-secondary);
+            margin-right: var(--spacing-sm);
+        }
+
+        .detail-value {
+            color: var(--text);
+        }
+
+        /* Insights */
+        .insights-grid {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+
+        .insight-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-md) 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .insight-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .insight-item:first-child {
+            padding-top: 0;
+        }
+
+        .insight-text {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .insight-visual {
+            width: 80px;
+            height: 6px;
+            background: var(--border);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+        }
+
+        .insight-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: var(--radius-sm);
+            transition: width 0.4s ease;
+        }
+
+        .section + .section {
+            margin-top: var(--spacing-2xl);
+        }
+
+        @media (min-width: 520px) {
+            .container {
+                padding: 48px var(--spacing-xl);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="page-header">
+            <h1 class="page-title">Purchase Journal</h1>
+            <p class="page-subtitle">Mindful spending decisions</p>
+        </div>
+
+        <!-- Main Form -->
+        <div class="main-card">
+            <div class="field-group">
+                <label class="field-label">What caught your attention?</label>
+                <textarea class="textarea" placeholder="Describe the item you're considering..."></textarea>
+            </div>
+
+            <div class="field-group">
+                <label class="field-label">Price</label>
+                <input type="text" class="text-input" placeholder="$120">
+            </div>
+
+            <div class="field-group">
+                <label class="field-label">How much do you want this?</label>
+                <div class="slider-wrapper">
+                    <div class="slider-labels">
+                        <span>Not much</span>
+                        <span>Desperately</span>
+                    </div>
+                    <input type="range" min="1" max="10" value="5" class="slider">
+                </div>
+            </div>
+
+            <div class="field-group">
+                <label class="field-label">What happened right before?</label>
+                <textarea class="textarea" placeholder="I was scrolling, had a meeting, saw an ad..."></textarea>
+            </div>
+
+            <div class="field-group">
+                <label class="field-label">What feeling do you want?</label>
+                <div class="choice-grid">
+                    <div class="choice-pill" data-feeling="safe">Safe</div>
+                    <div class="choice-pill" data-feeling="seen">Seen</div>
+                    <div class="choice-pill" data-feeling="excited">Excited</div>
+                    <div class="choice-pill" data-feeling="something else">Something else</div>
+                </div>
+                <div class="custom-feeling">
+                    <input type="text" class="text-input" placeholder="Describe the feeling...">
+                </div>
+            </div>
+
+            <div class="field-group">
+                <label class="field-label">How long can you wait?</label>
+                <div class="wait-choices">
+                    <div class="choice-pill" data-wait="breaths">A few breaths</div>
+                    <div class="choice-pill" data-wait="day">A day</div>
+                    <div class="choice-pill" data-wait="week">A week</div>
+                </div>
+            </div>
+        </div>
+
+        <button class="primary-action">Save This Moment</button>
+
+        <!-- Pause Section -->
+        <div class="pause-section">
+            <h3 class="section-title">Take a breath</h3>
+            <p>Notice what you're feeling right now. The urge will likely pass.</p>
+        </div>
+
+        <!-- Recent Entries -->
+        <div class="section">
+            <div class="section-card">
+                <h2 class="section-title">Recent entries</h2>
+                
+                <div class="entry-item">
+                    <div class="entry-timestamp">Yesterday, 2:30 PM</div>
+                    <div class="entry-detail">
+                        <span class="detail-label">Item:</span>
+                        <span class="detail-value">Wireless headphones</span>
+                    </div>
+                    <div class="entry-detail">
+                        <span class="detail-label">Price:</span>
+                        <span class="detail-value">$180</span>
+                    </div>
+                    <div class="entry-detail">
+                        <span class="detail-label">Desire:</span>
+                        <span class="detail-value">7/10</span>
+                    </div>
+                    <div class="entry-detail">
+                        <span class="detail-label">Wait:</span>
+                        <span class="detail-value">A week</span>
+                    </div>
+                </div>
+
+                <div class="entry-item">
+                    <div class="entry-timestamp">3 days ago, 10:15 AM</div>
+                    <div class="entry-detail">
+                        <span class="detail-label">Item:</span>
+                        <span class="detail-value">Running shoes</span>
+                    </div>
+                    <div class="entry-detail">
+                        <span class="detail-label">Price:</span>
+                        <span class="detail-value">$120</span>
+                    </div>
+                    <div class="entry-detail">
+                        <span class="detail-label">Desire:</span>
+                        <span class="detail-value">8/10</span>
+                    </div>
+                    <div class="entry-detail">
+                        <span class="detail-label">Wait:</span>
+                        <span class="detail-value">A day</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pattern Insights -->
+        <div class="section">
+            <div class="section-card">
+                <h2 class="section-title">Your patterns</h2>
+                <div class="insights-grid">
+                    <div class="insight-item">
+                        <span class="insight-text">You wait 75% of the time</span>
+                        <div class="insight-visual">
+                            <div class="insight-fill" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <div class="insight-item">
+                        <span class="insight-text">Most common trigger: Social media</span>
+                        <div class="insight-visual">
+                            <div class="insight-fill" style="width: 60%"></div>
+                        </div>
+                    </div>
+                    <div class="insight-item">
+                        <span class="insight-text">Average desire level: 7/10</span>
+                        <div class="insight-visual">
+                            <div class="insight-fill" style="width: 70%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Feeling selection
+        document.querySelectorAll('.choice-grid .choice-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                const group = pill.parentElement;
+                group.querySelectorAll('.choice-pill').forEach(p => p.classList.remove('selected'));
+                pill.classList.add('selected');
+                
+                const customInput = group.nextElementSibling;
+                if (pill.dataset.feeling === 'something else') {
+                    customInput.style.display = 'block';
+                } else {
+                    customInput.style.display = 'none';
+                }
+            });
+        });
+
+        // Wait time selection
+        document.querySelectorAll('.wait-choices .choice-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                const group = pill.parentElement;
+                group.querySelectorAll('.choice-pill').forEach(p => p.classList.remove('selected'));
+                pill.classList.add('selected');
+            });
+        });
+    </script>
+</body>
+</html>
+
