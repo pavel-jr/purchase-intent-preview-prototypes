@@ -761,12 +761,15 @@
       const floatingAction = document.getElementById("floating-action");
       const floatingButton = document.getElementById("floating-button");
       let endlessConfettiTimer = null;
+      let fallingTextTimer = null;
+      let fallingTextStartTimer = null;
 
       function showScreen(name) {
         screenOrder.forEach((screenName) => {
           screens.get(screenName).classList.toggle("active", screenName === name);
         });
         setEndlessConfetti(name === "finish");
+        setFallingTextRain(name);
         updateFloatingAction(name);
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
@@ -822,10 +825,15 @@
       }
 
       function launchWinnerText() {
-        for (let index = 0; index < 2; index += 1) {
+        const currentScreen = screenOrder.find((screenName) =>
+          screens.get(screenName).classList.contains("active")
+        );
+        const count = currentScreen === "finish" ? 2 : 1;
+
+        for (let index = 0; index < count; index += 1) {
           const piece = document.createElement("span");
           piece.className = "winner-text";
-          piece.textContent = "אולפן עציון מחזור 153";
+          piece.textContent = "Ulpanetion, Marsor153";
           piece.style.left = `${32 + Math.random() * 36}%`;
           piece.style.setProperty("--drift", `${Math.round((Math.random() - 0.5) * 120)}px`);
           piece.style.setProperty("--tilt", `${-18 + Math.random() * 24}deg`);
@@ -833,6 +841,26 @@
           celebrationTextLayer.appendChild(piece);
           piece.addEventListener("animationend", () => piece.remove(), { once: true });
         }
+      }
+
+      function setFallingTextRain(screenName) {
+        if (fallingTextTimer !== null) {
+          window.clearInterval(fallingTextTimer);
+          fallingTextTimer = null;
+        }
+
+        if (fallingTextStartTimer !== null) {
+          window.clearTimeout(fallingTextStartTimer);
+          fallingTextStartTimer = null;
+        }
+
+        const repeatMs = screenName === "finish" ? 1000 : 10000;
+        fallingTextStartTimer = window.setTimeout(() => {
+          launchWinnerText();
+          fallingTextTimer = window.setInterval(() => {
+            launchWinnerText();
+          }, repeatMs);
+        }, 1000);
       }
 
       function updateFloatingAction(screenName) {
@@ -883,6 +911,14 @@
 
       function resetAll() {
         setEndlessConfetti(false);
+        if (fallingTextTimer !== null) {
+          window.clearInterval(fallingTextTimer);
+          fallingTextTimer = null;
+        }
+        if (fallingTextStartTimer !== null) {
+          window.clearTimeout(fallingTextStartTimer);
+          fallingTextStartTimer = null;
+        }
         ["1", "2", "3"].forEach(clearStep);
         refreshProgress();
         showScreen("intro");
@@ -955,6 +991,8 @@
 
       restartButton.addEventListener("click", resetAll);
       refreshProgress();
+      setFallingTextRain("intro");
+      updateFloatingAction("intro");
     </script>
   </body>
 </html>
