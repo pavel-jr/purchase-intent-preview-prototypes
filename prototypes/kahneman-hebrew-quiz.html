@@ -142,6 +142,52 @@
         background: #1a365d;
       }
 
+      .tree-art {
+        position: relative;
+        height: 176px;
+      }
+
+      .tree-canopy {
+        position: absolute;
+        top: 32px;
+        left: 50%;
+        width: 92px;
+        height: 92px;
+        background: #ffffff;
+        border-radius: 50%;
+        transform: translateX(-50%);
+      }
+
+      .tree-canopy::before,
+      .tree-canopy::after {
+        content: "";
+        position: absolute;
+        bottom: 16px;
+        width: 62px;
+        height: 62px;
+        background: #ffffff;
+        border-radius: 50%;
+      }
+
+      .tree-canopy::before {
+        right: 58px;
+      }
+
+      .tree-canopy::after {
+        left: 58px;
+      }
+
+      .tree-trunk {
+        position: absolute;
+        left: 50%;
+        bottom: 18px;
+        width: 16px;
+        height: 62px;
+        background: #ffffff;
+        border-radius: 12px;
+        transform: translateX(-50%);
+      }
+
       .art-svg {
         display: block;
         width: 100%;
@@ -318,6 +364,34 @@
         .art-svg {
           height: 150px;
         }
+
+        .tree-art {
+          height: 150px;
+        }
+
+        .tree-canopy {
+          top: 24px;
+          width: 82px;
+          height: 82px;
+        }
+
+        .tree-canopy::before,
+        .tree-canopy::after {
+          width: 54px;
+          height: 54px;
+        }
+
+        .tree-canopy::before {
+          right: 50px;
+        }
+
+        .tree-canopy::after {
+          left: 50px;
+        }
+
+        .tree-trunk {
+          height: 54px;
+        }
       }
     </style>
   </head>
@@ -337,25 +411,10 @@
         </p>
 
         <div class="art-card dark" aria-hidden="true">
-          <svg
-            class="art-svg"
-            width="220"
-            height="160"
-            viewBox="0 0 220 160"
-            role="img"
-            style="--art-stroke: #ffffff; --art-fill: #111111;"
-          >
-            <rect width="220" height="160" fill="#1a365d"/>
-            <path d="M110 42 C92 42 78 56 78 74 C78 88 86 99 98 106 C102 108 105 111 106 116 L114 116 C115 111 118 108 122 106 C134 99 142 88 142 74 C142 56 128 42 110 42 Z" fill="#ffffff"/>
-            <path d="M110 86 V126" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
-            <path d="M110 96 C101 92 94 84 91 74" stroke="#1a365d" stroke-width="4" fill="none" stroke-linecap="round"/>
-            <path d="M110 92 C120 88 126 80 128 70" stroke="#1a365d" stroke-width="4" fill="none" stroke-linecap="round"/>
-            <path d="M110 126 C101 134 96 142 92 150" stroke="#ffffff" stroke-width="4" fill="none" stroke-linecap="round"/>
-            <path d="M110 126 C116 134 122 142 128 150" stroke="#ffffff" stroke-width="4" fill="none" stroke-linecap="round"/>
-            <path d="M110 126 C110 136 109 144 108 152" stroke="#ffffff" stroke-width="4" fill="none" stroke-linecap="round"/>
-            <path d="M102 130 C94 136 88 140 80 142" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round"/>
-            <path d="M118 130 C126 136 132 140 140 142" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round"/>
-          </svg>
+          <div class="tree-art">
+            <div class="tree-canopy"></div>
+            <div class="tree-trunk"></div>
+          </div>
         </div>
 
         <div class="facts">
