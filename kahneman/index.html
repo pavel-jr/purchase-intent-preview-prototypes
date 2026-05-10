@@ -149,40 +149,26 @@
 
       .tree-canopy {
         position: absolute;
-        top: 32px;
+        top: 18px;
         left: 50%;
-        width: 92px;
-        height: 92px;
+        width: 74px;
+        height: 112px;
         background: #ffffff;
-        border-radius: 50%;
+        border-radius: 48px;
         transform: translateX(-50%);
       }
 
       .tree-canopy::before,
       .tree-canopy::after {
-        content: "";
-        position: absolute;
-        bottom: 16px;
-        width: 62px;
-        height: 62px;
-        background: #ffffff;
-        border-radius: 50%;
-      }
-
-      .tree-canopy::before {
-        right: 58px;
-      }
-
-      .tree-canopy::after {
-        left: 58px;
+        content: none;
       }
 
       .tree-trunk {
         position: absolute;
         left: 50%;
-        bottom: 18px;
-        width: 16px;
-        height: 62px;
+        bottom: 16px;
+        width: 14px;
+        height: 56px;
         background: #ffffff;
         border-radius: 12px;
         transform: translateX(-50%);
@@ -370,27 +356,13 @@
         }
 
         .tree-canopy {
-          top: 24px;
-          width: 82px;
-          height: 82px;
-        }
-
-        .tree-canopy::before,
-        .tree-canopy::after {
-          width: 54px;
-          height: 54px;
-        }
-
-        .tree-canopy::before {
-          right: 50px;
-        }
-
-        .tree-canopy::after {
-          left: 50px;
+          top: 16px;
+          width: 68px;
+          height: 98px;
         }
 
         .tree-trunk {
-          height: 54px;
+          height: 50px;
         }
       }
     </style>
