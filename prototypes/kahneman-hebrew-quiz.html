@@ -81,6 +81,46 @@
         display: block;
       }
 
+      .confetti-layer {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 40;
+      }
+
+      .confetti {
+        position: absolute;
+        top: -18px;
+        width: 12px;
+        height: 18px;
+        border-radius: 4px;
+        opacity: 0.95;
+        animation: confetti-fall 1500ms linear forwards;
+      }
+
+      .confetti.square {
+        border-radius: 3px;
+      }
+
+      .confetti.ribbon {
+        width: 6px;
+        height: 22px;
+        border-radius: 999px;
+      }
+
+      @keyframes confetti-fall {
+        0% {
+          transform: translate3d(0, 0, 0) rotate(0deg);
+          opacity: 0.95;
+        }
+
+        100% {
+          transform: translate3d(var(--drift, 0px), 110vh, 0) rotate(var(--spin, 360deg));
+          opacity: 0;
+        }
+      }
+
       .eyebrow {
         display: inline-block;
         padding: 7px 12px;
@@ -323,6 +363,7 @@
     </style>
   </head>
   <body>
+    <div class="confetti-layer" id="confetti-layer" aria-hidden="true"></div>
     <main class="shell">
       <div class="progress" aria-label="התקדמות בחידון">
         <div class="track"><div class="fill" id="progress-1"></div></div>
@@ -634,6 +675,7 @@
         document.getElementById(`progress-${id}`)
       );
       const restartButton = document.getElementById("restart");
+      const confettiLayer = document.getElementById("confetti-layer");
 
       function showScreen(name) {
         screenOrder.forEach((screenName) => {
@@ -652,6 +694,23 @@
         progressBars.forEach((bar, index) => {
           bar.style.width = index < solvedCount() ? "100%" : "0%";
         });
+      }
+
+      function launchConfetti() {
+        const colors = ["#1d4ed8", "#3b82f6", "#60a5fa", "#93c5fd", "#ffffff"];
+        const shapes = ["square", "ribbon"];
+
+        for (let index = 0; index < 32; index += 1) {
+          const piece = document.createElement("span");
+          piece.className = `confetti ${shapes[index % shapes.length]}`;
+          piece.style.left = `${Math.random() * 100}%`;
+          piece.style.background = colors[index % colors.length];
+          piece.style.setProperty("--drift", `${Math.round((Math.random() - 0.5) * 220)}px`);
+          piece.style.setProperty("--spin", `${Math.round((Math.random() - 0.5) * 960)}deg`);
+          piece.style.animationDuration = `${1200 + Math.random() * 900}ms`;
+          confettiLayer.appendChild(piece);
+          piece.addEventListener("animationend", () => piece.remove(), { once: true });
+        }
       }
 
       function clearStep(stepName) {
@@ -712,6 +771,7 @@
             if (isCorrect) {
               step.dataset.solved = "true";
               refreshProgress();
+              launchConfetti();
 
               const nextButton = document.createElement("button");
               nextButton.type = "button";
