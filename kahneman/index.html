@@ -131,8 +131,8 @@
 
       .winner-text {
         position: absolute;
-        top: -40px;
-        left: 50%;
+        top: var(--start-top, -40px);
+        left: var(--start-left, 50%);
         padding: 8px 12px;
         border-radius: 999px;
         background: rgba(255, 255, 255, 0.92);
@@ -147,7 +147,7 @@
 
       @keyframes winner-text-fall {
         0% {
-          transform: translate(-50%, 0) rotate(var(--tilt, -8deg));
+          transform: translate(0, 0) rotate(var(--tilt, -8deg));
           opacity: 0;
         }
 
@@ -156,7 +156,7 @@
         }
 
         100% {
-          transform: translate(calc(-50% + var(--drift, 0px)), 112vh) rotate(calc(var(--tilt, -8deg) + 18deg));
+          transform: translate(var(--move-x, 0px), var(--move-y, 112vh)) rotate(calc(var(--tilt, -8deg) + 18deg));
           opacity: 0;
         }
       }
@@ -825,17 +825,81 @@
       }
 
       function launchWinnerText() {
-          const currentScreen = screenOrder.find((screenName) =>
+        const currentScreen = screenOrder.find((screenName) =>
           screens.get(screenName).classList.contains("active")
         );
-        const count = currentScreen === "finish" ? 2 : 1;
+        const isFinish = currentScreen === "finish";
+        const count = isFinish ? 2 : 1;
 
         for (let index = 0; index < count; index += 1) {
           const piece = document.createElement("span");
           piece.className = "winner-text";
           piece.textContent = "אולפן עציון מחזור 153";
-          piece.style.left = `${32 + Math.random() * 36}%`;
-          piece.style.setProperty("--drift", `${Math.round((Math.random() - 0.5) * 120)}px`);
+
+          if (isFinish) {
+            piece.style.setProperty("--start-left", `${32 + Math.random() * 36}%`);
+            piece.style.setProperty("--start-top", "-40px");
+            piece.style.setProperty("--move-x", `${Math.round((Math.random() - 0.5) * 120)}px`);
+            piece.style.setProperty("--move-y", "112vh");
+          } else {
+            const patterns = [
+              () => ({
+                left: `${10 + Math.random() * 80}%`,
+                top: "-40px",
+                moveX: `${Math.round((Math.random() - 0.5) * 140)}px`,
+                moveY: "112vh",
+              }),
+              () => ({
+                left: "-220px",
+                top: `${12 + Math.random() * 70}%`,
+                moveX: "120vw",
+                moveY: `${Math.round((Math.random() - 0.5) * 180)}px`,
+              }),
+              () => ({
+                left: "110vw",
+                top: `${12 + Math.random() * 70}%`,
+                moveX: "-120vw",
+                moveY: `${Math.round((Math.random() - 0.5) * 180)}px`,
+              }),
+              () => ({
+                left: "-220px",
+                top: "-40px",
+                moveX: "120vw",
+                moveY: "112vh",
+              }),
+              () => ({
+                left: "110vw",
+                top: "-40px",
+                moveX: "-120vw",
+                moveY: "112vh",
+              }),
+              () => ({
+                left: "-220px",
+                top: "105vh",
+                moveX: "120vw",
+                moveY: "-112vh",
+              }),
+              () => ({
+                left: "110vw",
+                top: "105vh",
+                moveX: "-120vw",
+                moveY: "-112vh",
+              }),
+              () => ({
+                left: `${10 + Math.random() * 80}%`,
+                top: "105vh",
+                moveX: `${Math.round((Math.random() - 0.5) * 140)}px`,
+                moveY: "-112vh",
+              }),
+            ];
+
+            const pattern = patterns[Math.floor(Math.random() * patterns.length)]();
+            piece.style.setProperty("--start-left", pattern.left);
+            piece.style.setProperty("--start-top", pattern.top);
+            piece.style.setProperty("--move-x", pattern.moveX);
+            piece.style.setProperty("--move-y", pattern.moveY);
+          }
+
           piece.style.setProperty("--tilt", `${-18 + Math.random() * 24}deg`);
           piece.style.animationDuration = `${2600 + Math.random() * 1200}ms`;
           celebrationTextLayer.appendChild(piece);
