@@ -132,7 +132,7 @@
       .winner-text {
         position: absolute;
         top: -40px;
-        right: 0;
+        left: 50%;
         padding: 8px 12px;
         border-radius: 999px;
         background: rgba(255, 255, 255, 0.92);
@@ -147,7 +147,7 @@
 
       @keyframes winner-text-fall {
         0% {
-          transform: translate3d(0, 0, 0) rotate(var(--tilt, -8deg));
+          transform: translate(-50%, 0) rotate(var(--tilt, -8deg));
           opacity: 0;
         }
 
@@ -156,7 +156,7 @@
         }
 
         100% {
-          transform: translate3d(var(--drift, 0px), 112vh, 0) rotate(calc(var(--tilt, -8deg) + 18deg));
+          transform: translate(calc(-50% + var(--drift, 0px)), 112vh) rotate(calc(var(--tilt, -8deg) + 18deg));
           opacity: 0;
         }
       }
@@ -825,9 +825,9 @@
         for (let index = 0; index < 2; index += 1) {
           const piece = document.createElement("span");
           piece.className = "winner-text";
-          piece.textContent = "Ulpanet1, Mahzor 153";
-          piece.style.left = `${8 + Math.random() * 72}%`;
-          piece.style.setProperty("--drift", `${Math.round((Math.random() - 0.5) * 180)}px`);
+          piece.textContent = "אולפן עציון מחזור 153";
+          piece.style.left = `${32 + Math.random() * 36}%`;
+          piece.style.setProperty("--drift", `${Math.round((Math.random() - 0.5) * 120)}px`);
           piece.style.setProperty("--tilt", `${-18 + Math.random() * 24}deg`);
           piece.style.animationDuration = `${2600 + Math.random() * 1200}ms`;
           celebrationTextLayer.appendChild(piece);
