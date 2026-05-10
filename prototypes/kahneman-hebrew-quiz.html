@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>דניאל כהנמן | ניסויים מפתיעים</title>
+    <title>דניאל כהנמן | חידון קצר</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -12,21 +12,19 @@
     />
     <style>
       :root {
-        --bg: #f6f2ea;
-        --panel: rgba(255, 252, 247, 0.9);
-        --panel-strong: #fffdf8;
-        --ink: #1f2a30;
-        --muted: #657178;
-        --line: rgba(31, 42, 48, 0.1);
-        --accent: #d96d4f;
-        --accent-strong: #b94d31;
-        --accent-soft: rgba(217, 109, 79, 0.12);
-        --mint: #cfded4;
-        --sand: #ead8b5;
-        --shadow: 0 22px 60px rgba(38, 36, 30, 0.08);
+        --bg: #f4f1ea;
+        --card: #fffdf9;
+        --ink: #20292e;
+        --muted: #667178;
+        --line: #ddd7cd;
+        --accent: #c96445;
+        --accent-strong: #a84d32;
+        --accent-soft: #f1ddd5;
+        --ok: #d9e8db;
+        --ok-ink: #2e6942;
         --radius-xl: 28px;
-        --radius-lg: 20px;
-        --radius-md: 14px;
+        --radius-lg: 18px;
+        --shadow: 0 20px 48px rgba(32, 41, 46, 0.08);
       }
 
       * {
@@ -38,277 +36,187 @@
         min-height: 100vh;
         font-family: "Heebo", sans-serif;
         color: var(--ink);
-        background:
-          radial-gradient(circle at top right, rgba(234, 216, 181, 0.85), transparent 24rem),
-          radial-gradient(circle at bottom left, rgba(207, 222, 212, 0.9), transparent 26rem),
-          linear-gradient(180deg, #f9f5ef 0%, var(--bg) 100%);
-      }
-
-      body::before,
-      body::after {
-        content: "";
-        position: fixed;
-        z-index: 0;
-        width: 18rem;
-        height: 18rem;
-        border-radius: 50%;
-        filter: blur(10px);
-        opacity: 0.45;
-        pointer-events: none;
-      }
-
-      body::before {
-        top: 3rem;
-        left: -5rem;
-        background: rgba(217, 109, 79, 0.12);
-      }
-
-      body::after {
-        right: -4rem;
-        bottom: 2rem;
-        background: rgba(126, 159, 140, 0.16);
+        background: var(--bg);
       }
 
       .shell {
-        position: relative;
-        z-index: 1;
-        width: min(960px, calc(100% - 28px));
+        width: min(760px, calc(100% - 24px));
         margin: 0 auto;
-        padding: 28px 0 56px;
+        padding: 18px 0 42px;
       }
 
-      .hero,
-      .step,
-      .summary,
-      .sources {
-        border: 1px solid var(--line);
-        background: var(--panel);
-        backdrop-filter: blur(18px);
-        box-shadow: var(--shadow);
+      .progress {
+        display: flex;
+        gap: 8px;
+        margin: 0 0 16px;
       }
 
-      .hero {
-        border-radius: 32px;
-        padding: 24px;
+      .track {
+        flex: 1;
+        height: 8px;
+        border-radius: 999px;
+        background: #dfdbd2;
         overflow: hidden;
       }
 
-      .hero-top {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 14px;
-        align-items: start;
+      .fill {
+        width: 0%;
+        height: 100%;
+        background: var(--accent);
+        transition: width 180ms ease;
+      }
+
+      .screen {
+        display: none;
+        padding: 24px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-xl);
+        background: var(--card);
+        box-shadow: var(--shadow);
+      }
+
+      .screen.active {
+        display: block;
       }
 
       .eyebrow {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
+        display: inline-block;
         padding: 7px 12px;
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.8);
+        background: var(--accent-soft);
         color: var(--accent-strong);
         font-size: 0.86rem;
         font-weight: 800;
       }
 
-      h1 {
-        margin: 16px 0 10px;
-        font-size: clamp(2.4rem, 8vw, 4.8rem);
-        line-height: 0.95;
+      h1,
+      h2 {
+        margin: 14px 0 10px;
+        line-height: 1;
         letter-spacing: -0.04em;
       }
 
-      .lede {
-        max-width: 42rem;
-        margin: 0;
-        font-size: 1.05rem;
-        line-height: 1.7;
-        color: var(--muted);
-      }
-
-      .hero-art {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 12px;
-        margin-top: 24px;
-      }
-
-      .mini-card {
-        min-height: 108px;
-        padding: 14px;
-        border-radius: var(--radius-lg);
-        background: rgba(255, 255, 255, 0.72);
-        border: 1px solid rgba(31, 42, 48, 0.06);
-      }
-
-      .mini-card strong {
-        display: block;
-        margin-bottom: 8px;
-        font-size: 1.25rem;
-      }
-
-      .mini-card span {
-        color: var(--muted);
-        line-height: 1.55;
-      }
-
-      .progress {
-        display: flex;
-        gap: 10px;
-        margin: 20px 0 18px;
-      }
-
-      .dot {
-        flex: 1;
-        height: 8px;
-        border-radius: 999px;
-        background: rgba(31, 42, 48, 0.08);
-        overflow: hidden;
-      }
-
-      .dot span {
-        display: block;
-        width: 0%;
-        height: 100%;
-        background: linear-gradient(90deg, var(--accent), #f19a57);
-        transition: width 220ms ease;
-      }
-
-      .steps {
-        display: grid;
-        gap: 18px;
-      }
-
-      .step {
-        border-radius: var(--radius-xl);
-        padding: 22px;
-      }
-
-      .step-head {
-        display: flex;
-        gap: 14px;
-        align-items: start;
-        justify-content: space-between;
-        margin-bottom: 14px;
-      }
-
-      .step-number {
-        width: 48px;
-        height: 48px;
-        flex: 0 0 auto;
-        display: grid;
-        place-items: center;
-        border-radius: 16px;
-        background: var(--accent-soft);
-        color: var(--accent-strong);
-        font-weight: 800;
-        font-size: 1.1rem;
-      }
-
-      .step-title-wrap {
-        flex: 1;
+      h1 {
+        font-size: clamp(2.2rem, 8vw, 4rem);
       }
 
       h2 {
-        margin: 0 0 6px;
-        font-size: clamp(1.5rem, 4vw, 2.15rem);
-        line-height: 1.05;
+        font-size: clamp(1.8rem, 6vw, 2.8rem);
       }
 
-      .step-kicker {
+      p {
         margin: 0;
-        color: var(--muted);
-        font-size: 0.96rem;
+        line-height: 1.7;
       }
 
-      .step-card {
+      .lede,
+      .small,
+      .source-note {
+        color: var(--muted);
+      }
+
+      .lede {
+        margin-top: 8px;
+        font-size: 1.02rem;
+      }
+
+      .facts,
+      .choices,
+      .sources {
+        display: grid;
+        gap: 12px;
+      }
+
+      .facts {
+        margin-top: 18px;
+      }
+
+      .fact,
+      .panel,
+      .source-item {
+        padding: 16px;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--line);
+        background: #fff;
+      }
+
+      .fact strong,
+      .panel strong {
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      .question-wrap {
         display: grid;
         gap: 14px;
-        grid-template-columns: 1.25fr 0.95fr;
-      }
-
-      .scenario,
-      .question,
-      .result {
-        border-radius: var(--radius-lg);
-        background: var(--panel-strong);
-        border: 1px solid rgba(31, 42, 48, 0.08);
-        padding: 16px;
-      }
-
-      .scenario p,
-      .question p,
-      .result p {
-        margin: 0;
-        line-height: 1.75;
-      }
-
-      .label {
-        display: inline-block;
-        margin-bottom: 10px;
-        color: var(--accent-strong);
-        font-size: 0.84rem;
-        font-weight: 800;
-      }
-
-      .question {
-        align-self: start;
+        margin-top: 18px;
       }
 
       .choices {
-        display: grid;
-        gap: 10px;
         margin-top: 14px;
       }
 
-      button.choice,
-      .restart {
+      button {
         appearance: none;
-        width: 100%;
         border: 0;
-        border-radius: 16px;
-        padding: 14px 16px;
         font: inherit;
-        font-weight: 700;
         cursor: pointer;
-        transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
       }
 
-      button.choice {
+      .choice,
+      .nav-button,
+      .retry-button {
+        width: 100%;
+        padding: 14px 16px;
+        border-radius: 16px;
+        font-weight: 700;
+      }
+
+      .choice {
         text-align: right;
         color: var(--ink);
-        background: linear-gradient(180deg, #ffffff 0%, #f6f1e8 100%);
-        box-shadow: inset 0 0 0 1px rgba(31, 42, 48, 0.08);
+        background: #f6f2eb;
+        border: 1px solid #d9d3c8;
       }
 
-      button.choice:hover,
-      button.choice:focus-visible,
-      .restart:hover,
-      .restart:focus-visible {
-        transform: translateY(-1px);
-        box-shadow: 0 10px 24px rgba(31, 42, 48, 0.1);
-        outline: none;
+      .choice.correct {
+        background: var(--ok);
+        color: var(--ok-ink);
+        border-color: #bdd3c0;
       }
 
-      button.choice[disabled] {
-        cursor: default;
+      .choice.wrong {
+        background: #f5dfd6;
+        color: #933f29;
+        border-color: #e5b7a9;
       }
 
-      button.choice.correct {
-        background: linear-gradient(180deg, #e5f0e8 0%, #d6e6da 100%);
-        box-shadow: inset 0 0 0 1px rgba(65, 112, 74, 0.18);
+      .actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 18px;
       }
 
-      button.choice.wrong {
-        background: linear-gradient(180deg, #f8e9e2 0%, #f4ddd2 100%);
-        box-shadow: inset 0 0 0 1px rgba(185, 77, 49, 0.14);
+      .nav-button,
+      .retry-button {
+        width: auto;
+        padding-inline: 18px;
+      }
+
+      .nav-button {
+        color: white;
+        background: var(--accent);
+      }
+
+      .retry-button {
+        color: var(--accent-strong);
+        background: var(--accent-soft);
       }
 
       .result {
-        margin-top: 14px;
         display: none;
+        margin-top: 14px;
       }
 
       .result.visible {
@@ -316,366 +224,356 @@
       }
 
       .feedback {
-        margin-bottom: 10px;
+        margin-bottom: 8px;
         font-weight: 800;
       }
 
       .feedback.good {
-        color: #2f6d43;
+        color: var(--ok-ink);
       }
 
       .feedback.bad {
         color: var(--accent-strong);
       }
 
-      .repro {
-        margin-top: 10px;
-        padding-top: 10px;
-        border-top: 1px dashed rgba(31, 42, 48, 0.12);
-        color: var(--muted);
-        font-size: 0.96rem;
+      .finish-title {
+        font-size: clamp(2rem, 7vw, 3.4rem);
       }
 
-      .summary,
       .sources {
-        margin-top: 18px;
-        border-radius: 24px;
-        padding: 20px;
+        margin-top: 20px;
       }
 
-      .summary-grid {
-        display: grid;
-        gap: 12px;
-        margin-top: 12px;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-
-      .summary-grid div {
-        padding: 14px;
-        border-radius: 18px;
-        background: rgba(255, 255, 255, 0.72);
-        border: 1px solid rgba(31, 42, 48, 0.06);
-      }
-
-      .summary-grid strong {
-        display: block;
-        margin-bottom: 6px;
-      }
-
-      .restart {
-        width: auto;
-        margin-top: 16px;
-        padding-inline: 18px;
-        color: white;
-        background: linear-gradient(90deg, var(--accent-strong), var(--accent));
-      }
-
-      .sources ul {
-        margin: 12px 0 0;
-        padding: 0 18px 0 0;
-        color: var(--muted);
-        line-height: 1.8;
-      }
-
-      .sources a {
+      .source-item a {
         color: var(--accent-strong);
       }
 
-      @media (max-width: 760px) {
+      @media (max-width: 640px) {
         .shell {
-          width: min(100% - 18px, 100%);
-          padding-top: 14px;
+          width: min(100% - 14px, 100%);
+          padding-top: 10px;
         }
 
-        .hero,
-        .step,
-        .summary,
-        .sources {
+        .screen {
+          padding: 18px;
           border-radius: 22px;
-        }
-
-        .hero-art,
-        .step-card,
-        .summary-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .step-head {
-          align-items: center;
-        }
-
-        h1 {
-          line-height: 1.02;
         }
       }
     </style>
   </head>
   <body>
     <main class="shell">
-      <section class="hero">
-        <div class="hero-top">
-          <div>
-            <div class="eyebrow">שורשי ים • דניאל כהנמן</div>
-            <h1>3 ניסויים<br />ששינו את הדרך שבה אנחנו חושבים</h1>
-            <p class="lede">
-              בכל שלב יש ניסוי אמיתי של דניאל כהנמן ושותפיו. קראו את הסיפור הקצר,
-              בחרו איזו קבוצה הושפעה יותר, ואז תראו את התוצאה המפתיעה.
+      <div class="progress" aria-label="התקדמות בחידון">
+        <div class="track"><div class="fill" id="progress-1"></div></div>
+        <div class="track"><div class="fill" id="progress-2"></div></div>
+        <div class="track"><div class="fill" id="progress-3"></div></div>
+      </div>
+
+      <section class="screen active" data-screen="intro">
+        <div class="eyebrow">דניאל כהנמן</div>
+        <h1>חידון קצר בעברית</h1>
+        <p class="lede">
+          קודם כמה פרטים קצרים מהמצגת, ואז 3 שאלות על ניסויים מפורסמים שלו.
+        </p>
+
+        <div class="facts">
+          <div class="fact">
+            <strong>השם</strong>
+            דניאל כהנמן.
+          </div>
+          <div class="fact">
+            <strong>מידע עליו</strong>
+            הוא נולד בתל אביב בשנת 1934, היה פסיכולוג וכלכלן, וקיבל פרס נובל
+            בכלכלה בשנת 2002.
+          </div>
+          <div class="fact">
+            <strong>מה הוא חקר</strong>
+            הוא חקר איך אנשים חושבים, זוכרים, ומקבלים החלטות.
+          </div>
+          <div class="fact">
+            <strong>מה למדתי ממנו</strong>
+            גם אנשים חכמים לא תמיד מחליטים בצורה מושלמת, ולכן חשוב לבדוק החלטות.
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="nav-button" type="button" data-go="1">נתחיל</button>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="1" data-solved="false">
+        <div class="eyebrow">שאלה 1 מתוך 3</div>
+        <h2>ניסוי העוגן</h2>
+        <p class="lede">
+          אנשים ראו מספר נמוך או גבוה בגלגל מזל, ואז העריכו כמה מדינות באפריקה יש
+          באו״ם.
+        </p>
+
+        <div class="question-wrap">
+          <div class="panel">
+            <strong>השאלה</strong>
+            איזו קבוצה נתנה הערכות גבוהות יותר?
+            <div class="choices">
+              <button class="choice" type="button" data-correct="false">
+                הקבוצה שראתה מספר נמוך
+              </button>
+              <button class="choice" type="button" data-correct="true">
+                הקבוצה שראתה מספר גבוה
+              </button>
+            </div>
+          </div>
+
+          <div class="panel result">
+            <div class="feedback"></div>
+            <p>
+              התוצאה: המספר האקראי השפיע. מי שראה מספר גבוה נתן בדרך כלל תשובות
+              גבוהות יותר.
+            </p>
+            <p class="small">
+              אחר כך חזרו על האפקט הזה גם במחקרים על מחירים, ענישה ומשא ומתן.
             </p>
           </div>
         </div>
+      </section>
 
-        <div class="hero-art" aria-hidden="true">
-          <div class="mini-card">
-            <strong>עוגן</strong>
-            <span>מספר אקראי יכול למשוך את ההערכה שלנו.</span>
+      <section class="screen" data-screen="2" data-solved="false">
+        <div class="eyebrow">שאלה 2 מתוך 3</div>
+        <h2>ניסוי המסגור</h2>
+        <p class="lede">
+          אנשים קיבלו אותה בעיה בדיוק על מחלה מסוכנת, אבל בניסוח שונה: הצלה או
+          מוות.
+        </p>
+
+        <div class="question-wrap">
+          <div class="panel">
+            <strong>השאלה</strong>
+            מי בחרו יותר באפשרות המסוכנת?
+            <div class="choices">
+              <button class="choice" type="button" data-correct="false">
+                הקבוצה ששמעה ניסוח של הצלה
+              </button>
+              <button class="choice" type="button" data-correct="true">
+                הקבוצה ששמעה ניסוח של מוות
+              </button>
+            </div>
           </div>
-          <div class="mini-card">
-            <strong>מסגור</strong>
-            <span>אותה החלטה נראית אחרת כשמציגים רווח או הפסד.</span>
-          </div>
-          <div class="mini-card">
-            <strong>זיכרון</strong>
-            <span>אנחנו לא זוכרים חוויה לפי כל האורך שלה.</span>
+
+          <div class="panel result">
+            <div class="feedback"></div>
+            <p>
+              התוצאה: כשדיברו על הפסד, יותר אנשים הסכימו לקחת סיכון. כשדיברו על
+              רווח, יותר אנשים העדיפו ודאות.
+            </p>
+            <p class="small">
+              זאת דוגמה מפורסמת לכך שניסוח שונה יכול לשנות החלטה.
+            </p>
           </div>
         </div>
       </section>
 
-      <div class="progress" aria-label="התקדמות">
-        <div class="dot"><span id="progress-1"></span></div>
-        <div class="dot"><span id="progress-2"></span></div>
-        <div class="dot"><span id="progress-3"></span></div>
-      </div>
+      <section class="screen" data-screen="3" data-solved="false">
+        <div class="eyebrow">שאלה 3 מתוך 3</div>
+        <h2>היד במי קרח</h2>
+        <p class="lede">
+          פעם אחת היד הייתה במים קרים מאוד ל-60 שניות. בפעם השנייה היה עוד חצי
+          דקה, אבל הסוף היה קצת פחות כואב.
+        </p>
 
-      <section class="steps">
-        <article class="step" data-step="1">
-          <div class="step-head">
-            <div class="step-title-wrap">
-              <p class="step-kicker">שלב 1</p>
-              <h2>ניסוי העוגן</h2>
-            </div>
-            <div class="step-number">01</div>
-          </div>
-
-          <div class="step-card">
-            <div class="scenario">
-              <span class="label">הסיפור</span>
-              <p>
-                משתתפים סובבו גלגל מזל שעצר במקרה על מספר נמוך או גבוה. אחר כך הם
-                נשאלו: כמה מדינות באפריקה יש באו״ם?
-              </p>
-            </div>
-
-            <div class="question">
-              <span class="label">השאלה</span>
-              <p>איזו קבוצה נתנה בממוצע הערכות גבוהות יותר?</p>
-              <div class="choices">
-                <button class="choice" data-correct="false">
-                  הקבוצה שראתה מספר נמוך בגלגל
-                </button>
-                <button class="choice" data-correct="true">
-                  הקבוצה שראתה מספר גבוה בגלגל
-                </button>
-              </div>
-              <div class="result">
-                <div class="feedback"></div>
-                <p>
-                  התוצאה המפתיעה: גם מספר אקראי לגמרי השפיע על ההערכה. מי שראה מספר
-                  גבוה נתן בדרך כלל תשובות גבוהות יותר.
-                </p>
-                <p class="repro">
-                  האפקט הזה נקרא עיגון. חוקרים חזרו עליו שוב ושוב בתחומים כמו מחירים,
-                  ענישה, משא ומתן והערכות כלליות.
-                </p>
-              </div>
+        <div class="question-wrap">
+          <div class="panel">
+            <strong>השאלה</strong>
+            איזו חוויה יותר אנשים הסכימו לחזור עליה?
+            <div class="choices">
+              <button class="choice" type="button" data-correct="false">
+                החוויה הקצרה יותר
+              </button>
+              <button class="choice" type="button" data-correct="true">
+                החוויה הארוכה יותר
+              </button>
             </div>
           </div>
-        </article>
 
-        <article class="step" data-step="2">
-          <div class="step-head">
-            <div class="step-title-wrap">
-              <p class="step-kicker">שלב 2</p>
-              <h2>ניסוי המסגור</h2>
-            </div>
-            <div class="step-number">02</div>
-          </div>
-
-          <div class="step-card">
-            <div class="scenario">
-              <span class="label">הסיפור</span>
-              <p>
-                לאנשים הוצגה אותה בעיה בדיוק: מחלה מסוכנת מאיימת על 600 אנשים. לקבוצה
-                אחת דיברו על “כמה יינצלו”, ולקבוצה אחרת על “כמה ימותו”.
-              </p>
-            </div>
-
-            <div class="question">
-              <span class="label">השאלה</span>
-              <p>מי בחרו יותר באפשרות המסוכנת?</p>
-              <div class="choices">
-                <button class="choice" data-correct="false">
-                  הקבוצה ששמעה ניסוח של הצלה
-                </button>
-                <button class="choice" data-correct="true">
-                  הקבוצה ששמעה ניסוח של מוות
-                </button>
-              </div>
-              <div class="result">
-                <div class="feedback"></div>
-                <p>
-                  התוצאה המפתיעה: כשהבעיה הוצגה כהפסד, יותר אנשים הסכימו לקחת סיכון.
-                  כשהיא הוצגה כרווח, יותר אנשים העדיפו ודאות.
-                </p>
-                <p class="repro">
-                  זאת דוגמה קלאסית לאפקט המסגור. גם כששומרים על אותה מתמטיקה, שינוי
-                  בניסוח יכול לשנות החלטה.
-                </p>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="step" data-step="3">
-          <div class="step-head">
-            <div class="step-title-wrap">
-              <p class="step-kicker">שלב 3</p>
-              <h2>היד במי קרח</h2>
-            </div>
-            <div class="step-number">03</div>
-          </div>
-
-          <div class="step-card">
-            <div class="scenario">
-              <span class="label">הסיפור</span>
-              <p>
-                פעם אחת אנשים החזיקו יד במים קרים מאוד למשך 60 שניות. בפעם אחרת הם
-                עשו את אותו דבר, ואז עוד 30 שניות של מים קצת פחות קרים.
-              </p>
-            </div>
-
-            <div class="question">
-              <span class="label">השאלה</span>
-              <p>איזו חוויה יותר אנשים הסכימו לחזור עליה?</p>
-              <div class="choices">
-                <button class="choice" data-correct="false">
-                  החוויה הקצרה יותר
-                </button>
-                <button class="choice" data-correct="true">
-                  החוויה הארוכה יותר, שנגמרה קצת יותר טוב
-                </button>
-              </div>
-              <div class="result">
-                <div class="feedback"></div>
-                <p>
-                  התוצאה המפתיעה: הרבה משתתפים העדיפו לחזור דווקא על החוויה הארוכה
-                  יותר, כי היא הסתיימה בצורה מעט פחות כואבת.
-                </p>
-                <p class="repro">
-                  זה מתחבר ל״כלל השיא-סוף״: הזיכרון שלנו נותן משקל גדול לרגע השיא
-                  ולסיום, ולא רק לאורך הכולל של החוויה.
-                </p>
-              </div>
-            </div>
-          </div>
-        </article>
-      </section>
-
-      <section class="summary">
-        <div class="eyebrow">מה לומדים מזה?</div>
-        <div class="summary-grid">
-          <div>
-            <strong>אנחנו לא תמיד אובייקטיביים</strong>
-            מספרים, מילים וסדר ההצגה משפיעים עלינו.
-          </div>
-          <div>
-            <strong>החלטות לא תמיד “רציונליות”</strong>
-            גם אנשים חכמים מושפעים ממסגור, עוגן וזיכרון חלקי.
-          </div>
-          <div>
-            <strong>בגלל זה כהנמן היה חשוב</strong>
-            הוא הראה שאפשר למדוד טעויות חשיבה בצורה ברורה ופשוטה.
+          <div class="panel result">
+            <div class="feedback"></div>
+            <p>
+              התוצאה: הרבה אנשים העדיפו לחזור על החוויה הארוכה יותר, כי היא
+              הסתיימה קצת יותר טוב.
+            </p>
+            <p class="small">
+              זה קשור ל״כלל השיא-סוף״: אנחנו זוכרים חוויה בעיקר לפי השיא ולפי הסוף.
+            </p>
           </div>
         </div>
-        <button class="restart" type="button" id="restart">להתחיל שוב</button>
       </section>
 
-      <section class="sources">
-        <div class="eyebrow">מקורות קצרים</div>
-        <ul>
-          <li>
-            Tversky &amp; Kahneman, 1974, <a href="https://doi.org/10.1126/science.185.4157.1124">Judgment under Uncertainty: Heuristics and Biases</a>
-          </li>
-          <li>
-            Tversky &amp; Kahneman, 1981, <a href="https://doi.org/10.1126/science.7455683">The Framing of Decisions and the Psychology of Choice</a>
-          </li>
-          <li>
-            Kahneman, Fredrickson, Schreiber &amp; Redelmeier, 1993, <a href="https://doi.org/10.1111/j.1467-9280.1993.tb00589.x">When More Pain Is Preferred to Less</a>
-          </li>
-          <li>
-            Redelmeier, Katz &amp; Kahneman, 2003, <a href="https://pubmed.ncbi.nlm.nih.gov/12855341/">Memories of Colonoscopy: a randomized trial</a>
-          </li>
-        </ul>
+      <section class="screen" data-screen="finish">
+        <div class="eyebrow">סיום</div>
+        <h2 class="finish-title">כל הכבוד, זכית בפרס נובל</h2>
+        <p class="lede">
+          ענית נכון על כל 3 השאלות. עכשיו אתם כבר יודעים למה כהנמן היה כל כך
+          חשוב.
+        </p>
+
+        <div class="facts">
+          <div class="fact">
+            <strong>בקצרה</strong>
+            כהנמן הראה שאנשים לא תמיד חושבים בצורה רציונלית, ושאפשר למדוד את זה
+            בניסויים פשוטים.
+          </div>
+        </div>
+
+        <div class="sources">
+          <div class="source-item">
+            Tversky &amp; Kahneman, 1974,
+            <a href="https://doi.org/10.1126/science.185.4157.1124">
+              Judgment under Uncertainty: Heuristics and Biases
+            </a>
+          </div>
+          <div class="source-item">
+            Tversky &amp; Kahneman, 1981,
+            <a href="https://doi.org/10.1126/science.7455683">
+              The Framing of Decisions and the Psychology of Choice
+            </a>
+          </div>
+          <div class="source-item">
+            Kahneman, Fredrickson, Schreiber &amp; Redelmeier, 1993,
+            <a href="https://doi.org/10.1111/j.1467-9280.1993.tb00589.x">
+              When More Pain Is Preferred to Less
+            </a>
+          </div>
+          <div class="source-item">
+            Redelmeier, Katz &amp; Kahneman, 2003,
+            <a href="https://pubmed.ncbi.nlm.nih.gov/12855341/">
+              Memories of Colonoscopy: a randomized trial
+            </a>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="retry-button" type="button" id="restart">
+            להתחיל שוב
+          </button>
+        </div>
       </section>
     </main>
 
     <script>
-      const steps = Array.from(document.querySelectorAll(".step"));
-      const progressBars = steps.map((step, index) =>
-        document.getElementById(`progress-${index + 1}`)
+      const screenOrder = ["intro", "1", "2", "3", "finish"];
+      const screens = new Map(
+        Array.from(document.querySelectorAll(".screen")).map((screen) => [
+          screen.dataset.screen,
+          screen,
+        ])
+      );
+      const progressBars = [1, 2, 3].map((id) =>
+        document.getElementById(`progress-${id}`)
       );
       const restartButton = document.getElementById("restart");
 
-      function refreshProgress() {
-        steps.forEach((step, index) => {
-          const answered = step.dataset.answered === "true";
-          progressBars[index].style.width = answered ? "100%" : "0%";
+      function showScreen(name) {
+        screenOrder.forEach((screenName) => {
+          screens.get(screenName).classList.toggle("active", screenName === name);
         });
-      }
-
-      function resetQuiz() {
-        steps.forEach((step) => {
-          step.dataset.answered = "false";
-          step.querySelectorAll(".choice").forEach((button) => {
-            button.disabled = false;
-            button.classList.remove("correct", "wrong");
-          });
-          step.querySelector(".result").classList.remove("visible");
-          step.querySelector(".feedback").textContent = "";
-          step.querySelector(".feedback").className = "feedback";
-        });
-        refreshProgress();
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
 
-      steps.forEach((step) => {
+      function solvedCount() {
+        return ["1", "2", "3"].filter(
+          (name) => screens.get(name).dataset.solved === "true"
+        ).length;
+      }
+
+      function refreshProgress() {
+        progressBars.forEach((bar, index) => {
+          bar.style.width = index < solvedCount() ? "100%" : "0%";
+        });
+      }
+
+      function clearStep(stepName) {
+        const step = screens.get(stepName);
+        step.dataset.solved = "false";
+        step.querySelectorAll(".choice").forEach((button) => {
+          button.disabled = false;
+          button.classList.remove("correct", "wrong");
+        });
+        const result = step.querySelector(".result");
+        result.classList.remove("visible");
+        result.querySelector(".feedback").textContent = "";
+        result.querySelector(".feedback").className = "feedback";
+        step.querySelectorAll(".actions").forEach((node) => node.remove());
+      }
+
+      function resetAll() {
+        ["1", "2", "3"].forEach(clearStep);
+        refreshProgress();
+        showScreen("intro");
+      }
+
+      document.querySelectorAll("[data-go]").forEach((button) => {
+        button.addEventListener("click", () => {
+          showScreen(button.dataset.go);
+        });
+      });
+
+      ["1", "2", "3"].forEach((stepName, index) => {
+        const step = screens.get(stepName);
         const buttons = Array.from(step.querySelectorAll(".choice"));
         const result = step.querySelector(".result");
-        const feedback = step.querySelector(".feedback");
+        const feedback = result.querySelector(".feedback");
 
         buttons.forEach((button) => {
           button.addEventListener("click", () => {
-            if (step.dataset.answered === "true") {
-              return;
-            }
-
             const isCorrect = button.dataset.correct === "true";
-            step.dataset.answered = "true";
 
             buttons.forEach((item) => {
               item.disabled = true;
-              const itemCorrect = item.dataset.correct === "true";
-              item.classList.add(itemCorrect ? "correct" : "wrong");
+              item.classList.add(
+                item.dataset.correct === "true" ? "correct" : "wrong"
+              );
             });
 
-            feedback.textContent = isCorrect ? "נכון." : "לא בדיוק.";
-            feedback.classList.add(isCorrect ? "good" : "bad");
             result.classList.add("visible");
-            refreshProgress();
+            feedback.textContent = isCorrect ? "נכון." : "לא נכון.";
+            feedback.classList.add(isCorrect ? "good" : "bad");
+
+            const oldActions = step.querySelector(".actions");
+            if (oldActions) {
+              oldActions.remove();
+            }
+
+            const actions = document.createElement("div");
+            actions.className = "actions";
+
+            if (isCorrect) {
+              step.dataset.solved = "true";
+              refreshProgress();
+
+              const nextButton = document.createElement("button");
+              nextButton.type = "button";
+              nextButton.className = "nav-button";
+              nextButton.textContent =
+                index === 2 ? "לסיום" : "לשאלה הבאה";
+              nextButton.addEventListener("click", () => {
+                showScreen(index === 2 ? "finish" : String(index + 2));
+              });
+              actions.appendChild(nextButton);
+            } else {
+              const retryButton = document.createElement("button");
+              retryButton.type = "button";
+              retryButton.className = "retry-button";
+              retryButton.textContent = "לנסות שוב";
+              retryButton.addEventListener("click", () => {
+                clearStep(stepName);
+              });
+              actions.appendChild(retryButton);
+            }
+
+            step.appendChild(actions);
           });
         });
       });
 
-      restartButton.addEventListener("click", resetQuiz);
+      restartButton.addEventListener("click", resetAll);
       refreshProgress();
     </script>
   </body>
