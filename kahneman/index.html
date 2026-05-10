@@ -91,6 +91,17 @@
         font-weight: 800;
       }
 
+      .intro-head {
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        gap: 18px;
+      }
+
+      .intro-copy {
+        flex: 1;
+      }
+
       h1,
       h2 {
         margin: 14px 0 10px;
@@ -99,7 +110,8 @@
       }
 
       h1 {
-        font-size: clamp(2.2rem, 8vw, 4rem);
+        font-size: clamp(2.9rem, 9vw, 4.8rem);
+        color: var(--accent-strong);
       }
 
       h2 {
@@ -142,18 +154,26 @@
         background: #1a365d;
       }
 
+      .intro-tree-card {
+        margin-top: 0;
+        width: 156px;
+        min-width: 156px;
+        padding: 8px;
+        align-self: flex-start;
+      }
+
       .tree-art {
         position: relative;
-        height: 176px;
+        height: 108px;
       }
 
       .tree-canopy {
         position: absolute;
-        top: 18px;
+        top: 8px;
         left: 50%;
-        width: 74px;
-        height: 112px;
-        background: #ffffff;
+        width: 44px;
+        height: 70px;
+        background: var(--accent);
         border-radius: 48px;
         transform: translateX(-50%);
       }
@@ -166,10 +186,10 @@
       .tree-trunk {
         position: absolute;
         left: 50%;
-        bottom: 16px;
-        width: 14px;
-        height: 56px;
-        background: #ffffff;
+        bottom: 8px;
+        width: 10px;
+        height: 34px;
+        background: var(--accent);
         border-radius: 12px;
         transform: translateX(-50%);
       }
@@ -347,22 +367,32 @@
           border-radius: 22px;
         }
 
+        .intro-head {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .intro-tree-card {
+          width: 132px;
+          min-width: 132px;
+        }
+
         .art-svg {
           height: 150px;
         }
 
         .tree-art {
-          height: 150px;
+          height: 96px;
         }
 
         .tree-canopy {
-          top: 16px;
-          width: 68px;
-          height: 98px;
+          top: 8px;
+          width: 40px;
+          height: 62px;
         }
 
         .tree-trunk {
-          height: 50px;
+          height: 30px;
         }
       }
     </style>
@@ -376,16 +406,20 @@
       </div>
 
       <section class="screen active" data-screen="intro">
-        <div class="eyebrow">שורשי עמי</div>
-        <h1>דניאל כהנמן</h1>
-        <p class="lede">
-          קודם כמה פרטים קצרים מהמצגת, ואז 3 שאלות על ניסויים מפורסמים שלו.
-        </p>
+        <div class="intro-head">
+          <div class="intro-copy">
+            <div class="eyebrow">שורשי עמי</div>
+            <h1>דניאל כהנמן</h1>
+            <p class="lede">
+              קודם כמה פרטים קצרים מהמצגת, ואז 3 שאלות על ניסויים מפורסמים שלו.
+            </p>
+          </div>
 
-        <div class="art-card dark" aria-hidden="true">
-          <div class="tree-art">
-            <div class="tree-canopy"></div>
-            <div class="tree-trunk"></div>
+          <div class="art-card intro-tree-card" aria-hidden="true">
+            <div class="tree-art">
+              <div class="tree-canopy"></div>
+              <div class="tree-trunk"></div>
+            </div>
           </div>
         </div>
 
