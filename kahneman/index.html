@@ -12,19 +12,21 @@
     />
     <style>
       :root {
-        --bg: #f4f1ea;
-        --card: #fffdf9;
-        --ink: #20292e;
-        --muted: #667178;
-        --line: #ddd7cd;
-        --accent: #c96445;
-        --accent-strong: #a84d32;
-        --accent-soft: #f1ddd5;
-        --ok: #d9e8db;
-        --ok-ink: #2e6942;
+        --bg: #f8faff;
+        --card: #ffffff;
+        --ink: #1a365d;
+        --muted: #64748b;
+        --line: #e2e8f0;
+        --accent: #3b82f6;
+        --accent-strong: #1d4ed8;
+        --accent-soft: #dbeafe;
+        --ok: #2563eb;
+        --ok-ink: #ffffff;
+        --art-card-bg: #ffffff;
+        --art-border: #e2e8f0;
         --radius-xl: 28px;
         --radius-lg: 18px;
-        --shadow: 0 20px 48px rgba(32, 41, 46, 0.08);
+        --shadow: 0 20px 48px rgba(59, 130, 246, 0.08);
       }
 
       * {
@@ -55,7 +57,7 @@
         flex: 1;
         height: 8px;
         border-radius: 999px;
-        background: #dfdbd2;
+        background: #dbeafe;
         overflow: hidden;
       }
 
@@ -131,13 +133,13 @@
         margin-top: 18px;
         padding: 12px;
         border-radius: 22px;
-        border: 1px solid #cdddf0;
-        background: #edf5ff;
+        border: 1px solid var(--art-border);
+        background: var(--art-card-bg);
       }
 
       .art-card.dark {
-        border-color: #111;
-        background: #111;
+        border-color: #1a365d;
+        background: #1a365d;
       }
 
       .art-svg {
@@ -229,8 +231,8 @@
       .choice {
         text-align: right;
         color: var(--ink);
-        background: #f6f2eb;
-        border: 1px solid #d9d3c8;
+        background: #f8fbff;
+        border: 1px solid #dbeafe;
       }
 
       .choice.correct {
@@ -240,9 +242,9 @@
       }
 
       .choice.wrong {
-        background: #f5dfd6;
-        color: #933f29;
-        border-color: #e5b7a9;
+        background: #eff6ff;
+        color: var(--accent-strong);
+        border-color: #bfdbfe;
       }
 
       .actions {
@@ -283,11 +285,11 @@
       }
 
       .feedback.good {
-        color: var(--ok-ink);
+        color: var(--accent-strong);
       }
 
       .feedback.bad {
-        color: var(--accent-strong);
+        color: var(--muted);
       }
 
       .finish-title {
@@ -343,20 +345,20 @@
             role="img"
             style="--art-stroke: #ffffff; --art-fill: #111111;"
           >
-            <path class="stroke" d="M110 138 V93" />
-            <path class="stroke" d="M110 104 C96 108, 89 118, 86 130" />
-            <path class="stroke" d="M110 111 C122 114, 130 124, 134 136" />
-            <path class="stroke" d="M110 92 C95 88, 86 75, 85 61" />
-            <path class="stroke" d="M110 90 C124 85, 133 72, 135 57" />
-            <path class="stroke" d="M109 84 C100 74, 97 60, 99 46" />
-            <path class="stroke" d="M111 83 C121 74, 126 60, 124 46" />
-            <circle class="fill-light" cx="75" cy="64" r="16" />
-            <circle class="fill-light" cx="100" cy="44" r="20" />
-            <circle class="fill-light" cx="132" cy="45" r="20" />
-            <circle class="fill-light" cx="149" cy="71" r="18" />
-            <circle class="fill-light" cx="120" cy="70" r="18" />
-            <circle class="fill-light" cx="88" cy="72" r="17" />
-            <path class="stroke-thin" d="M47 139 H173" />
+            <rect width="220" height="160" fill="#1a365d"/>
+            <path d="M110 130 L100 120 L90 115 L85 110 L82 100 L80 90 L78 80 L76 70 L78 60 L82 52 L88 46 L96 42 L104 40 L110 38 L116 40 L124 42 L132 46 L138 52 L142 60 L144 70 L142 80 L140 90 L138 100 L135 110 L130 115 L120 120 Z" fill="#ffffff"/>
+            <circle cx="95" cy="65" r="8" fill="#ffffff"/>
+            <circle cx="125" cy="65" r="6" fill="#ffffff"/>
+            <circle cx="102" cy="80" r="4" fill="#ffffff"/>
+            <circle cx="130" cy="85" r="5" fill="#ffffff"/>
+            <circle cx="88" cy="90" r="3" fill="#ffffff"/>
+            <circle cx="118" cy="95" r="4" fill="#ffffff"/>
+            <path d="M85 115 L75 125 L65 130" stroke="#ffffff" stroke-width="3" fill="none"/>
+            <path d="M92 118 L82 128 L70 135" stroke="#ffffff" stroke-width="2" fill="none"/>
+            <path d="M130 115 L145 125 L155 130" stroke="#ffffff" stroke-width="3" fill="none"/>
+            <path d="M128 118 L138 128 L150 135" stroke="#ffffff" stroke-width="2" fill="none"/>
+            <path d="M110 130 L110 140 L105 150" stroke="#ffffff" stroke-width="4" fill="none"/>
+            <path d="M110 130 L110 140 L115 150" stroke="#ffffff" stroke-width="4" fill="none"/>
           </svg>
         </div>
 
@@ -409,22 +411,17 @@
             role="img"
             style="--art-stroke: #0b5ea8; --art-fill: #ffffff;"
           >
-            <circle class="fill-light" cx="80" cy="76" r="40" />
-            <path class="stroke" d="M80 36 V30" />
-            <path class="stroke" d="M45 76 H39" />
-            <path class="stroke" d="M121 76 H115" />
-            <path class="stroke" d="M80 116 V122" />
-            <path class="stroke" d="M80 76 L106 54" />
-            <circle class="solid" cx="80" cy="76" r="5" />
-            <text x="58" y="60" font-size="14">10</text>
-            <text x="96" y="60" font-size="14">65</text>
-            <path class="stroke" d="M150 45 C142 56, 142 72, 150 83" />
-            <path class="stroke" d="M170 45 C178 56, 178 72, 170 83" />
-            <path class="stroke" d="M150 60 H170" />
-            <path class="stroke" d="M160 83 V111" />
-            <path class="stroke" d="M146 112 C151 103, 169 103, 174 112" />
-            <path class="stroke" d="M148 121 C151 112, 169 112, 172 121" />
-            <path class="stroke-thin" d="M24 136 H196" />
+            <rect width="220" height="160" fill="#f8faff"/>
+            <rect x="30" y="40" width="60" height="80" rx="8" fill="#3b82f6" stroke="#1d4ed8" stroke-width="2"/>
+            <rect x="130" y="60" width="60" height="60" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+            <text x="60" y="85" text-anchor="middle" fill="#ffffff" font-family="Arial" font-size="16" font-weight="bold">10</text>
+            <text x="160" y="95" text-anchor="middle" fill="#1d4ed8" font-family="Arial" font-size="16" font-weight="bold">65</text>
+            <path d="M100 80 L120 80" stroke="#1a365d" stroke-width="2" marker-end="url(#arrow)"/>
+            <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#1a365d"/></marker></defs>
+            <circle cx="60" cy="25" r="3" fill="#3b82f6"/>
+            <circle cx="160" cy="25" r="3" fill="#3b82f6"/>
+            <path d="M60 28 Q110 15 160 28" stroke="#3b82f6" stroke-width="2" fill="none"/>
+            <text x="110" y="20" text-anchor="middle" fill="#1a365d" font-family="Arial" font-size="12">עוגן</text>
           </svg>
         </div>
 
@@ -472,19 +469,17 @@
             role="img"
             style="--art-stroke: #0b5ea8; --art-fill: #ffffff;"
           >
-            <rect class="fill-light" x="28" y="34" width="66" height="86" rx="14" />
-            <rect class="fill-light" x="126" y="34" width="66" height="86" rx="14" />
-            <path class="stroke" d="M61 50 V84" />
-            <path class="stroke" d="M44 67 H78" />
-            <path class="stroke" d="M146 67 H172" />
-            <path class="stroke" d="M110 55 H122" />
-            <path class="stroke" d="M110 100 H122" />
-            <path class="stroke" d="M106 50 L122 67 L106 84" />
-            <path class="stroke" d="M126 100 L110 117 L126 134" />
-            <path class="stroke" d="M50 105 C58 95, 64 95, 72 105" />
-            <path class="stroke" d="M148 105 C156 95, 162 95, 170 105" />
-            <circle class="stroke-thin" cx="61" cy="105" r="16" />
-            <circle class="stroke-thin" cx="159" cy="105" r="16" />
+            <rect width="220" height="160" fill="#f8faff"/>
+            <rect x="20" y="30" width="80" height="50" rx="6" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+            <rect x="120" y="30" width="80" height="50" rx="6" fill="#3b82f6" stroke="#1d4ed8" stroke-width="2"/>
+            <text x="60" y="50" text-anchor="middle" fill="#1d4ed8" font-family="Arial" font-size="12">90% הצלחה</text>
+            <text x="160" y="50" text-anchor="middle" fill="#ffffff" font-family="Arial" font-size="12">10% כישלון</text>
+            <rect x="60" y="100" width="100" height="40" rx="20" fill="#ffffff" stroke="#3b82f6" stroke-width="2"/>
+            <circle cx="80" cy="120" r="8" fill="#dbeafe"/>
+            <circle cx="140" cy="120" r="8" fill="#3b82f6"/>
+            <path d="M60 85 L85 95" stroke="#3b82f6" stroke-width="2"/>
+            <path d="M160 85 L135 95" stroke="#3b82f6" stroke-width="2"/>
+            <text x="110" y="125" text-anchor="middle" fill="#1a365d" font-family="Arial" font-size="10">מסגור</text>
           </svg>
         </div>
 
@@ -532,19 +527,21 @@
             role="img"
             style="--art-stroke: #0b5ea8; --art-fill: #ffffff;"
           >
-            <path class="fill-light" d="M48 88 H172 L164 118 H56 Z" />
-            <path class="stroke" d="M56 88 C68 76, 84 70, 110 70 C136 70, 152 76, 164 88" />
-            <path class="stroke" d="M107 38 V82" />
-            <path class="stroke" d="M93 54 V82" />
-            <path class="stroke" d="M121 52 V82" />
-            <path class="stroke" d="M81 64 V82" />
-            <path class="stroke" d="M135 63 V82" />
-            <path class="stroke" d="M82 85 C83 68, 93 59, 105 59" />
-            <path class="stroke" d="M139 84 C138 68, 128 60, 116 60" />
-            <path class="stroke-thin" d="M31 44 H55" />
-            <path class="stroke-thin" d="M43 32 V56" />
-            <path class="stroke-thin" d="M35 36 L51 52" />
-            <path class="stroke-thin" d="M35 52 L51 36" />
+            <rect width="220" height="160" fill="#f8faff"/>
+            <rect x="40" y="40" width="40" height="80" rx="4" fill="#ffffff" stroke="#3b82f6" stroke-width="2"/>
+            <rect x="140" y="60" width="40" height="60" rx="4" fill="#ffffff" stroke="#3b82f6" stroke-width="2"/>
+            <rect x="45" y="100" width="30" height="15" fill="#dbeafe"/>
+            <rect x="45" y="85" width="30" height="15" fill="#3b82f6"/>
+            <rect x="45" y="70" width="30" height="15" fill="#dbeafe"/>
+            <rect x="145" y="105" width="30" height="10" fill="#dbeafe"/>
+            <rect x="145" y="95" width="30" height="10" fill="#3b82f6"/>
+            <rect x="145" y="85" width="30" height="10" fill="#dbeafe"/>
+            <path d="M90 80 Q110 60 130 80" stroke="#1d4ed8" stroke-width="3" fill="none"/>
+            <circle cx="60" cy="130" r="2" fill="#3b82f6"/>
+            <circle cx="160" cy="130" r="2" fill="#3b82f6"/>
+            <text x="60" y="140" text-anchor="middle" fill="#1a365d" font-family="Arial" font-size="10">14°C</text>
+            <text x="160" y="140" text-anchor="middle" fill="#1a365d" font-family="Arial" font-size="10">14°C</text>
+            <text x="110" y="25" text-anchor="middle" fill="#1a365d" font-family="Arial" font-size="12">השפעת השיא</text>
           </svg>
         </div>
 
@@ -592,18 +589,18 @@
             role="img"
             style="--art-stroke: #0b5ea8; --art-fill: #ffffff;"
           >
-            <path class="fill-light" d="M78 26 H102 L94 58 H70 Z" />
-            <path class="fill-light" d="M118 26 H142 L150 58 H126 Z" />
-            <circle class="fill-light" cx="110" cy="86" r="34" />
-            <circle class="stroke-thin" cx="110" cy="86" r="24" />
-            <text x="100" y="92" font-size="18">N</text>
-            <path class="stroke" d="M65 115 C72 129, 81 138, 93 144" />
-            <path class="stroke-thin" d="M71 118 C79 122, 84 128, 88 136" />
-            <path class="stroke-thin" d="M79 112 C87 117, 91 123, 95 131" />
-            <path class="stroke" d="M155 115 C148 129, 139 138, 127 144" />
-            <path class="stroke-thin" d="M149 118 C141 122, 136 128, 132 136" />
-            <path class="stroke-thin" d="M141 112 C133 117, 129 123, 125 131" />
-            <path class="stroke-thin" d="M49 146 H171" />
+            <rect width="220" height="160" fill="#f8faff"/>
+            <circle cx="110" cy="80" r="35" fill="#3b82f6" stroke="#1d4ed8" stroke-width="3"/>
+            <circle cx="110" cy="80" r="25" fill="#ffffff"/>
+            <text x="110" y="75" text-anchor="middle" fill="#1d4ed8" font-family="Arial" font-size="10" font-weight="bold">NOBEL</text>
+            <text x="110" y="87" text-anchor="middle" fill="#1d4ed8" font-family="Arial" font-size="8">2002</text>
+            <rect x="100" y="45" width="20" height="8" fill="#3b82f6"/>
+            <path d="M105 45 L110 35 L115 45" fill="#1d4ed8"/>
+            <path d="M80 70 L85 60 Q90 55 95 60 L100 70" stroke="#dbeafe" stroke-width="2" fill="none"/>
+            <path d="M120 70 L125 60 Q130 55 135 60 L140 70" stroke="#dbeafe" stroke-width="2" fill="none"/>
+            <circle cx="85" cy="65" r="2" fill="#3b82f6"/>
+            <circle cx="135" cy="65" r="2" fill="#3b82f6"/>
+            <text x="110" y="135" text-anchor="middle" fill="#1a365d" font-family="Arial" font-size="14" font-weight="bold">כל הכבוד!</text>
           </svg>
         </div>
 
