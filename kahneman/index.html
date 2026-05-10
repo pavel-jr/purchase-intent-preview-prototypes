@@ -676,11 +676,13 @@
       );
       const restartButton = document.getElementById("restart");
       const confettiLayer = document.getElementById("confetti-layer");
+      let endlessConfettiTimer = null;
 
       function showScreen(name) {
         screenOrder.forEach((screenName) => {
           screens.get(screenName).classList.toggle("active", screenName === name);
         });
+        setEndlessConfetti(name === "finish");
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
 
@@ -713,6 +715,25 @@
         }
       }
 
+      function setEndlessConfetti(enabled) {
+        if (enabled) {
+          if (endlessConfettiTimer !== null) {
+            return;
+          }
+
+          launchConfetti();
+          endlessConfettiTimer = window.setInterval(() => {
+            launchConfetti();
+          }, 900);
+          return;
+        }
+
+        if (endlessConfettiTimer !== null) {
+          window.clearInterval(endlessConfettiTimer);
+          endlessConfettiTimer = null;
+        }
+      }
+
       function clearStep(stepName) {
         const step = screens.get(stepName);
         step.dataset.solved = "false";
@@ -728,6 +749,7 @@
       }
 
       function resetAll() {
+        setEndlessConfetti(false);
         ["1", "2", "3"].forEach(clearStep);
         refreshProgress();
         showScreen("intro");
