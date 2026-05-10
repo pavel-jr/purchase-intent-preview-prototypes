@@ -147,7 +147,7 @@
 
       @keyframes winner-text-fall {
         0% {
-          transform: translate(0, 0) rotate(var(--tilt, -8deg));
+          transform: translate(var(--base-x, 0px), var(--base-y, 0px)) rotate(var(--tilt, -8deg));
           opacity: 0;
         }
 
@@ -156,7 +156,7 @@
         }
 
         100% {
-          transform: translate(var(--move-x, 0px), var(--move-y, 112vh)) rotate(calc(var(--tilt, -8deg) + 18deg));
+          transform: translate(calc(var(--base-x, 0px) + var(--move-x, 0px)), calc(var(--base-y, 0px) + var(--move-y, 112vh))) rotate(calc(var(--tilt, -8deg) + 18deg));
           opacity: 0;
         }
       }
@@ -837,9 +837,10 @@
           piece.textContent = "אולפן עציון מחזור 153";
 
           if (isFinish) {
-            piece.style.setProperty("--start-left", `${32 + Math.random() * 36}%`);
+            piece.style.setProperty("--start-left", `${44 + Math.random() * 12}%`);
             piece.style.setProperty("--start-top", "-40px");
-            piece.style.setProperty("--move-x", `${Math.round((Math.random() - 0.5) * 120)}px`);
+            piece.style.setProperty("--base-x", "-50%");
+            piece.style.setProperty("--move-x", `${Math.round((Math.random() - 0.5) * 80)}px`);
             piece.style.setProperty("--move-y", "112vh");
           } else {
             const patterns = [
