@@ -127,6 +127,59 @@
         gap: 12px;
       }
 
+      .art-card {
+        margin-top: 18px;
+        padding: 12px;
+        border-radius: 22px;
+        border: 1px solid #cdddf0;
+        background: #edf5ff;
+      }
+
+      .art-card.dark {
+        border-color: #111;
+        background: #111;
+      }
+
+      .art-svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .art-svg .stroke {
+        fill: none;
+        stroke: var(--art-stroke, #0b5ea8);
+        stroke-width: 4;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .art-svg .stroke-thin {
+        fill: none;
+        stroke: var(--art-stroke, #0b5ea8);
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .art-svg .fill-light {
+        fill: var(--art-fill, #ffffff);
+        stroke: var(--art-stroke, #0b5ea8);
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .art-svg .solid {
+        fill: var(--art-stroke, #0b5ea8);
+      }
+
+      .art-svg text {
+        fill: var(--art-stroke, #0b5ea8);
+        font-family: "Heebo", sans-serif;
+        font-weight: 800;
+      }
+
       .facts {
         margin-top: 18px;
       }
@@ -276,6 +329,30 @@
           קודם כמה פרטים קצרים מהמצגת, ואז 3 שאלות על ניסויים מפורסמים שלו.
         </p>
 
+        <div class="art-card dark" aria-hidden="true">
+          <svg
+            class="art-svg"
+            viewBox="0 0 220 160"
+            role="img"
+            style="--art-stroke: #ffffff; --art-fill: #111111;"
+          >
+            <path class="stroke" d="M110 138 V93" />
+            <path class="stroke" d="M110 104 C96 108, 89 118, 86 130" />
+            <path class="stroke" d="M110 111 C122 114, 130 124, 134 136" />
+            <path class="stroke" d="M110 92 C95 88, 86 75, 85 61" />
+            <path class="stroke" d="M110 90 C124 85, 133 72, 135 57" />
+            <path class="stroke" d="M109 84 C100 74, 97 60, 99 46" />
+            <path class="stroke" d="M111 83 C121 74, 126 60, 124 46" />
+            <circle class="fill-light" cx="75" cy="64" r="16" />
+            <circle class="fill-light" cx="100" cy="44" r="20" />
+            <circle class="fill-light" cx="132" cy="45" r="20" />
+            <circle class="fill-light" cx="149" cy="71" r="18" />
+            <circle class="fill-light" cx="120" cy="70" r="18" />
+            <circle class="fill-light" cx="88" cy="72" r="17" />
+            <path class="stroke-thin" d="M47 139 H173" />
+          </svg>
+        </div>
+
         <div class="facts">
           <div class="fact">
             <strong>מגישים</strong>
@@ -316,6 +393,32 @@
           באו״ם.
         </p>
 
+        <div class="art-card" aria-hidden="true">
+          <svg
+            class="art-svg"
+            viewBox="0 0 220 160"
+            role="img"
+            style="--art-stroke: #0b5ea8; --art-fill: #ffffff;"
+          >
+            <circle class="fill-light" cx="80" cy="76" r="40" />
+            <path class="stroke" d="M80 36 V30" />
+            <path class="stroke" d="M45 76 H39" />
+            <path class="stroke" d="M121 76 H115" />
+            <path class="stroke" d="M80 116 V122" />
+            <path class="stroke" d="M80 76 L106 54" />
+            <circle class="solid" cx="80" cy="76" r="5" />
+            <text x="58" y="60" font-size="14">10</text>
+            <text x="96" y="60" font-size="14">65</text>
+            <path class="stroke" d="M150 45 C142 56, 142 72, 150 83" />
+            <path class="stroke" d="M170 45 C178 56, 178 72, 170 83" />
+            <path class="stroke" d="M150 60 H170" />
+            <path class="stroke" d="M160 83 V111" />
+            <path class="stroke" d="M146 112 C151 103, 169 103, 174 112" />
+            <path class="stroke" d="M148 121 C151 112, 169 112, 172 121" />
+            <path class="stroke-thin" d="M24 136 H196" />
+          </svg>
+        </div>
+
         <div class="question-wrap">
           <div class="panel">
             <strong>השאלה</strong>
@@ -350,6 +453,29 @@
           אנשים קיבלו אותה בעיה בדיוק על מחלה מסוכנת, אבל בניסוח שונה: הצלה או
           מוות.
         </p>
+
+        <div class="art-card" aria-hidden="true">
+          <svg
+            class="art-svg"
+            viewBox="0 0 220 160"
+            role="img"
+            style="--art-stroke: #0b5ea8; --art-fill: #ffffff;"
+          >
+            <rect class="fill-light" x="28" y="34" width="66" height="86" rx="14" />
+            <rect class="fill-light" x="126" y="34" width="66" height="86" rx="14" />
+            <path class="stroke" d="M61 50 V84" />
+            <path class="stroke" d="M44 67 H78" />
+            <path class="stroke" d="M146 67 H172" />
+            <path class="stroke" d="M110 55 H122" />
+            <path class="stroke" d="M110 100 H122" />
+            <path class="stroke" d="M106 50 L122 67 L106 84" />
+            <path class="stroke" d="M126 100 L110 117 L126 134" />
+            <path class="stroke" d="M50 105 C58 95, 64 95, 72 105" />
+            <path class="stroke" d="M148 105 C156 95, 162 95, 170 105" />
+            <circle class="stroke-thin" cx="61" cy="105" r="16" />
+            <circle class="stroke-thin" cx="159" cy="105" r="16" />
+          </svg>
+        </div>
 
         <div class="question-wrap">
           <div class="panel">
@@ -386,6 +512,29 @@
           דקה, אבל הסוף היה קצת פחות כואב.
         </p>
 
+        <div class="art-card" aria-hidden="true">
+          <svg
+            class="art-svg"
+            viewBox="0 0 220 160"
+            role="img"
+            style="--art-stroke: #0b5ea8; --art-fill: #ffffff;"
+          >
+            <path class="fill-light" d="M48 88 H172 L164 118 H56 Z" />
+            <path class="stroke" d="M56 88 C68 76, 84 70, 110 70 C136 70, 152 76, 164 88" />
+            <path class="stroke" d="M107 38 V82" />
+            <path class="stroke" d="M93 54 V82" />
+            <path class="stroke" d="M121 52 V82" />
+            <path class="stroke" d="M81 64 V82" />
+            <path class="stroke" d="M135 63 V82" />
+            <path class="stroke" d="M82 85 C83 68, 93 59, 105 59" />
+            <path class="stroke" d="M139 84 C138 68, 128 60, 116 60" />
+            <path class="stroke-thin" d="M31 44 H55" />
+            <path class="stroke-thin" d="M43 32 V56" />
+            <path class="stroke-thin" d="M35 36 L51 52" />
+            <path class="stroke-thin" d="M35 52 L51 36" />
+          </svg>
+        </div>
+
         <div class="question-wrap">
           <div class="panel">
             <strong>השאלה</strong>
@@ -420,6 +569,28 @@
           ענית נכון על כל 3 השאלות. עכשיו אתם כבר יודעים למה כהנמן היה כל כך
           חשוב.
         </p>
+
+        <div class="art-card" aria-hidden="true">
+          <svg
+            class="art-svg"
+            viewBox="0 0 220 160"
+            role="img"
+            style="--art-stroke: #0b5ea8; --art-fill: #ffffff;"
+          >
+            <path class="fill-light" d="M78 26 H102 L94 58 H70 Z" />
+            <path class="fill-light" d="M118 26 H142 L150 58 H126 Z" />
+            <circle class="fill-light" cx="110" cy="86" r="34" />
+            <circle class="stroke-thin" cx="110" cy="86" r="24" />
+            <text x="100" y="92" font-size="18">N</text>
+            <path class="stroke" d="M65 115 C72 129, 81 138, 93 144" />
+            <path class="stroke-thin" d="M71 118 C79 122, 84 128, 88 136" />
+            <path class="stroke-thin" d="M79 112 C87 117, 91 123, 95 131" />
+            <path class="stroke" d="M155 115 C148 129, 139 138, 127 144" />
+            <path class="stroke-thin" d="M149 118 C141 122, 136 128, 132 136" />
+            <path class="stroke-thin" d="M141 112 C133 117, 129 123, 125 131" />
+            <path class="stroke-thin" d="M49 146 H171" />
+          </svg>
+        </div>
 
         <div class="facts">
           <div class="fact">
