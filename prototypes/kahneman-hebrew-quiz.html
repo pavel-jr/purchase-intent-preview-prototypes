@@ -91,17 +91,6 @@
         font-weight: 800;
       }
 
-      .intro-head {
-        display: flex;
-        align-items: start;
-        justify-content: space-between;
-        gap: 18px;
-      }
-
-      .intro-copy {
-        flex: 1;
-      }
-
       h1,
       h2 {
         margin: 14px 0 10px;
@@ -152,46 +141,6 @@
       .art-card.dark {
         border-color: #1a365d;
         background: #1a365d;
-      }
-
-      .intro-tree-card {
-        margin-top: 0;
-        width: 156px;
-        min-width: 156px;
-        padding: 8px;
-        align-self: flex-start;
-      }
-
-      .tree-art {
-        position: relative;
-        height: 108px;
-      }
-
-      .tree-canopy {
-        position: absolute;
-        top: 8px;
-        left: 50%;
-        width: 44px;
-        height: 70px;
-        background: var(--accent);
-        border-radius: 48px;
-        transform: translateX(-50%);
-      }
-
-      .tree-canopy::before,
-      .tree-canopy::after {
-        content: none;
-      }
-
-      .tree-trunk {
-        position: absolute;
-        left: 50%;
-        bottom: 8px;
-        width: 10px;
-        height: 34px;
-        background: var(--accent);
-        border-radius: 12px;
-        transform: translateX(-50%);
       }
 
       .art-svg {
@@ -367,32 +316,8 @@
           border-radius: 22px;
         }
 
-        .intro-head {
-          flex-direction: column;
-          align-items: stretch;
-        }
-
-        .intro-tree-card {
-          width: 132px;
-          min-width: 132px;
-        }
-
         .art-svg {
           height: 150px;
-        }
-
-        .tree-art {
-          height: 96px;
-        }
-
-        .tree-canopy {
-          top: 8px;
-          width: 40px;
-          height: 62px;
-        }
-
-        .tree-trunk {
-          height: 30px;
         }
       }
     </style>
@@ -406,22 +331,11 @@
       </div>
 
       <section class="screen active" data-screen="intro">
-        <div class="intro-head">
-          <div class="intro-copy">
-            <div class="eyebrow">שורשי עמי</div>
-            <h1>דניאל כהנמן</h1>
-            <p class="lede">
-              קודם כמה פרטים קצרים מהמצגת, ואז 3 שאלות על ניסויים מפורסמים שלו.
-            </p>
-          </div>
-
-          <div class="art-card intro-tree-card" aria-hidden="true">
-            <div class="tree-art">
-              <div class="tree-canopy"></div>
-              <div class="tree-trunk"></div>
-            </div>
-          </div>
-        </div>
+        <div class="eyebrow">שורשי עמי</div>
+        <h1>דניאל כהנמן</h1>
+        <p class="lede">
+          קודם כמה פרטים קצרים מהמצגת, ואז 3 שאלות על ניסויים מפורסמים שלו.
+        </p>
 
         <div class="facts">
           <div class="fact">
