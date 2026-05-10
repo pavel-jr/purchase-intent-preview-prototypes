@@ -44,7 +44,7 @@
       .shell {
         width: min(760px, calc(100% - 24px));
         margin: 0 auto;
-        padding: 18px 0 42px;
+        padding: 18px 0 120px;
       }
 
       .progress {
@@ -325,6 +325,41 @@
       .choice.wrong {
         background: #eff6ff;
         color: var(--accent-strong);
+        border-color: #bfdbfe;
+      }
+
+      .floating-action {
+        position: fixed;
+        left: 50%;
+        bottom: 16px;
+        width: min(760px, calc(100% - 24px));
+        transform: translateX(-50%);
+        z-index: 30;
+        display: none;
+      }
+
+      .floating-action.visible {
+        display: block;
+      }
+
+      .floating-button {
+        width: 100%;
+        padding: 15px 18px;
+        border-radius: 18px;
+        font: inherit;
+        font-weight: 800;
+        border: 1px solid transparent;
+        box-shadow: 0 16px 32px rgba(37, 99, 235, 0.16);
+      }
+
+      .floating-button.primary {
+        color: white;
+        background: var(--accent);
+      }
+
+      .floating-button.helper {
+        color: var(--accent-strong);
+        background: rgba(255, 255, 255, 0.98);
         border-color: #bfdbfe;
       }
 
@@ -703,6 +738,11 @@
         </div>
       </section>
     </main>
+    <div class="floating-action" id="floating-action">
+      <button class="floating-button helper" id="floating-button" type="button">
+        עבור לשאלה
+      </button>
+    </div>
 
     <script>
       const screenOrder = ["intro", "1", "2", "3", "finish"];
@@ -718,6 +758,8 @@
       const restartButton = document.getElementById("restart");
       const confettiLayer = document.getElementById("confetti-layer");
       const celebrationTextLayer = document.getElementById("celebration-text-layer");
+      const floatingAction = document.getElementById("floating-action");
+      const floatingButton = document.getElementById("floating-button");
       let endlessConfettiTimer = null;
 
       function showScreen(name) {
@@ -725,6 +767,7 @@
           screens.get(screenName).classList.toggle("active", screenName === name);
         });
         setEndlessConfetti(name === "finish");
+        updateFloatingAction(name);
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
 
@@ -792,9 +835,41 @@
         }
       }
 
+      function updateFloatingAction(screenName) {
+        if (!["1", "2", "3"].includes(screenName)) {
+          floatingAction.classList.remove("visible");
+          floatingButton.dataset.mode = "hidden";
+          return;
+        }
+
+        const step = screens.get(screenName);
+        const answerState = step.dataset.answerState || "idle";
+        floatingAction.classList.add("visible");
+        floatingButton.dataset.step = screenName;
+
+        if (answerState === "correct") {
+          floatingButton.dataset.mode = "next";
+          floatingButton.textContent = screenName === "3" ? "לסיום" : "לשאלה הבאה";
+          floatingButton.className = "floating-button primary";
+          return;
+        }
+
+        if (answerState === "wrong") {
+          floatingButton.dataset.mode = "retry";
+          floatingButton.textContent = "לנסות שוב";
+          floatingButton.className = "floating-button primary";
+          return;
+        }
+
+        floatingButton.dataset.mode = "scroll";
+        floatingButton.textContent = "עבור לשאלה";
+        floatingButton.className = "floating-button helper";
+      }
+
       function clearStep(stepName) {
         const step = screens.get(stepName);
         step.dataset.solved = "false";
+        step.dataset.answerState = "idle";
         step.querySelectorAll(".choice").forEach((button) => {
           button.disabled = false;
           button.classList.remove("correct", "wrong");
@@ -803,7 +878,7 @@
         result.classList.remove("visible");
         result.querySelector(".feedback").textContent = "";
         result.querySelector(".feedback").className = "feedback";
-        step.querySelectorAll(".actions").forEach((node) => node.remove());
+        updateFloatingAction(stepName);
       }
 
       function resetAll() {
@@ -819,8 +894,33 @@
         });
       });
 
+      floatingButton.addEventListener("click", () => {
+        const mode = floatingButton.dataset.mode;
+        const stepName = floatingButton.dataset.step;
+        const step = screens.get(stepName);
+        if (!step) {
+          return;
+        }
+
+        if (mode === "scroll") {
+          step.querySelector(".panel").scrollIntoView({ behavior: "smooth", block: "start" });
+          return;
+        }
+
+        if (mode === "retry") {
+          clearStep(stepName);
+          step.querySelector(".panel").scrollIntoView({ behavior: "smooth", block: "start" });
+          return;
+        }
+
+        if (mode === "next") {
+          showScreen(stepName === "3" ? "finish" : String(Number(stepName) + 1));
+        }
+      });
+
       ["1", "2", "3"].forEach((stepName, index) => {
         const step = screens.get(stepName);
+        step.dataset.answerState = "idle";
         const buttons = Array.from(step.querySelectorAll(".choice"));
         const result = step.querySelector(".result");
         const feedback = result.querySelector(".feedback");
@@ -840,40 +940,15 @@
             feedback.textContent = isCorrect ? "נכון." : "לא נכון.";
             feedback.classList.add(isCorrect ? "good" : "bad");
 
-            const oldActions = step.querySelector(".actions");
-            if (oldActions) {
-              oldActions.remove();
-            }
-
-            const actions = document.createElement("div");
-            actions.className = "actions";
-
             if (isCorrect) {
               step.dataset.solved = "true";
+              step.dataset.answerState = "correct";
               refreshProgress();
               launchConfetti();
-
-              const nextButton = document.createElement("button");
-              nextButton.type = "button";
-              nextButton.className = "nav-button";
-              nextButton.textContent =
-                index === 2 ? "לסיום" : "לשאלה הבאה";
-              nextButton.addEventListener("click", () => {
-                showScreen(index === 2 ? "finish" : String(index + 2));
-              });
-              actions.appendChild(nextButton);
             } else {
-              const retryButton = document.createElement("button");
-              retryButton.type = "button";
-              retryButton.className = "retry-button";
-              retryButton.textContent = "לנסות שוב";
-              retryButton.addEventListener("click", () => {
-                clearStep(stepName);
-              });
-              actions.appendChild(retryButton);
+              step.dataset.answerState = "wrong";
             }
-
-            step.appendChild(actions);
+            updateFloatingAction(stepName);
           });
         });
       });
